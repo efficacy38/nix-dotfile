@@ -28,17 +28,6 @@
     '';
   };
 
-  programs.git = {
-    enable = true;
-    userName  = "efficacy38";
-    userEmail = "efficacy38@gmail.com";
-    aliases = {
-      ci = "commit";
-      co = "checkout";
-      s = "status";
-    };
-  };
-
   home.file = {
     ".p10k.zsh" = {
       source = ../dotfiles/p10k.zsh;

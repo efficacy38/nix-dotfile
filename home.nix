@@ -20,7 +20,6 @@
   home.packages = with pkgs; [
     # dev tools
     ctags
-    rustup
     neovim
     flatpak
     openssl
@@ -32,12 +31,6 @@
     kustomize
     yq
     k9s
-
-    # git related
-    git
-    glab
-    gh
-    lazygit
 
     # kde packages
     kdePackages.kate
@@ -60,7 +53,7 @@
 
     ".config/nvim" = {
       source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/home-manager/dotfiles/nvim";
-   };
+    };
   };
 
 
@@ -89,19 +82,10 @@
 
   # enable shells
   programs.bash.enable = true;
-  programs.git = {
-    enable = true;
-    userName  = "efficacy38";
-    userEmail = "efficacy38@gmail.com";
-    aliases = {
-      ci = "commit";
-      co = "checkout";
-      s = "status";
-    };
-  };
   nixpkgs.config.allowUnfree = true;
 
-  imports =  [
+  imports = [
     ./shell
+    ./programing
   ];
 }
