@@ -7,5 +7,6 @@
     jq
     yq
     k9s
+    krew
   ];
 }
