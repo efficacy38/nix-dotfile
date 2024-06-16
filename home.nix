@@ -22,6 +22,8 @@
     ctags
     rustup
     neovim
+    flatpak
+    openssl
 
     # k8s dev tools
     fluxcd
@@ -36,6 +38,10 @@
     glab
     gh
     lazygit
+
+    # kde packages
+    kdePackages.kate
+    kdePackages.yakuake
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -110,6 +116,9 @@
             "deno"
         ];
     };
+    profileExtra = ''
+      export XDG_DATA_DIRS=$XDG_DATA_DIRS:/usr/share:/var/lib/flatpak/exports/share:$HOME/.local/share/flatpak/exports/share
+    '';
   };
   programs.git = {
     enable = true;
@@ -121,4 +130,5 @@
       s = "status";
     };
   };
+  nixpkgs.config.allowUnfree = true;
 }
