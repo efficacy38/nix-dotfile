@@ -45,12 +45,13 @@
   programs.home-manager.enable = true;
 
   # enable shells
-  programs.bash.enable = true;
+  # programs.bash.enable = true;
   nixpkgs.config.allowUnfree = true;
 
   imports = [
     ./shell
     ./programing
     ./ops
+    ./desktop
   ];
 }
