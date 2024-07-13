@@ -1,5 +1,8 @@
 { config, pkgs, ... }: {
   imports = [
-    ./keepassxc.nix
+    ./apps.nix
+    ./scripts
+    ./kde.nix
+    # ./steam.nix
   ];
 }

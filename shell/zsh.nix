@@ -50,12 +50,7 @@
           "deno"
         ];
     };
-    profileExtra = ''
-      # export XDG_DATA_DIRS=$XDG_DATA_DIRS:$HOME/.nix-profile/share:/usr/share:/var/lib/flatpak/exports/share:$HOME/.local/share/flatpak/exports/share
-      # export XDG_DATA_DIRS=$HOME/.nix-profile/share:/usr/share:/var/lib/flatpak/exports/share:$HOME/.local/share/flatpak/exports/share
-      export XDG_DATA_DIRS="$HOME/.nix-profile/share:/usr/share:/var/lib/flatpak/exports/share:$HOME/.local/share/flatpak/exports/share"
-      . "/home/efficacy38/.nix-profile/etc/profile.d/hm-session-vars.sh"
-    '';
+
     initExtra = ''
       [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
       # ------------------------ self defined functions ----------------------------
@@ -158,6 +153,7 @@
       aliasIfExist docker podman
       alias kreload='kquitapp5 plasmashell; plasmashell --replace &'
       export PATH=$HOME/.local/bin:$PATH:$HOME/.krew/bin
+      alias s=systemctl
 
       source <(fzf --zsh)
     '';

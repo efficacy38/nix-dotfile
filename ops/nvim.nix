@@ -1,6 +1,7 @@
 { config, pkgs, ... }: {
   home.packages = with pkgs; [
     neovim
+    nodejs_22
   ];
 
   home.sessionVariables = {

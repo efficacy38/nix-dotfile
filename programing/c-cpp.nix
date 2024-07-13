@@ -2,6 +2,7 @@
   home.packages = with pkgs; [
     clang-tools
     gcc14
+    gnumake
     cmake
     codespell
     conan

@@ -11,6 +11,7 @@
     flatpak
     openssl
     cfssl
+    dnsutils
 
     # dev tools
     podman
