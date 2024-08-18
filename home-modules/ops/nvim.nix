@@ -9,9 +9,9 @@
     EDITOR = "nvim";
   };
 
-  # home.file = {
-  #   ".config/nvim" = {
-  #     source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/home-manager/dotfiles/nvim";
-  #   };
-  # };
+  home.file = {
+    ".config/nvim" = {
+      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/Projects/Personal/nix-dotfile/home-modules/dotfiles/nvim";
+    };
+  };
 }
