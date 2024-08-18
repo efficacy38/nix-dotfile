@@ -35,6 +35,18 @@
           ./hosts/cc-desktop/configuration.nix
         ];
       };
+
+      dorm-desktop = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = { inherit inputs; };
+        modules = [
+          ./hosts/dorm-desktop/configuration.nix
+          inputs.nixos-hardware.nixosModules.common-cpu-amd
+          inputs.nixos-hardware.nixosModules.common-cpu-amd-zenpower
+          inputs.nixos-hardware.nixosModules.common-cpu-amd-pstate
+          inputs.nixos-hardware.nixosModules.common-pc-ssd
+        ];
+      };
     };
   };
 }
