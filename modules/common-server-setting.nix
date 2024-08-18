@@ -1,4 +1,4 @@
-{ ... }: {
+{ lib, config, pkgs, ... }: {
   # enable nix flake
   nix = {
     settings = {
@@ -45,4 +45,41 @@
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
+
+  # this is for nix-helper(nh)
+  environment.sessionVariables = {
+    # TODO: use main user module to control this
+    FLAKE = "/home/efficacy38/Projects/Personal/nix-dotfile";
+  };
+
+  environment.systemPackages = with pkgs; [
+    # nix helper
+    nh
+    nix-output-monitor
+    nvd
+    nix-index
+
+    # management utils
+    vim
+    neovim
+    git
+    wget
+    curl
+    htop
+
+    # system utils
+    man-db
+    wireguard-tools
+    tcpdump
+  ];
+
+  networking.firewall.enable = true;
+
+  programs.zsh.enable = true;
+  # add completion for zsh, links completion to $HOME/.nix-profile/share/zsh
+  environment.pathsToLink = [ "/share/zsh" ];
+
+  # Some programs need SUID wrappers, can be configured further or are
+  # started in user sessions.
+  programs.mtr.enable = true;
 }

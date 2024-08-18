@@ -1,8 +1,11 @@
-{ lib, config, pkgs, ... }:
+{ lib, config, pkgs, inputs, ... }:
 {
   imports = [
     ./main-user.nix
     ./common-server-setting.nix
+    ./my-steam.nix
+    ./my-desktop.nix
+    inputs.home-manager.nixosModules.default
   ];
 
   options = {
@@ -17,17 +20,5 @@
     # Usually these depend on whether a user of this module chose to "enable" it
     # using the "option" above. 
     # Options for modules imported in "imports" can be set here.
-
-    # this is for nix-helper(nh)
-    environment.sessionVariables = {
-      # TODO: use main user module to control this
-      FLAKE = "/home/efficacy38/Projects/Personal/nix-dotfile";
-    };
-
-    environment.systemPackages = with pkgs; [
-      nh
-      nix-output-monitor
-      nvd
-    ];
   };
 }

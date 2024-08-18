@@ -38,10 +38,6 @@
     firefox
   ];
 
-  programs.ssh = {
-    addKeysToAgent = "yes";
-  };
-
   services.nextcloud-client.enable = true;
   services.nextcloud-client.startInBackground = true;
   services.syncthing.enable = true;

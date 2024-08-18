@@ -26,7 +26,7 @@ in
     };
 
     home-manager.users.${cfg.userName} = with cfg;
-      import ./home-manager {
+      import ../home-modules {
         inherit config pkgs desktopEnable devProgEnable userName;
       };
 
