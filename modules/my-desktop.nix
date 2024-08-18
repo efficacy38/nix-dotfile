@@ -90,5 +90,10 @@ in
       enable = true;
       enableSSHSupport = true;
     };
+
+    # enables support for Bluetooth
+    hardware.bluetooth.enable = true;
+    # powers up the default Bluetooth controller on boot
+    hardware.bluetooth.powerOnBoot = true;
   };
 }
