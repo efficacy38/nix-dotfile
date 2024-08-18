@@ -13,6 +13,10 @@
 
   environment.variables.EDITOR = "vim";
 
+  # enable sshd
+  services.openssh.enable = true;
+  services.fail2ban.enable = true;
+
   services.tailscale = {
     enable = true;
     useRoutingFeatures = "none";
@@ -82,4 +86,5 @@
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   programs.mtr.enable = true;
+
 }
