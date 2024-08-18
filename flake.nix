@@ -10,12 +10,14 @@
   };
 
   outputs = { self, nixpkgs, ... }@inputs: {
-    phoenixton = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
-      specialArgs = { inherit inputs; };
-      modules = [
-        ./hosts/desktop/configuration.nix
-      ];
+    nixosConfigurations = {
+      phoenixton = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = { inherit inputs; };
+        modules = [
+          ./hosts/phoenixton/configuration.nix
+        ];
+      };
     };
   };
 }
