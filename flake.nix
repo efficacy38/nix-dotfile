@@ -27,6 +27,14 @@
           inputs.nixos-hardware.nixosModules.common-hidpi
         ];
       };
+
+      cc-desktop = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = { inherit inputs; };
+        modules = [
+          ./hosts/cc-desktop/configuration.nix
+        ];
+      };
     };
   };
 }
