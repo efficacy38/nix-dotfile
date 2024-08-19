@@ -62,20 +62,7 @@ in
         fcitx5-rime
         fcitx5-chinese-addons
         librime
-        openfortivpn
       ];
-    };
-
-    systemd.services."openfortivpn@" = {
-      enable = true;
-      description = "OpenFortiVPN for %I";
-      after = [ "network-online.target" ];
-      wants = [ "network-online.target" "systemd-networkd-wait-online.service" ];
-
-      serviceConfig = {
-        ExecStart = "${pkgs.openfortivpn}/bin/openfortivpn -c /etc/openfortivpn/%I.conf --password=\${PASSWD}";
-        EnvironmentFile = "/etc/default/openfortivpn";
-      };
     };
 
     zramSwap =
