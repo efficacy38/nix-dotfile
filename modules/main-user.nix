@@ -19,7 +19,7 @@ in
 
   config = lib.mkIf cfg.enable {
     sops.secrets."main_user_passwd_hash".neededForUsers = true;
-
+    sops.secrets."main_user_passwd_hash" = { };
     users.users.${cfg.userName} = {
       isNormalUser = true;
       description = "${cfg.userName}(admin)";
