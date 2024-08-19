@@ -6,6 +6,7 @@
     ./my-steam.nix
     ./my-desktop.nix
     inputs.home-manager.nixosModules.default
+    inputs.sops-nix.nixosModules.sops
   ];
 
   options = {

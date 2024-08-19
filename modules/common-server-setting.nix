@@ -75,7 +75,16 @@
     man-db
     wireguard-tools
     tcpdump
+
+    # sops
+    sops
+    gnupg
+    age
   ];
+  sops.defaultSopsFile = ../secrets/default.yaml;
+  # TODO: use variable to modify following code
+  sops.age.keyFile = "/home/efficacy38/.config/sops/age/keys.txt";
+  sops.defaultSopsFormat = "yaml";
 
   networking.firewall.enable = true;
 
@@ -86,5 +95,4 @@
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   programs.mtr.enable = true;
-
 }

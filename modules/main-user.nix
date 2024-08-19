@@ -18,11 +18,14 @@ in
   };
 
   config = lib.mkIf cfg.enable {
+    sops.secrets."main_user_passwd_hash".neededForUsers = true;
+
     users.users.${cfg.userName} = {
       isNormalUser = true;
       description = "${cfg.userName}(admin)";
       shell = pkgs.zsh;
       extraGroups = [ "wheel" ];
+      hashedPasswordFile = config.sops.secrets."main_user_passwd_hash".path;
     };
 
     home-manager.users.${cfg.userName} = with cfg;
