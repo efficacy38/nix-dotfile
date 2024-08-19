@@ -71,6 +71,10 @@
     curl
     htop
 
+    # compression
+    unzip
+    gnutar
+
     # system utils
     man-db
     wireguard-tools
