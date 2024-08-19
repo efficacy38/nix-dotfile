@@ -5,5 +5,6 @@
     ./common.nix
     ./incus.nix
     ./podman.nix
+    ./justfile.nix
   ];
 }
