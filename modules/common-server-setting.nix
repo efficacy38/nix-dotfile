@@ -84,6 +84,11 @@
     sops
     gnupg
     age
+
+
+    # vpn
+    openfortivpn
+    wireguard-tools
   ];
   sops.defaultSopsFile = ../secrets/default.yaml;
   # TODO: use variable to modify following code
