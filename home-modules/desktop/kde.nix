@@ -5,7 +5,6 @@
     okular
     kdeconnect-kde
     elisa
-    knotes
     markdownpart
     # kcommit
     # kexi
