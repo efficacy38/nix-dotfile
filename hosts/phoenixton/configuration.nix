@@ -20,10 +20,7 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelParams = [ "reboot=bios" "amdgpu.sg_display=0" ];
-
-  networking.extraHosts = ''
-    10.106.241.134 ubuntu.cs.nctu.edu.tw
-  '';
+  boot.tmp.useTmpfs = true;
 
   # Enable networking related
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
