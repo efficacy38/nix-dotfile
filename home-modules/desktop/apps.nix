@@ -5,7 +5,7 @@
   ];
   home.packages = with pkgs; [
     fcitx5-rime
-    (nerdfonts.override { fonts = [ "Hack" ]; })
+    nerd-fonts.hack
     libreoffice
     keepassxc
     git-credential-keepassxc
