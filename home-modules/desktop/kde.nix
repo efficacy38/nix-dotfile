@@ -6,9 +6,9 @@
     kdeconnect-kde
     elisa
     markdownpart
-    # kcommit
-    # kexi
     kate
+    # markdown preview plugin of kate
+    markdownpart
     yakuake
     kcalc
     kate
