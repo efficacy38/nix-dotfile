@@ -81,7 +81,7 @@ in
     zramSwap =
       if cfg.zramEnable then {
         enable = true;
-        memoryPercent = 75;
+        memoryPercent = 50;
       } else { };
 
     # Some programs need SUID wrappers, can be configured further or are
@@ -95,10 +95,5 @@ in
     hardware.bluetooth.enable = true;
     # powers up the default Bluetooth controller on boot
     hardware.bluetooth.powerOnBoot = true;
-
-    # systemd.targets.sleep.enable = false;
-    # systemd.targets.hybrid-sleep.enable = false;
-    systemd.targets.suspend.enable = false;
-    systemd.targets.hibernate.enable = false;
   };
 }
