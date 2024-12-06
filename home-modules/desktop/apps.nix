@@ -6,6 +6,8 @@
   home.packages = with pkgs; [
     fcitx5-rime
     nerd-fonts.hack
+    nerd-fonts.fira-mono
+    nerd-fonts.fira-code
     libreoffice
     keepassxc
     git-credential-keepassxc
