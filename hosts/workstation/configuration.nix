@@ -1,10 +1,8 @@
-{ config, pkgs, inputs, ... }:
+{ config, pkgs, modulesPath, inputs, ... }:
 {
   imports = [
     # custom modules
     ../../modules
-    # Include the results of the hardware scan.
-    ./hardware-configuration.nix
     # Include the default lxd configuration.
     "${modulesPath}/virtualisation/lxd-virtual-machine.nix"
   ];
