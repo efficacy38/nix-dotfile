@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-24.05";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -14,7 +15,7 @@
     sops-nix.url = "github:Mic92/sops-nix";
   };
 
-  outputs = { self, nixpkgs, ... }@inputs: {
+  outputs = { self, nixpkgs, nixpkgs-stable, ... }@inputs: {
     nixosConfigurations = {
       phoenixton = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
@@ -47,6 +48,22 @@
           inputs.nixos-hardware.nixosModules.common-cpu-amd-zenpower
           inputs.nixos-hardware.nixosModules.common-cpu-amd-pstate
           inputs.nixos-hardware.nixosModules.common-pc-ssd
+        ];
+      };
+
+      workstation = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = { inherit inputs; };
+        modules = [
+          ./hosts/workstation/configuration.nix
+        ];
+      };
+
+      homelab-1 = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = { inherit inputs; };
+        modules = [
+          ./hosts/workstation/configuration.nix
         ];
       };
     };
