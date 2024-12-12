@@ -13,6 +13,13 @@
     };
 
     sops-nix.url = "github:Mic92/sops-nix";
+
+    nix-secrets = {
+      url = "git+ssh://git@github.com/efficacy38/nix-secret.git?ref=main&shallow=1";
+      # url = "git+ssh://git@gitlab.com/emergentmind/nix-secrets.git?ref=main&shallow=1";
+      inputs = { };
+      flake = false;
+    };
   };
 
   outputs = { self, nixpkgs, nixpkgs-stable, ... }@inputs: {
