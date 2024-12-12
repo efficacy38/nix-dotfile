@@ -15,6 +15,7 @@
   my-steam.hidpi = true;
   my-desktop.enable = true;
   my-desktop.zramEnable = true;
+  cscc-work.enable = true;
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
