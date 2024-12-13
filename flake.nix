@@ -4,6 +4,7 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-24.05";
+
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -22,57 +23,64 @@
     };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-stable, ... }@inputs: {
-    nixosConfigurations = {
-      phoenixton = nixpkgs.lib.nixosSystem {
+  outputs = { self, nixpkgs, nixpkgs-stable, ... }@inputs:
+    let
+      pkgs-stable = import nixpkgs-stable {
         system = "x86_64-linux";
-        specialArgs = { inherit inputs; };
-        modules = [
-          ./hosts/phoenixton/configuration.nix
-          inputs.nixos-hardware.nixosModules.common-cpu-amd
-          inputs.nixos-hardware.nixosModules.common-cpu-amd-zenpower
-          inputs.nixos-hardware.nixosModules.common-cpu-amd-pstate
-          inputs.nixos-hardware.nixosModules.common-cpu-amd-raphael-igpu
-          inputs.nixos-hardware.nixosModules.common-pc-ssd
-          inputs.nixos-hardware.nixosModules.common-hidpi
-        ];
       };
+    in
+    {
 
-      cc-desktop = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        specialArgs = { inherit inputs; };
-        modules = [
-          ./hosts/cc-desktop/configuration.nix
-        ];
-      };
+      nixosConfigurations = {
+        phoenixton = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          specialArgs = { inherit inputs pkgs-stable; };
+          modules = [
+            ./hosts/phoenixton/configuration.nix
+            inputs.nixos-hardware.nixosModules.common-cpu-amd
+            inputs.nixos-hardware.nixosModules.common-cpu-amd-zenpower
+            inputs.nixos-hardware.nixosModules.common-cpu-amd-pstate
+            inputs.nixos-hardware.nixosModules.common-cpu-amd-raphael-igpu
+            inputs.nixos-hardware.nixosModules.common-pc-ssd
+            inputs.nixos-hardware.nixosModules.common-hidpi
+          ];
+        };
 
-      dorm-desktop = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        specialArgs = { inherit inputs; };
-        modules = [
-          ./hosts/dorm-desktop/configuration.nix
-          inputs.nixos-hardware.nixosModules.common-cpu-amd
-          inputs.nixos-hardware.nixosModules.common-cpu-amd-zenpower
-          inputs.nixos-hardware.nixosModules.common-cpu-amd-pstate
-          inputs.nixos-hardware.nixosModules.common-pc-ssd
-        ];
-      };
+        cc-desktop = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          specialArgs = { inherit inputs; };
+          modules = [
+            ./hosts/cc-desktop/configuration.nix
+          ];
+        };
 
-      workstation = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        specialArgs = { inherit inputs; };
-        modules = [
-          ./hosts/workstation/configuration.nix
-        ];
-      };
+        dorm-desktop = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          specialArgs = { inherit inputs; };
+          modules = [
+            ./hosts/dorm-desktop/configuration.nix
+            inputs.nixos-hardware.nixosModules.common-cpu-amd
+            inputs.nixos-hardware.nixosModules.common-cpu-amd-zenpower
+            inputs.nixos-hardware.nixosModules.common-cpu-amd-pstate
+            inputs.nixos-hardware.nixosModules.common-pc-ssd
+          ];
+        };
 
-      homelab-1 = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        specialArgs = { inherit inputs; };
-        modules = [
-          ./hosts/workstation/configuration.nix
-        ];
+        workstation = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          specialArgs = { inherit inputs; };
+          modules = [
+            ./hosts/workstation/configuration.nix
+          ];
+        };
+
+        homelab-1 = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          specialArgs = { inherit inputs; };
+          modules = [
+            ./hosts/workstation/configuration.nix
+          ];
+        };
       };
     };
-  };
 }

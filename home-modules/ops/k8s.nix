@@ -30,6 +30,6 @@ in
 
     # google cloud
     gdk
-    terraform
+    opentofu
   ];
 }

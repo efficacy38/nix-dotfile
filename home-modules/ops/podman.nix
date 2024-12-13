@@ -5,8 +5,7 @@
   ];
 
   home.file.".config/containers/registries.conf".text = ''
-    [registries.search]
-    registries = ['docker.io', 'quay.io', "gcr.io"]
+    unqualified-search-registries = ['docker.io', 'quay.io', "gcr.io"]
 
     # use cscc mirror when available
     [[registry]]
@@ -14,6 +13,6 @@
       location = "registry-1.docker.io"
 
       [[registry.mirror]]
-        location = "docker.cccr.test.cc.cs.nctu.edu.tw"
+        location = "docker.cccr.sys.test.cc.cs.nctu.edu.tw"
   '';
 }

@@ -13,6 +13,7 @@
     kcalc
     kate
     yakuake
+    ghostwriter
   ];
   # programs.kdeconnect.enable = true;
 }

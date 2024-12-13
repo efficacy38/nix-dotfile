@@ -1,8 +1,9 @@
 { lib, config, pkgs, inputs, ... }:
 let
   cfg = config.cscc-work;
+  secretpath = builtins.toString inputs.nix-secrets;
   csccSecret = {
-    sopsFile = ../secrets/desktop.yaml;
+    sopsFile = "${secretpath}/secrets/desktop.yaml";
     format = "yaml";
   };
 in
