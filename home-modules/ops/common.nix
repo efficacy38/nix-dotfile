@@ -1,4 +1,9 @@
-{ config, pkgs, ... }: {
+{
+  config,
+  pkgs,
+  ...
+}:
+{
   home.packages = with pkgs; [
     curl
     wget
@@ -22,5 +27,8 @@
 
     # TODO: direnv use home-manager to setup
     direnv
+
+    # handle nix cache
+    cachix
   ];
 }
