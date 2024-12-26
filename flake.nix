@@ -21,16 +21,28 @@
       inputs = { };
       flake = false;
     };
+
+    solaar = {
+      url = "https://flakehub.com/f/Svenum/Solaar-Flake/*.tar.gz"; # For latest stable version
+      #url = "https://flakehub.com/f/Svenum/Solaar-Flake/0.1.1.tar.gz" # uncomment line for solaar version 1.1.13
+      #url = "github:Svenum/Solaar-Flake/main"; # Uncomment line for latest unstable version
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-stable, ... }@inputs:
+  outputs =
+    {
+      self,
+      nixpkgs,
+      nixpkgs-stable,
+      ...
+    }@inputs:
     let
       pkgs-stable = import nixpkgs-stable {
         system = "x86_64-linux";
       };
     in
     {
-
       nixosConfigurations = {
         phoenixton = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
@@ -43,6 +55,7 @@
             inputs.nixos-hardware.nixosModules.common-cpu-amd-raphael-igpu
             inputs.nixos-hardware.nixosModules.common-pc-ssd
             inputs.nixos-hardware.nixosModules.common-hidpi
+            inputs.solaar.nixosModules.default
           ];
         };
 
