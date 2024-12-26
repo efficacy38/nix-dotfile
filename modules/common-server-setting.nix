@@ -1,8 +1,18 @@
-{ lib, config, pkgs, pkgs-stable, ... }: {
+{
+  lib,
+  config,
+  pkgs,
+  pkgs-stable,
+  ...
+}:
+{
   # enable nix flake
   nix = {
     settings = {
-      experimental-features = [ "nix-command" "flakes" ];
+      experimental-features = [
+        "nix-command"
+        "flakes"
+      ];
       trusted-users = [ "@wheel" ];
     };
     gc = {
@@ -80,6 +90,7 @@
     man-db
     wireguard-tools
     tcpdump
+    nftables
 
     # sops
     sops
@@ -95,6 +106,7 @@
   # sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
   sops.age.keyFile = "/var/lib/sops-nix/key.txt";
 
+  networking.nftables.enable = true;
   networking.firewall.enable = true;
 
   programs.zsh.enable = true;
