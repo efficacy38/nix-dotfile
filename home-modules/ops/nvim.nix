@@ -1,4 +1,5 @@
-{ config, pkgs, ... }: {
+{ config, pkgs, ... }:
+{
   home.packages = with pkgs; [
     neovim
     yamllint
@@ -7,14 +8,20 @@
     pyright
 
     # based on ./suggested-pkgs.json
+    lua-language-server
+    terraform-ls
+    yaml-language-server
+    ansible-language-server
     gopls
-    golangci-lint
     nodePackages.bash-language-server
+    golangci-lint
+    docker-compose-language-service
+    docker-ls
     taplo-lsp
+    sqls
     marksman
     selene
     rust-analyzer
-    yaml-language-server
     nil
     nixd
     shellcheck
@@ -22,10 +29,17 @@
     ruff
     ruff-lsp
     nixfmt-rfc-style
-    terraform-ls
     clang-tools
     nodePackages.prettier
     stylua
+    tflint
+    tfsec
+    prettierd
+    ansible-lint
+    hadolint
+    deadnix
+    alejandra
+
     # based on https://github.com/ray-x/go.nvim#go-binaries-install-and-update
     go
     gofumpt
