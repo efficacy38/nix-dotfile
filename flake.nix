@@ -28,6 +28,9 @@
       #url = "github:Svenum/Solaar-Flake/main"; # Uncomment line for latest unstable version
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nix-index-database.url = "github:nix-community/nix-index-database";
+    nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
@@ -76,6 +79,11 @@
             inputs.nixos-hardware.nixosModules.common-cpu-amd-zenpower
             inputs.nixos-hardware.nixosModules.common-cpu-amd-pstate
             inputs.nixos-hardware.nixosModules.common-pc-ssd
+
+            # use nix-index-database instaed of run nix-index individually
+            inputs.nix-index-database.nixosModules.nix-index
+            # optional to also wrap and install comma
+            { programs.nix-index-database.comma.enable = true; }
           ];
         };
 

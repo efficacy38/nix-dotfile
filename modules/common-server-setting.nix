@@ -16,10 +16,12 @@
       trusted-users = [ "@wheel" ];
       substituters = [
         "https://nix-community.cachix.org"
+        "https://incus.nixos.org/"
         "https://cache.nixos.org/"
       ];
       trusted-public-keys = [
         "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+        "incus.cachix.org-1:uijzgxNGx595n032YA7dgQPJ5DCzVu+mBA8FNJPpg98="
       ];
     };
     gc = {
@@ -79,7 +81,6 @@
     nh
     nix-output-monitor
     nvd
-    nix-index
 
     # management utils
     vim

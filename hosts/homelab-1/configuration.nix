@@ -1,4 +1,9 @@
-{ config, pkgs, inputs, ... }:
+{
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
 {
   imports = [
     # custom modules
@@ -59,7 +64,6 @@
   networking.nftables.enable = true;
   networking.firewall.enable = false;
 
-
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
@@ -71,7 +75,6 @@
     curl
     htop
     openfortivpn
-    nix-index
     incus-lts
     tailscale
     tcpdump
