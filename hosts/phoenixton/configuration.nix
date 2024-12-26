@@ -1,4 +1,9 @@
-{ config, pkgs, inputs, ... }:
+{
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
 {
   imports = [
     # custom modules
@@ -14,13 +19,16 @@
   my-steam.enable = true;
   my-steam.hidpi = true;
   my-desktop.enable = true;
-  my-desktop.zramEnable = true;
+  my-desktop.zramEnable = false;
   cscc-work.enable = true;
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.kernelParams = [ "reboot=bios" "amdgpu.sg_display=0" ];
+  boot.kernelParams = [
+    "reboot=bios"
+    "amdgpu.sg_display=0"
+  ];
   boot.tmp.useTmpfs = true;
 
   # Enable networking related
@@ -29,11 +37,16 @@
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
   networking.hostName = "phoenixton"; # Define your hostname.
+  networking.extraHosts = ''
+    10.1.0.131   imap.cs.nycu.edu.tw
+  '';
 
   services.udev.extraRules = ''
     # make amdgpu card don't display some artifact
         KERNEL=="card1", SUBSYSTEM=="drm", DRIVERS=="amdgpu", ATTR{device/power_dpm_force_performance_level}="high"
   '';
+
+  services.solaar.enable = true;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
