@@ -1,4 +1,9 @@
-{ config, pkgs, ... }: {
+{
+  config,
+  pkgs,
+  ...
+}:
+{
   fonts.fontconfig.enable = true;
   nixpkgs.config.permittedInsecurePackages = [
     "electron"
@@ -38,6 +43,8 @@
     remmina
     haruna
     firefox
+
+    prismlauncher
   ];
 
   services.nextcloud-client.enable = true;
