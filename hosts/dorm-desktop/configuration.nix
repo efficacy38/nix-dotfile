@@ -1,4 +1,9 @@
-{ config, pkgs, inputs, ... }:
+{
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
 {
   imports = [
     # custom modules
@@ -32,11 +37,47 @@
   environment.systemPackages = with pkgs; [
   ];
 
-  # Open ports in the firewall.
-  networking.firewall.allowedTCPPorts = [ 22 ];
+  networking.firewall = {
+    enable = true;
+    extraInputRules = ''
+      ip saddr 140.113.0.0/16 tcp dport 25565 accept
+      ip saddr !=140.113.0.0/16 tcp dport 25565 drop
+    '';
+
+    # Open ports in the firewall.
+    allowedTCPPorts = [
+      # ssh
+      22
+      # sunshine
+      47984
+      47989
+      47990
+      48010
+    ];
+    allowedUDPPortRanges = [
+      # sunshine
+      {
+        from = 47998;
+        to = 48000;
+      }
+      {
+        from = 8000;
+        to = 8010;
+      }
+    ];
+  };
+
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # programs.ssh.enable = true;
+
+  # enable gaming
+  services.sunshine = {
+    enable = true;
+    autoStart = true;
+    capSysAdmin = true;
+    openFirewall = true;
+  };
 
   system.stateVersion = "24.11";
 }
