@@ -16,19 +16,24 @@
       trusted-users = [ "@wheel" ];
       substituters = [
         "https://nix-community.cachix.org"
-        "https://incus.nixos.org/"
+        "http://nix-cache.homelab-1.csjhuang.net"
         "https://cache.nixos.org/"
       ];
       trusted-public-keys = [
         "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-        "incus.cachix.org-1:uijzgxNGx595n032YA7dgQPJ5DCzVu+mBA8FNJPpg98="
+        "nix-cache.homelab-1.csjhuang.net-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
       ];
     };
+
     gc = {
       automatic = true;
       dates = "weekly";
       options = "--delete-older-than 14d";
     };
+
+    extraOptions = ''
+      binary-caches-parallel-connections = 24
+    '';
   };
 
   environment.variables.EDITOR = "vim";
