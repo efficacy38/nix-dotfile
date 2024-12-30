@@ -12,6 +12,14 @@ return {
     opts.formatting = opts.formatting or {}
     opts.servers = opts.servers or {}
 
+	-- vim.filetype.add {
+ --  	extension = {
+ --    	jinja = 'jinja',
+ --    	jinja2 = 'jinja',
+ --    	j2 = 'jinja',
+ --  	},
+	-- }
+
     opts.formatting = {
       -- control auto formatting on save
       format_on_save = {
@@ -41,6 +49,9 @@ return {
 			"clangd",
 			"denols",
 			"gopls",
+			-- TODO: add or waiting for jinja_lsp to nixpkgs
+			-- https://github.com/uros-5/jinja-lsp
+			-- "jinja_lsp",
 			"jsonnet_ls",
 			"lua_ls",
 			"marksman",
@@ -60,5 +71,11 @@ return {
 		opts.config.clangd.capabilities = {
 			offsetEncoding = "utf-8",
 		}
+		opts.config.jinja_lsp = opts.config.jinja_lsp or {}
+		opts.config.jinja_lsp.filetypes = {
+			"j2",
+			"jinja",
+			"jinja2"
+		};
   end
 }
