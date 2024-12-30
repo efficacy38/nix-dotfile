@@ -1,4 +1,8 @@
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  ...
+}:
 {
   home.packages = with pkgs; [
     neovim
@@ -39,6 +43,9 @@
     hadolint
     deadnix
     alejandra
+    typos
+    typos-lsp
+    jsonnet-language-server
 
     # based on https://github.com/ray-x/go.nvim#go-binaries-install-and-update
     go
