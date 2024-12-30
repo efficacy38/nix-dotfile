@@ -44,6 +44,12 @@
       pkgs-stable = import nixpkgs-stable {
         system = "x86_64-linux";
       };
+      common-modules = [
+        # use nix-index-database instaed of run nix-index individually
+        inputs.nix-index-database.nixosModules.nix-index
+        # optional to also wrap and install comma
+        { programs.nix-index-database.comma.enable = true; }
+      ];
     in
     {
       nixosConfigurations = {
@@ -59,7 +65,7 @@
             inputs.nixos-hardware.nixosModules.common-pc-ssd
             inputs.nixos-hardware.nixosModules.common-hidpi
             inputs.solaar.nixosModules.default
-          ];
+          ] ++ common-modules;
         };
 
         cc-desktop = nixpkgs.lib.nixosSystem {
@@ -67,7 +73,7 @@
           specialArgs = { inherit inputs; };
           modules = [
             ./hosts/cc-desktop/configuration.nix
-          ];
+          ] ++ common-modules;
         };
 
         dorm-desktop = nixpkgs.lib.nixosSystem {
@@ -79,12 +85,7 @@
             inputs.nixos-hardware.nixosModules.common-cpu-amd-zenpower
             inputs.nixos-hardware.nixosModules.common-cpu-amd-pstate
             inputs.nixos-hardware.nixosModules.common-pc-ssd
-
-            # use nix-index-database instaed of run nix-index individually
-            inputs.nix-index-database.nixosModules.nix-index
-            # optional to also wrap and install comma
-            { programs.nix-index-database.comma.enable = true; }
-          ];
+          ] ++ common-modules;
         };
 
         workstation = nixpkgs.lib.nixosSystem {
@@ -92,7 +93,7 @@
           specialArgs = { inherit inputs; };
           modules = [
             ./hosts/workstation/configuration.nix
-          ];
+          ] ++ common-modules;
         };
 
         homelab-1 = nixpkgs.lib.nixosSystem {
@@ -100,7 +101,7 @@
           specialArgs = { inherit inputs; };
           modules = [
             ./hosts/workstation/configuration.nix
-          ];
+          ] ++ common-modules;
         };
       };
     };
