@@ -1,4 +1,9 @@
-{ lib, config, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 let
   cfg = config.my-desktop;
 in
@@ -66,10 +71,24 @@ in
     };
 
     zramSwap =
-      if cfg.zramEnable then {
-        enable = true;
-        memoryPercent = 50;
-      } else { };
+      if cfg.zramEnable then
+        {
+          enable = true;
+          memoryPercent = 50;
+        }
+      else
+        { };
+
+    boot.kernel.sysctl =
+      if cfg.zramEnable then
+        {
+          "vm.swappiness" = 180;
+          "vm.watermark_boost_factor" = 0;
+          "vm.watermark_scale_factor" = 125;
+          "vm.page-cluster" = 0;
+        }
+      else
+        { };
 
     # Some programs need SUID wrappers, can be configured further or are
     # started in user sessions.
