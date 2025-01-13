@@ -1,5 +1,9 @@
-{ config, pkgs, ... }: {
-
+{
+  config,
+  pkgs,
+  ...
+}:
+{
   home.packages = with pkgs; [
     fzf
     fzf-zsh
@@ -16,8 +20,15 @@
   programs.zsh = {
     enable = true;
     plugins = [
-      { name = "zsh-completions"; src = pkgs.zsh-completions; }
-      { name = "powerlevel10k"; src = pkgs.zsh-powerlevel10k; file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme"; }
+      {
+        name = "zsh-completions";
+        src = pkgs.zsh-completions;
+      }
+      {
+        name = "powerlevel10k";
+        src = pkgs.zsh-powerlevel10k;
+        file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
+      }
     ];
     autosuggestion.enable = true;
     completionInit = ''
@@ -49,15 +60,14 @@
     oh-my-zsh = {
       enable = true;
       theme = "robbyrussell";
-      plugins =
-        [
-          "git"
-          "npm"
-          "history"
-          "node"
-          "rust"
-          "deno"
-        ];
+      plugins = [
+        "git"
+        "npm"
+        "history"
+        "node"
+        "rust"
+        "deno"
+      ];
     };
 
     initExtra = ''
@@ -87,7 +97,7 @@
           fi
       }
 
-      # attach to lxd container with username 
+      # attach to lxd container with username
       function goincus(){
           if [[ $# -eq 0 ]]; then
               echo "Usage: $0 <container or vm name> [namespace] [username]" >&2
@@ -170,6 +180,7 @@
       alias kreload='kquitapp5 plasmashell; plasmashell --replace &'
       export PATH=$HOME/.local/bin:$PATH:$HOME/.krew/bin
       alias s=systemctl
+      alias chknix="pushd $(nix registry list | grep 'system flake:nixpkgs' | cut -d' ' -f 3 | cut -d':' -f 2) && vim . && popd"
 
       source <(fzf --zsh)
     '';
