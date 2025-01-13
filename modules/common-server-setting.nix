@@ -1,10 +1,4 @@
-{
-  lib,
-  config,
-  pkgs,
-  pkgs-stable,
-  ...
-}:
+{ pkgs, ... }:
 {
   # enable nix flake
   nix = {

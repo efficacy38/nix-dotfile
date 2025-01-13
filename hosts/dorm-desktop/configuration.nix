@@ -1,9 +1,4 @@
-{
-  config,
-  pkgs,
-  inputs,
-  ...
-}:
+{ ... }:
 {
   imports = [
     # custom modules
@@ -36,8 +31,8 @@
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs; [
-  ];
+  # environment.systemPackages = with pkgs; [
+  # ];
 
   networking.firewall = {
     enable = true;

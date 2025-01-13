@@ -1,5 +1,10 @@
-{ lib, config, pkgs, ... }:
-let cfg = config.my-steam;
+{
+  lib,
+  config,
+  ...
+}:
+let
+  cfg = config.my-steam;
 in
 {
   options.my-steam = {
@@ -15,8 +20,11 @@ in
       localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
     };
     environment.sessionVariables =
-      if cfg.hidpi then {
-        STEAM_FORCE_DESKTOPUI_SCALING = "2";
-      } else { };
+      if cfg.hidpi then
+        {
+          STEAM_FORCE_DESKTOPUI_SCALING = "2";
+        }
+      else
+        { };
   };
 }

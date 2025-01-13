@@ -1,9 +1,4 @@
-{
-  config,
-  pkgs,
-  inputs,
-  ...
-}:
+{ pkgs, ... }:
 {
   imports = [
     # custom modules

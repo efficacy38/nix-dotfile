@@ -45,7 +45,7 @@
         system = "x86_64-linux";
       };
       common-modules = [
-        # use nix-index-database instaed of run nix-index individually
+        # use nix-index-database instead of run nix-index individually
         inputs.nix-index-database.nixosModules.nix-index
         # optional to also wrap and install comma
         { programs.nix-index-database.comma.enable = true; }
