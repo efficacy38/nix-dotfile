@@ -32,7 +32,6 @@
     youtube-music
     obs-studio
     chromium
-    vmware-workstation
     # ### wallpaper-engine-plugin
     # wallpaper-engine-kde-plugin
     # qt5.qtwebsockets
