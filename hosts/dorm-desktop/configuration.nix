@@ -20,6 +20,8 @@
   my-steam.hidpi = false;
   my-desktop.enable = true;
   my-desktop.zramEnable = true;
+  my-tailscale.enable = true;
+  my-tailscale.asRouter = true;
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -42,6 +44,9 @@
     extraInputRules = ''
       ip saddr 140.113.0.0/16 tcp dport 25565 accept
       ip saddr !=140.113.0.0/16 tcp dport 25565 drop
+
+      ip saddr 140.113.0.0/16 tcp dport 25566 accept
+      ip saddr !=140.113.0.0/16 tcp dport 25566 drop
     '';
 
     # Open ports in the firewall.

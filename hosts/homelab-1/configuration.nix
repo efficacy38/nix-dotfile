@@ -53,12 +53,6 @@
   # services
   services.openssh.enable = true;
   services.nfs.server.enable = true;
-  services.tailscale = {
-    enable = true;
-    useRoutingFeatures = "none";
-    openFirewall = true;
-  };
-
   # Enable networking related
   networking.hostName = "homelab-1"; # Define your hostname.
   networking.nftables.enable = true;
@@ -76,8 +70,8 @@
     htop
     openfortivpn
     incus-lts
-    tailscale
     tcpdump
+
     bcachefs-tools
     nut
   ];

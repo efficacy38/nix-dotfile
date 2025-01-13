@@ -21,6 +21,8 @@
   my-desktop.enable = true;
   my-desktop.zramEnable = false;
   cscc-work.enable = true;
+  my-tailscale.enable = true;
+  my-tailscale.asRouter = false;
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;

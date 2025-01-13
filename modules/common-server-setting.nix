@@ -42,12 +42,6 @@
   services.openssh.enable = true;
   services.fail2ban.enable = true;
 
-  services.tailscale = {
-    enable = true;
-    useRoutingFeatures = "none";
-    openFirewall = true;
-  };
-
   # Set your time zone.
   time.timeZone = "Asia/Taipei";
 

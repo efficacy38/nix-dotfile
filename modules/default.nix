@@ -1,4 +1,4 @@
-{ lib, config, pkgs, inputs, ... }:
+{ inputs, ... }:
 {
   imports = [
     inputs.home-manager.nixosModules.default
@@ -7,6 +7,7 @@
     ./common-server-setting.nix
     ./my-steam.nix
     ./my-desktop.nix
+    ./my-tailscale.nix
     ./cscc-work.nix
   ];
 
@@ -20,7 +21,7 @@
     # Option definitions.
     # Define what other settings, services and resources should be active.
     # Usually these depend on whether a user of this module chose to "enable" it
-    # using the "option" above. 
+    # using the "option" above.
     # Options for modules imported in "imports" can be set here.
   };
 }
