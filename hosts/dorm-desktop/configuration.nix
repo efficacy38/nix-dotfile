@@ -16,6 +16,7 @@
   my-desktop.enable = true;
   my-desktop.zramEnable = true;
   my-tailscale.enable = true;
+  # can be used as exit node
   my-tailscale.asRouter = true;
 
   # Bootloader.

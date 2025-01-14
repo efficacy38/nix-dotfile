@@ -15,7 +15,9 @@
   my-steam.hidpi = true;
   my-desktop.enable = true;
   my-desktop.zramEnable = true;
-  cscc-work.enable = true;
+  my-tailscale.enable = true;
+  # can be used as exit node
+  my-tailscale.asRouter = true;
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
