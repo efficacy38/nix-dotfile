@@ -1,7 +1,7 @@
 {
   config,
   pkgs,
-  inputs,
+  pkgs-stable,
   ...
 }:
 {
@@ -10,6 +10,7 @@
     ../../modules
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
+    # ./cgroup.nix
   ];
 
   main-user.enable = true;
@@ -22,7 +23,6 @@
   my-desktop.zramEnable = false;
   cscc-work.enable = true;
   my-tailscale.enable = true;
-  my-tailscale.asRouter = false;
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -53,6 +53,7 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    libcgroup
   ];
 
   # Open ports in the firewall.
