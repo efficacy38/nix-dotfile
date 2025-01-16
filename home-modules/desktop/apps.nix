@@ -13,7 +13,6 @@
     nerd-fonts.hack
     nerd-fonts.fira-mono
     nerd-fonts.fira-code
-    libreoffice
     keepassxc
     git-credential-keepassxc
     thunderbird
