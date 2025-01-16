@@ -10,12 +10,16 @@
       trusted-users = [ "@wheel" ];
       substituters = [
         "https://nix-community.cachix.org"
-        "http://nix-cache.homelab-1.csjhuang.net"
         "https://cache.nixos.org/"
+      ];
+      extra-substituters = [
+        "http://nix-cache.homelab-1.csjhuang.net"
+      ];
+      extra-trusted-public-keys = [
+        "nix-cache.homelab-1.csjhuang.net-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
       ];
       trusted-public-keys = [
         "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-        "nix-cache.homelab-1.csjhuang.net-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
       ];
     };
 
