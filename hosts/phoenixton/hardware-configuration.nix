@@ -29,6 +29,87 @@
     "vm.page-cluster" = 0;
   };
 
+  environment.persistence."/persistent" = {
+    enable = true; # NB: Defaults to true, not needed
+    hideMounts = true;
+    directories = [
+      "/var/log"
+      "/var/lib/bluetooth"
+      "/var/lib/nixos"
+      "/var/lib/systemd/coredump"
+      "/etc/NetworkManager/system-connections"
+      "/var/lib/tailscale/"
+      "/var/lib/sops-nix"
+    ];
+    files = [
+      "/etc/machine-id"
+    ];
+    users.efficacy38 = {
+      directories = [
+        "Downloads"
+        "Music"
+        "Pictures"
+        "Documents"
+        "Nextcloud"
+        "Videos"
+        "Projects"
+        "Postman"
+        {
+          directory = ".gnupg";
+          mode = "0700";
+        }
+        {
+          directory = ".ssh";
+          mode = "0700";
+        }
+        {
+          directory = ".nixops";
+          mode = "0700";
+        }
+        {
+          directory = ".local/share/keyrings";
+          mode = "0700";
+        }
+        {
+          directory = ".local/share/kwalletd";
+          mode = "0700";
+        }
+        ".local/share/direnv"
+        "Sync"
+        "Zotero"
+      ];
+      files = [
+        ".bash_history"
+        ".zsh_history"
+      ];
+    };
+  };
+
+  boot.initrd.postResumeCommands = lib.mkAfter ''
+    mkdir /btrfs_tmp
+    mount /dev/disk/by-label/root /btrfs_tmp
+    if [[ -e /btrfs_tmp/@ ]]; then
+        mkdir -p /btrfs_tmp/old_roots
+        timestamp=$(date --date="@$(stat -c %Y /btrfs_tmp/@)" "+%Y-%m-%-d_%H:%M:%S")
+        mv /btrfs_tmp/@ "/btrfs_tmp/old_roots/$timestamp"
+    fi
+
+    delete_subvolume_recursively() {
+        IFS=$'\n'
+        for i in $(btrfs subvolume list -o "$1" | cut -f 9- -d ' '); do
+            delete_subvolume_recursively "/btrfs_tmp/$i"
+        done
+        btrfs subvolume delete "$1"
+    }
+
+    for i in $(find /btrfs_tmp/old_roots/ -maxdepth 1 -mtime +30); do
+        delete_subvolume_recursively "$i"
+    done
+
+    btrfs subvolume create /btrfs_tmp/@
+    umount /btrfs_tmp
+  '';
+
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/181a096d-2934-425f-ac9b-73095e8678fa";
     fsType = "btrfs";
@@ -45,6 +126,13 @@
     device = "/dev/disk/by-uuid/181a096d-2934-425f-ac9b-73095e8678fa";
     fsType = "btrfs";
     options = [ "subvol=@nix" ];
+  };
+
+  fileSystems."/persistent" = {
+    device = "/dev/disk/by-uuid/181a096d-2934-425f-ac9b-73095e8678fa";
+    fsType = "btrfs";
+    options = [ "subvol=persistent" ];
+    neededForBoot = true;
   };
 
   fileSystems."/boot" = {
