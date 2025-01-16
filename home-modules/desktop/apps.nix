@@ -20,18 +20,15 @@
     rclone
     kopia
     nextcloud-client
-    ferdium
-    discord
     protonmail-bridge
     protonmail-bridge-gui
-    mattermost-desktop
-    telegram-desktop
     protonmail-desktop
     noto-fonts-cjk-sans
     noto-fonts-cjk-serif
     youtube-music
     obs-studio
     chromium
+    rambox
     # ### wallpaper-engine-plugin
     # wallpaper-engine-kde-plugin
     # qt5.qtwebsockets
