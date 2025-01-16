@@ -17,7 +17,7 @@
   main-user.devProgEnable = true;
   main-user.desktopEnable = true;
   my-steam.enable = true;
-  my-steam.hidpi = true;
+  my-steam.hidpi = false;
   my-desktop.enable = true;
   my-desktop.zramEnable = false;
   cscc-work.enable = true;
