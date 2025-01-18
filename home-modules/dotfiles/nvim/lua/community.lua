@@ -14,6 +14,6 @@ return {
   { import = "astrocommunity.pack.json" },
   { import = "astrocommunity.pack.nix" },
   { import = "astrocommunity.pack.sql" },
-  { import = "astrocommunity.git.blame-nvim" },
+  { import = "astrocommunity.git.git-blame-nvim" },
   -- import/override with your plugins folder
 }
