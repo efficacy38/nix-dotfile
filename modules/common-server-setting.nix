@@ -46,6 +46,12 @@
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
 
+  # enable nix-ld
+  programs.nix-ld = {
+    enable = true;
+    libraries = with pkgs; [ ];
+  };
+
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "zh_TW.UTF-8";
     LC_IDENTIFICATION = "zh_TW.UTF-8";
