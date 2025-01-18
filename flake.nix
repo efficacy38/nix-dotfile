@@ -106,6 +106,36 @@
             ./hosts/workstation/configuration.nix
           ] ++ common-modules;
         };
+
+        # INFO: iso building flake
+        minimal-latest-iso = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = [
+            (
+              {
+                pkgs,
+                modulesPath,
+                lib,
+                ...
+              }:
+              {
+                imports = [ (modulesPath + "/installer/cd-dvd/installation-cd-minimal.nix") ];
+                environment.systemPackages = [ pkgs.neovim ];
+                environment.variables.EDITOR = "vim";
+                boot.supportedFilesystems = lib.mkForce [
+                  "btrfs"
+                  "reiserfs"
+                  "vfat"
+                  "f2fs"
+                  "xfs"
+                  "ntfs"
+                  "cifs"
+                  "zfs"
+                ];
+              }
+            )
+          ];
+        };
       };
     };
 }

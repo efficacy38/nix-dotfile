@@ -20,3 +20,8 @@ git clone git@github.com:efficacy38/nix-dotfile.git
 nix shell nixpkgs#nh
 nh os switch --hostname=phoenixton
 ```
+
+## build minimal iso image
+```
+nix build .#nixosConfigurations.minimal-latest-iso.config.system.build.isoImage
+```
