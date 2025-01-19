@@ -12,8 +12,10 @@
         "https://nix-community.cachix.org"
         "https://cache.nixos.org/"
       ];
+      # 40 is the default value of cache, cache.nixos.org is 30
+      # use 0 as personal cache
       extra-substituters = [
-        "http://nix-cache.homelab-1.csjhuang.net"
+        "http://nix-cache.homelab-1.csjhuang.net?priority=0"
       ];
       extra-trusted-public-keys = [
         "nix-cache.homelab-1.csjhuang.net-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
@@ -31,6 +33,9 @@
 
     extraOptions = ''
       binary-caches-parallel-connections = 24
+
+      # Ensure we can still build when missing-server is not accessible
+      fallback = true
     '';
   };
 
