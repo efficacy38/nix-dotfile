@@ -120,7 +120,18 @@
               }:
               {
                 imports = [ (modulesPath + "/installer/cd-dvd/installation-cd-minimal.nix") ];
-                environment.systemPackages = [ pkgs.neovim ];
+                environment.systemPackages = with pkgs; [
+                  wget
+                  curl
+                  # dhclient
+                  u-root-cmds
+                  # iw tui
+                  impala
+                ];
+                services.connman.wifi.backend = "iwd";
+                # disable wpa_supplicant, use iwd as alternative
+                networking.wireless.enable = false;
+                networking.wireless.iwd.enable = true;
                 environment.variables.EDITOR = "vim";
                 boot.supportedFilesystems = lib.mkForce [
                   "btrfs"
