@@ -40,6 +40,7 @@
       "/etc/NetworkManager/system-connections"
       "/var/lib/tailscale/"
       "/var/lib/sops-nix"
+      "/var/db/sudo"
     ];
     files = [
       "/etc/machine-id"
