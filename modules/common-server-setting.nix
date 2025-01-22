@@ -134,6 +134,10 @@
   programs.mtr.enable = true;
   services.pcscd.enable = true;
 
+  # systemd-sysuser could make system much more stateless, good for our
+  # nix-impermanent deployment
+  config.systemd.sysusers.enable = true;
+
   # my rootca
   security.pki.certificates = [
     ''
