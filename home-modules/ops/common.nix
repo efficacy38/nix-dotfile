@@ -24,10 +24,6 @@
 
     # TODO: move this to DE folder
     wl-clipboard
-
-    # TODO: direnv use home-manager to setup
-    direnv
-
     # handle nix cache
     cachix
   ];
