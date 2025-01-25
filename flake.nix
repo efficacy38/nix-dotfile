@@ -103,7 +103,15 @@
           system = "x86_64-linux";
           specialArgs = { inherit inputs; };
           modules = [
-            ./hosts/workstation/configuration.nix
+            ./hosts/homelab-1/configuration.nix
+          ] ++ common-modules;
+        };
+
+        homelab-test = nixpkgs-stable.lib.nixosSystem {
+          system = "x86_64-linux";
+          specialArgs = { inherit inputs; };
+          modules = [
+            ./hosts/homelab-test/configuration.nix
           ] ++ common-modules;
         };
 
