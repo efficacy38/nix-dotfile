@@ -46,6 +46,12 @@
     typos
     typos-lsp
     jsonnet-language-server
+    dockerfile-language-server-nodejs
+    docker-compose-language-service
+    vtsls
+    delve
+    eslint
+    deno
 
     # based on https://github.com/ray-x/go.nvim#go-binaries-install-and-update
     go
