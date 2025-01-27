@@ -45,9 +45,10 @@ return {
 
 		vim.list_extend(opts.servers, {
 			"ansiblels",
+			"astro",
 			"bashls",
 			"clangd",
-			"denols",
+			-- "denols",
 			"gopls",
 			-- TODO: add or waiting for jinja_lsp to nixpkgs
 			-- https://github.com/uros-5/jinja-lsp
@@ -63,6 +64,7 @@ return {
 			"taplo",
 			"terraformls",
 			"typos_lsp",
+			"ts_ls",
 			"yamlls",
 			-- add more servers as needed...
 		})

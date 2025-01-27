@@ -38,6 +38,7 @@
     stylua
     tflint
     tfsec
+    typescript-language-server
     prettierd
     ansible-lint
     hadolint
@@ -48,6 +49,7 @@
     jsonnet-language-server
     dockerfile-language-server-nodejs
     docker-compose-language-service
+    astro-language-server
     vtsls
     delve
     eslint
