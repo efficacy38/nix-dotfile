@@ -29,12 +29,6 @@
       ];
     };
 
-    gc = {
-      automatic = true;
-      dates = "weekly";
-      options = "--delete-older-than 14d";
-    };
-
     extraOptions = ''
       binary-caches-parallel-connections = 24
 
@@ -59,6 +53,15 @@
   programs.nix-ld = {
     enable = true;
     libraries = with pkgs; [ ];
+  };
+
+  programs.nh = {
+    enable = true;
+    clean = {
+      enable = true;
+      dates = "weekly";
+      extraArgs = "--keep 14 --keep-since 14d";
+    };
   };
 
   i18n.extraLocaleSettings = {
@@ -89,11 +92,6 @@
   };
 
   environment.systemPackages = with pkgs; [
-    # nix helper
-    nh
-    nix-output-monitor
-    nvd
-
     # management utils
     vim
     neovim
