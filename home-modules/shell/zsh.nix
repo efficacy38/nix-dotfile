@@ -31,16 +31,6 @@
       }
     ];
     autosuggestion.enable = true;
-    completionInit = ''
-      autoload -U +X bashcompinit && bashcompinit
-      autoload -U compinit && compinit
-      source <(incus completion zsh)
-
-      # kubectl
-      command -v kubectl > /dev/null && source <(kubectl completion zsh)
-      command -v flux > /dev/null && source <(flux completion zsh)
-      command -v helm > /dev/null && source <(helm completion zsh)
-    '';
     # default 10000, maybe 1000000 is good for me to use fzf :>
     history = {
       save = 1000000;
