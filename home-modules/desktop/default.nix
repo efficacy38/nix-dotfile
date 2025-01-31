@@ -1,4 +1,5 @@
-{ config, pkgs, ... }: {
+{ ... }:
+{
   imports = [
     ./apps.nix
     ./scripts
