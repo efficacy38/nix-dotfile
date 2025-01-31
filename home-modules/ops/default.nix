@@ -1,4 +1,5 @@
-{ config, pkgs, ... }: {
+{ ... }:
+{
   imports = [
     ./k8s.nix
     ./nvim.nix
@@ -6,5 +7,6 @@
     ./incus.nix
     ./podman.nix
     ./justfile.nix
+    ./my-gpg.nix
   ];
 }

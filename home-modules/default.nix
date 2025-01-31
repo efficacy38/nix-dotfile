@@ -19,6 +19,20 @@
   # programs.bash.enable = true;
   nixpkgs.config.allowUnfree = true;
 
+  # would generate alias script
+  my-gpg = [
+    {
+      usage = "personal";
+      keyCapacity = "enc";
+      subkeyId = "1722121F0FB35C6CDA7ABF9E680078CD836172D6";
+    }
+    {
+      usage = "personal";
+      keyCapacity = "sign";
+      subkeyId = "5EAB3A07B1B5078585C1C5E938DFF1897150C309";
+    }
+  ];
+
   imports =
     [
       ./shell
