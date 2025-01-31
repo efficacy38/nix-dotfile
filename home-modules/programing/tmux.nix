@@ -1,5 +1,6 @@
-{ config, pkgs, ... }: {
-  home.packages = with pkgs; [
+{ pkgs, ... }:
+{
+  home.packages = [
   ];
 
   programs = {
@@ -37,14 +38,9 @@
         set -g automatic-rename on
         set-option -g automatic-rename-format '#(basename "#{pane_current_path}")'
         set -g window-status-current-format '#[bold,fg=red]#(echo ":")#{window_name}#{window_flags}'
+        set-option -ga terminal-overrides ",*256col*:Tc"
       '';
       plugins = with pkgs.tmuxPlugins; [
-        {
-          plugin = tmux-colors-solarized;
-          extraConfig = ''
-          set -g @colors-solarized '256'
-          '';
-        }
         {
           plugin = sysstat;
           extraConfig = ''
