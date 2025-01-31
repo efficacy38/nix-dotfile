@@ -22,8 +22,28 @@
     "usb_storage"
     "sd_mod"
   ];
-  boot.initrd.kernelModules = [ ];
+  boot.initrd.kernelModules = [ "vfio vfio_iommu_type1 vfio_pci" ];
   boot.extraModulePackages = [ ];
+  boot.kernelModules = [
+    "intel-kvm"
+    "vfio vfio_iommu_type1 vfio_pci"
+  ];
+  boot.blacklistedKernelModules = [
+    "nvidiafb"
+    "nouveau"
+  ];
+  boot.modprobeConfig.enable = true;
+  boot.kernelParams = [
+    "quiet"
+    "splash"
+    "intel_iommu=on"
+    "vfio-pci.ids=\"10de:128b,10de:0e0f\""
+    "vfio-pci.disable_idle_p3=\"1\""
+  ];
+  boot.extraModprobeConfig = ''
+    softdep nvidia pre: vfio-pci
+  '';
+
   # required for zfs
   networking.hostId = "e8d233ca";
 

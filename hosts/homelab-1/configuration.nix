@@ -36,6 +36,8 @@
   my-desktop.enable = false;
   my-desktop.zramEnable = false;
   cscc-work.enable = false;
+  my-tailscale.enable = true;
+  my-tailscale.asRouter = true;
 
   # systemd-resolved
   services.resolved = {
