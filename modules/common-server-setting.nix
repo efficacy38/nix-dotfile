@@ -1,4 +1,8 @@
-{ pkgs, ... }:
+{
+  pkgs,
+  lib,
+  ...
+}:
 {
   # enable nix flake
   nix = {
@@ -72,7 +76,7 @@
   # systemd resolved
   services.resolved = {
     enable = true;
-    dnsovertls = "opportunistic";
+    dnsovertls = lib.mkDefault "opportunistic";
   };
 
   # Allow unfree packages
@@ -123,7 +127,7 @@
   sops.age.keyFile = "/var/lib/sops-nix/key.txt";
 
   networking.nftables.enable = true;
-  networking.firewall.enable = true;
+  networking.firewall.enable = lib.mkDefault true;
 
   programs.zsh.enable = true;
   # add completion for zsh, links completion to $HOME/.nix-profile/share/zsh
