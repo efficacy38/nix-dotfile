@@ -1,7 +1,6 @@
 { inputs, ... }:
 {
   imports = [
-    inputs.home-manager.nixosModules.default
     inputs.sops-nix.nixosModules.sops
     ./main-user.nix
     ./common-server-setting.nix

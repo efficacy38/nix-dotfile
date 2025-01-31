@@ -9,6 +9,10 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    home-manager-stable = {
+      url = "github:nix-community/home-manager/release-24.11";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nixos-hardware = {
       url = "github:NixOS/nixos-hardware";
     };
@@ -60,6 +64,7 @@
           specialArgs = { inherit inputs pkgs-stable; };
           modules = [
             ./hosts/phoenixton/configuration.nix
+            inputs.home-manager.nixosModules.default
             inputs.nixos-hardware.nixosModules.common-cpu-amd
             inputs.nixos-hardware.nixosModules.common-cpu-amd-zenpower
             inputs.nixos-hardware.nixosModules.common-cpu-amd-pstate
@@ -76,6 +81,7 @@
           specialArgs = { inherit inputs; };
           modules = [
             ./hosts/cc-desktop/configuration.nix
+            inputs.home-manager.nixosModules.default
           ] ++ common-modules;
         };
 
@@ -84,6 +90,7 @@
           specialArgs = { inherit inputs; };
           modules = [
             ./hosts/dorm-desktop/configuration.nix
+            inputs.home-manager.nixosModules.default
             inputs.nixos-hardware.nixosModules.common-cpu-amd
             inputs.nixos-hardware.nixosModules.common-cpu-amd-zenpower
             inputs.nixos-hardware.nixosModules.common-cpu-amd-pstate
@@ -95,6 +102,7 @@
           system = "x86_64-linux";
           specialArgs = { inherit inputs; };
           modules = [
+            inputs.home-manager.nixosModules.default
             ./hosts/workstation/configuration.nix
           ] ++ common-modules;
         };
@@ -103,6 +111,7 @@
           system = "x86_64-linux";
           specialArgs = { inherit inputs; };
           modules = [
+            inputs.home-manager-stable.nixosModules.default
             ./hosts/homelab-1/configuration.nix
           ] ++ common-modules;
         };
@@ -112,6 +121,7 @@
           specialArgs = { inherit inputs; };
           modules = [
             ./hosts/homelab-test/configuration.nix
+            inputs.home-manager-stable.nixosModules.default
           ] ++ common-modules;
         };
 
