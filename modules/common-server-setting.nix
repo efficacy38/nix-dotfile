@@ -121,8 +121,9 @@
   ];
   sops.defaultSopsFile = ../secrets/default.yaml;
   sops.defaultSopsFormat = "yaml";
-  # sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
-  sops.age.keyFile = "/var/lib/sops-nix/key.txt";
+  sops.age.sshKeyPaths = [
+    "/etc/ssh/ssh_host_ed25519_key"
+  ];
 
   networking.nftables.enable = true;
   networking.firewall.enable = lib.mkDefault true;

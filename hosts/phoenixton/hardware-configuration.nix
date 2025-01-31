@@ -33,14 +33,15 @@
     enable = true; # NB: Defaults to true, not needed
     hideMounts = true;
     directories = [
+      "/var/db/sudo"
       "/var/log"
       "/var/lib/bluetooth"
       "/var/lib/nixos"
       "/var/lib/systemd/coredump"
-      "/etc/NetworkManager/system-connections"
       "/var/lib/tailscale/"
       "/var/lib/sops-nix"
-      "/var/db/sudo"
+      "/etc/NetworkManager/system-connections"
+      "/etc/ssh/"
     ];
     files = [
       "/etc/machine-id"
@@ -157,6 +158,8 @@
       "dmask=0022"
     ];
   };
+
+  fileSystems."/etc/ssh".neededForBoot = true;
 
   swapDevices = [
     {

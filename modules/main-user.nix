@@ -1,6 +1,13 @@
-{ lib, config, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
 let
   cfg = config.main-user;
+  secretpath = builtins.toString inputs.nix-secrets;
 in
 {
   options.main-user = {
@@ -18,53 +25,63 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    # sops.secrets."main_user_passwd_hash".neededForUsers = true;
-    # sops.secrets."main_user_passwd_hash".sopsFile = ../secrets/default.yaml;
+    sops.secrets."main_user_passwd_hash".neededForUsers = true;
+    sops.secrets."main_user_passwd_hash".sopsFile = "${secretpath}/secrets/common.yaml";
     users.users.${cfg.userName} = {
       isNormalUser = true;
       description = "${cfg.userName}(admin)";
       shell = pkgs.zsh;
       extraGroups = [ "wheel" ];
-      # hashedPasswordFile = config.sops.secrets."main_user_passwd_hash".path;
+      hashedPasswordFile = config.sops.secrets."main_user_passwd_hash".path;
     };
 
-    home-manager.users.${cfg.userName} = with cfg;
+    home-manager.users.${cfg.userName} =
+      with cfg;
       import ../home-modules {
-        inherit config pkgs desktopEnable devProgEnable userName;
+        inherit
+          config
+          pkgs
+          desktopEnable
+          devProgEnable
+          userName
+          ;
       };
 
     security.sudo = {
       enable = true;
       extraRules = [
         {
-          commands = map
-            (
-              systemd_cmd: {
+          commands =
+            map
+              (systemd_cmd: {
                 command = "${pkgs.systemd.out}/bin/${systemd_cmd}";
                 options = [ "NOPASSWD" ];
+              })
+              [
+                "systemctl"
+                "reboot"
+                "poweroff"
+                "resolvectl"
+              ]
+            ++ [
+              {
+                command = "${pkgs.iproute2.out}/bin/ip";
+                options = [ "NOPASSWD" ];
               }
-            ) [
-            "systemctl"
-            "reboot"
-            "poweroff"
-            "resolvectl"
-          ] ++ [
-            {
-              command = "${pkgs.iproute2.out}/bin/ip";
-              options = [ "NOPASSWD" ];
-            }
-            {
-              command = "/run/current-system/sw/bin/ip";
-              options = [ "NOPASSWD" ];
-            }
-          ];
+              {
+                command = "/run/current-system/sw/bin/ip";
+                options = [ "NOPASSWD" ];
+              }
+            ];
           users = [ "${cfg.userName}" ];
         }
       ];
       extraConfig = with pkgs; ''
-        Defaults:${cfg.userName} secure_path="${lib.makeBinPath [
-          systemd
-        ]}:/nix/var/nix/profiles/default/bin:/run/current-system/sw/bin"
+        Defaults:${cfg.userName} secure_path="${
+          lib.makeBinPath [
+            systemd
+          ]
+        }:/nix/var/nix/profiles/default/bin:/run/current-system/sw/bin"
       '';
     };
   };
