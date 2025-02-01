@@ -31,6 +31,11 @@
       keyCapacity = "sign";
       subkeyId = "5EAB3A07B1B5078585C1C5E938DFF1897150C309";
     }
+    {
+      usage = "personal";
+      keyCapacity = "auth";
+      subkeyId = "7964380B1866F94F09FBEE68F66D16FB0A1D33BB";
+    }
   ];
 
   imports =
