@@ -1,6 +1,7 @@
 { pkgs, ... }:
 {
   home.packages = [
+    pkgs.tmux
   ];
 
   programs = {
@@ -44,13 +45,13 @@
         {
           plugin = sysstat;
           extraConfig = ''
-          set -g status-right '#{prefix_highlight} #[fg=white]| 📈#{sysstat_cpu} #{sysstat_mem} #{sysstat_swap} | ⚡#{battery_percentage} | %Y-%m-%d %H:%M'
-          set -g status-interval 1
-          set -g status-left-length 30
-          set -g status-right-length 60
-          set -g status-left '#[fg=color140]❐ #(echo "session: ")#{session_name} #[default]'
-          set -g status-justify centre
-          # set -g status-justify left
+            set -g status-right '#{prefix_highlight} #[fg=white]| 📈#{sysstat_cpu} #{sysstat_mem} #{sysstat_swap} | ⚡#{battery_percentage} | %Y-%m-%d %H:%M'
+            set -g status-interval 1
+            set -g status-left-length 30
+            set -g status-right-length 60
+            set -g status-left '#[fg=color140]❐ #(echo "session: ")#{session_name} #[default]'
+            set -g status-justify centre
+            # set -g status-justify left
           '';
         }
         continuum

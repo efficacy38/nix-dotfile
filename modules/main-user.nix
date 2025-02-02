@@ -3,6 +3,7 @@
   config,
   pkgs,
   inputs,
+  myLib,
   ...
 }:
 let
@@ -36,10 +37,25 @@ in
     };
 
     home-manager = {
-      extraSpecialArgs = { inherit inputs; };
+      extraSpecialArgs = { inherit inputs myLib pkgs; };
       users."efficacy38" = {
         config = {
           home.stateVersion = "24.11";
+
+          myHomeManager.backup.enable = true;
+          myHomeManager.desktop-apps.enable = true;
+          myHomeManager.desktop-firefox.enable = true;
+          myHomeManager.desktop-kde.enable = true;
+          myHomeManager.git.enable = true;
+          myHomeManager.gpg.enable = true;
+          myHomeManager.incus.enable = true;
+          myHomeManager.just.enable = true;
+          myHomeManager.k8s.enable = true;
+          myHomeManager.nvim.enable = true;
+          myHomeManager.podman.enable = true;
+          myHomeManager.tmux.enable = true;
+          myHomeManager.utils.enable = true;
+          myHomeManager.zsh.enable = true;
         };
 
         imports = [
