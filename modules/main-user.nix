@@ -4,7 +4,7 @@
   pkgs,
   inputs,
   ...
-}@args:
+}:
 let
   cfg = config.main-user;
   secretpath = builtins.toString inputs.nix-secrets;
@@ -35,21 +35,18 @@ in
       hashedPasswordFile = config.sops.secrets."main_user_passwd_hash".path;
     };
 
-    home-manager.users.${cfg.userName} =
-      with cfg;
-      import ../home-modules (
-        {
-          inherit
-            config
-            pkgs
-            desktopEnable
-            devProgEnable
-            userName
-            inputs
-            ;
-        }
-        // args
-      );
+    home-manager = {
+      extraSpecialArgs = { inherit inputs; };
+      users."efficacy38" = {
+        config = {
+          home.stateVersion = "24.11";
+        };
+
+        imports = [
+          inputs.self.outputs.homeModules.default
+        ];
+      };
+    };
 
     security.sudo = {
       enable = true;
