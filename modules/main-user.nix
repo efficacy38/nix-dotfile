@@ -3,8 +3,9 @@
   config,
   pkgs,
   inputs,
+  myLib,
   ...
-}@args:
+}:
 let
   cfg = config.main-user;
   secretpath = builtins.toString inputs.nix-secrets;
@@ -35,21 +36,33 @@ in
       hashedPasswordFile = config.sops.secrets."main_user_passwd_hash".path;
     };
 
-    home-manager.users.${cfg.userName} =
-      with cfg;
-      import ../home-modules (
-        {
-          inherit
-            config
-            pkgs
-            desktopEnable
-            devProgEnable
-            userName
-            inputs
-            ;
-        }
-        // args
-      );
+    home-manager = {
+      extraSpecialArgs = { inherit inputs myLib pkgs; };
+      users."efficacy38" = {
+        config = {
+          home.stateVersion = "24.11";
+
+          myHomeManager.backup.enable = true;
+          myHomeManager.desktop-apps.enable = true;
+          myHomeManager.desktop-firefox.enable = true;
+          myHomeManager.desktop-kde.enable = true;
+          myHomeManager.git.enable = true;
+          myHomeManager.gpg.enable = true;
+          myHomeManager.incus.enable = true;
+          myHomeManager.just.enable = true;
+          myHomeManager.k8s.enable = true;
+          myHomeManager.nvim.enable = true;
+          myHomeManager.podman.enable = true;
+          myHomeManager.tmux.enable = true;
+          myHomeManager.utils.enable = true;
+          myHomeManager.zsh.enable = true;
+        };
+
+        imports = [
+          inputs.self.outputs.homeModules.default
+        ];
+      };
+    };
 
     security.sudo = {
       enable = true;

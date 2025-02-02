@@ -1,4 +1,5 @@
-{ config, pkgs, ... }: {
+{ pkgs, ... }:
+{
   home.packages = with pkgs; [
     # git related
     git
@@ -24,7 +25,9 @@
       s = "status";
     };
     extraConfig = {
-      core = { whitespace = "trailing-space,space-before-tab"; };
+      core = {
+        whitespace = "trailing-space,space-before-tab";
+      };
       credential = {
         helper = "cache --timeout 3600";
       };

@@ -1,4 +1,4 @@
-{ lib, config, pkgs, inputs, ... }:
+{ pkgs, ... }:
 {
   home.file.".config/just/justfile".text = ''
     list:

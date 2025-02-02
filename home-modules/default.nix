@@ -1,48 +1,41 @@
 {
   config,
-  userName ? "efficacy38",
-  desktopEnable ? false,
-  devProgEnable ? false,
+  lib,
+  myLib,
   ...
-}@args:
-{
-  # Home Manager needs a bit of information about you and the paths it should
-  # manage.
-  home.username = "${userName}";
-  home.homeDirectory = "/home/${userName}";
-  home.stateVersion = "${config.system.stateVersion}";
+}: let
+  cfg = config.myHomeManager;
+  # Taking all modules in ./features and adding enables to them
+  features = myLib.extendModules (name: {
+    extraOptions = {
+      myHomeManager.${name}.enable = lib.mkEnableOption "enable my ${name} configuration";
+    };
 
-  # Let Home Manager install and manage itself.
-  programs.home-manager.enable = true;
+    configExtension = config: (lib.mkIf cfg.${name}.enable config);
+  }) (myLib.filesIn ./features);
 
-  # enable shells
-  # programs.bash.enable = true;
-  nixpkgs.config.allowUnfree = true;
+  bundlers = myLib.extendModules (name: {
+    extraOptions = {
+      myHomeManager.${name}.enable = lib.mkEnableOption "enable my ${name} configuration";
+    };
 
-  # would generate alias script
-  my-gpg = [
-    {
-      usage = "personal";
-      keyCapacity = "enc";
-      subkeyId = "1722121F0FB35C6CDA7ABF9E680078CD836172D6";
-    }
-    {
-      usage = "personal";
-      keyCapacity = "sign";
-      subkeyId = "5EAB3A07B1B5078585C1C5E938DFF1897150C309";
-    }
-    {
-      usage = "personal";
-      keyCapacity = "auth";
-      subkeyId = "7964380B1866F94F09FBEE68F66D16FB0A1D33BB";
-    }
-  ];
+    configExtension = config: (lib.mkIf cfg.${name}.enable config);
+  }) (myLib.filesIn ./bundlers);
+in {
+  config = {
+    # Home Manager needs a bit of information about you and the paths it should
+    # manage.
 
-  imports =
-    [
-      ./shell
-      ./ops
-    ]
-    ++ (if desktopEnable then [ (import ./desktop args) ] else [ ])
-    ++ (if devProgEnable then [ ./programing ] else [ ]);
+    home.username = "efficacy38";
+    home.homeDirectory = "/home/efficacy38";
+
+    # Let Home Manager install and manage itself.
+    programs.home-manager.enable = true;
+
+    # enable shells
+    # programs.bash.enable = true;
+    nixpkgs.config.allowUnfree = true;
+  };
+
+  imports = [] ++ features ++ bundlers;
 }
