@@ -3,8 +3,7 @@
   lib,
   myLib,
   ...
-}:
-let
+}: let
   cfg = config.myHomeManager;
   # Taking all modules in ./features and adding enables to them
   features = myLib.extendModules (name: {
@@ -14,8 +13,15 @@ let
 
     configExtension = config: (lib.mkIf cfg.${name}.enable config);
   }) (myLib.filesIn ./features);
-in
-{
+
+  bundlers = myLib.extendModules (name: {
+    extraOptions = {
+      myHomeManager.${name}.enable = lib.mkEnableOption "enable my ${name} configuration";
+    };
+
+    configExtension = config: (lib.mkIf cfg.${name}.enable config);
+  }) (myLib.filesIn ./bundlers);
+in {
   config = {
     # Home Manager needs a bit of information about you and the paths it should
     # manage.
@@ -31,5 +37,5 @@ in
     nixpkgs.config.allowUnfree = true;
   };
 
-  imports = [ ] ++ features;
+  imports = [] ++ features ++ bundlers;
 }
