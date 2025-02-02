@@ -10,6 +10,16 @@
     ../../modules
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
+    inputs.solaar.nixosModules.default
+    inputs.impermanence.nixosModules.impermanence
+
+    # nixos-hardware
+    inputs.nixos-hardware.nixosModules.common-cpu-amd
+    inputs.nixos-hardware.nixosModules.common-cpu-amd-zenpower
+    inputs.nixos-hardware.nixosModules.common-cpu-amd-pstate
+    inputs.nixos-hardware.nixosModules.common-cpu-amd-raphael-igpu
+    inputs.nixos-hardware.nixosModules.common-pc-ssd
+    inputs.nixos-hardware.nixosModules.common-hidpi
   ];
 
   main-user.enable = true;
