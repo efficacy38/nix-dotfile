@@ -4,7 +4,7 @@
   pkgs,
   inputs,
   ...
-}:
+}@args:
 let
   cfg = config.main-user;
   secretpath = builtins.toString inputs.nix-secrets;
@@ -37,15 +37,19 @@ in
 
     home-manager.users.${cfg.userName} =
       with cfg;
-      import ../home-modules {
-        inherit
-          config
-          pkgs
-          desktopEnable
-          devProgEnable
-          userName
-          ;
-      };
+      import ../home-modules (
+        {
+          inherit
+            config
+            pkgs
+            desktopEnable
+            devProgEnable
+            userName
+            inputs
+            ;
+        }
+        // args
+      );
 
     security.sudo = {
       enable = true;

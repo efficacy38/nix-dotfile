@@ -4,7 +4,7 @@
   desktopEnable ? false,
   devProgEnable ? false,
   ...
-}:
+}@args:
 {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
@@ -43,6 +43,6 @@
       ./shell
       ./ops
     ]
-    ++ (if desktopEnable then [ ./desktop ] else [ ])
+    ++ (if desktopEnable then [ (import ./desktop args) ] else [ ])
     ++ (if devProgEnable then [ ./programing ] else [ ]);
 }

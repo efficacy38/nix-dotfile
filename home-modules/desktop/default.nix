@@ -1,9 +1,9 @@
-{ ... }:
+{ ... }@args:
 {
   imports = [
     ./apps.nix
     ./scripts
     ./kde.nix
-    # ./steam.nix
+    (import ./firefox.nix args)
   ];
 }

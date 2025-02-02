@@ -37,7 +37,6 @@
     syncthing
     remmina
     haruna
-    firefox
 
     prismlauncher
   ];
