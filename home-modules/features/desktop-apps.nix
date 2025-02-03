@@ -13,7 +13,6 @@
     # desktop apps
     keepassxc
     thunderbird
-    nextcloud-client
     protonmail-bridge
     protonmail-bridge-gui
     protonmail-desktop
@@ -34,9 +33,8 @@
 
     # minecraft
     prismlauncher
+    nextcloud-client
   ];
 
-  services.nextcloud-client.enable = true;
-  services.nextcloud-client.startInBackground = true;
   services.syncthing.enable = true;
 }

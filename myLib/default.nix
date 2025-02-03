@@ -22,6 +22,7 @@ let
         inputs.nix-index-database.nixosModules.nix-index
         # optional to also wrap and install comma
         { programs.nix-index-database.comma.enable = true; }
+        inputs.stylix.nixosModules.stylix
       ]
       ++ inputs.nixpkgs.lib.optionals isStable [
         inputs.home-manager-stable.nixosModules.default

@@ -15,6 +15,7 @@
         vimium
         multi-account-containers
         youtube-shorts-block
+        sidebery
       ];
 
       search.engines = {

@@ -2,6 +2,7 @@
   lib,
   config,
   pkgs,
+  inputs,
   ...
 }:
 let
@@ -24,6 +25,53 @@ in
     # Enable the KDE Plasma Desktop Environment.
     services.displayManager.sddm.enable = true;
     services.desktopManager.plasma6.enable = true;
+
+    # Enable hyprland config
+    programs.hyprland = {
+      enable = true;
+      withUWSM = true;
+    };
+
+    hardware.opengl.enable = true;
+    environment.systemPackages = with pkgs; [
+      # hyprland default terminal
+      kitty
+      # maybe other is good also
+      # NOTE: remove following terminal emulator if not necessary
+      alacritty
+      wezterm
+      networkmanagerapplet
+
+      waybar
+
+      # customize widges
+      eww
+
+      # for notification
+      dunst
+      libnotify
+
+      # wallpaper
+      hyprpaper
+      hyprshot
+      swaybg
+      wpaperd
+      mpvpaper
+      swww
+      brightnessctl
+
+      # wayland launcher
+      rofi-wayland
+
+      # lock
+      hyprlock
+
+      # idle
+      hypridle
+    ];
+    xdg.portal.enable = true;
+    # for better compatibility, check https://wiki.archlinux.org/title/XDG_Desktop_Portal
+    xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-kde ];
 
     # Configure keymap in X11
     services.xserver.xkb = {
@@ -97,9 +145,24 @@ in
       enableSSHSupport = true;
     };
 
+    # unlock gnome keyring when logined(hyprland)
+    # security.pam.services.login.enableGnomeKeyring = true;
+
     # enables support for Bluetooth
     hardware.bluetooth.enable = true;
     # powers up the default Bluetooth controller on boot
     hardware.bluetooth.powerOnBoot = true;
+
+    # enable kwallet when sddm start the session
+    # security.pam.services.sddm.enableKwallet = true;
+    security.pam.services.sddm.enableGnomeKeyring = true;
+    services.gnome.gnome-keyring.enable = true;
+
+    # use stylix to themeing whole DE
+    stylix = {
+      enable = true;
+      base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
+      image = ./suisei-january-wallpaper.png;
+    };
   };
 }

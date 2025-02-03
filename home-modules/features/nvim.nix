@@ -10,6 +10,8 @@
     nodejs # copilot
     terraform-ls
     pyright
+    # treesitter needs an compiler
+    gcc
 
     # based on ./suggested-pkgs.json
     lua-language-server
