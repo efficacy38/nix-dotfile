@@ -14,13 +14,19 @@ in
   options.main-user = {
     enable = lib.mkEnableOption "enable user module";
 
-    desktopEnable = lib.mkEnableOption "enable desktop support(current only kde)";
-    devProgEnable = lib.mkEnableOption "enable development programming language tool support";
-
     userName = lib.mkOption {
       default = "efficacy38";
       description = ''
         username, whose has sudo privilege of every command
+      '';
+    };
+
+    userConfig = lib.mkOption {
+      default = ../hosts/homelab-1/home.nix;
+      description = ''
+        main user's home configuration, include both myHomeManager and
+        home-manager module, default user homelab-1's userConfig, it should be
+        farily small and no desktop support.
       '';
     };
   };
@@ -38,27 +44,9 @@ in
 
     home-manager = {
       extraSpecialArgs = { inherit inputs myLib pkgs; };
-      users."efficacy38" = {
-        config = {
-          home.stateVersion = "24.11";
-
-          myHomeManager.backup.enable = true;
-          myHomeManager.desktop-apps.enable = true;
-          myHomeManager.desktop-firefox.enable = true;
-          myHomeManager.desktop-kde.enable = true;
-          myHomeManager.git.enable = true;
-          myHomeManager.gpg.enable = true;
-          myHomeManager.incus.enable = true;
-          myHomeManager.just.enable = true;
-          myHomeManager.k8s.enable = true;
-          myHomeManager.nvim.enable = true;
-          myHomeManager.podman.enable = true;
-          myHomeManager.tmux.enable = true;
-          myHomeManager.utils.enable = true;
-          myHomeManager.zsh.enable = true;
-        };
-
+      users."${cfg.userName}" = {
         imports = [
+          (import cfg.userConfig)
           inputs.self.outputs.homeModules.default
         ];
       };

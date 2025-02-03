@@ -30,8 +30,6 @@
   # module related options
   main-user.enable = true;
   main-user.userName = "efficacy38";
-  main-user.devProgEnable = false;
-  main-user.desktopEnable = false;
   my-steam.enable = false;
   my-desktop.enable = false;
   my-desktop.zramEnable = false;

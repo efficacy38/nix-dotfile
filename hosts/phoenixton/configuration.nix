@@ -1,5 +1,4 @@
 {
-  config,
   pkgs,
   inputs,
   ...
@@ -24,8 +23,7 @@
 
   main-user.enable = true;
   main-user.userName = "efficacy38";
-  main-user.devProgEnable = true;
-  main-user.desktopEnable = true;
+  main-user.userConfig = ./home.nix;
   my-steam.enable = true;
   my-steam.hidpi = false;
   my-desktop.enable = true;
