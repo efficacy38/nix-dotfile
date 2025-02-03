@@ -28,8 +28,6 @@
 
   main-user.enable = true;
   main-user.userName = "efficacy38";
-  main-user.devProgEnable = true;
-  main-user.desktopEnable = false;
   my-desktop.enable = true;
   cscc-work.enable = true;
 

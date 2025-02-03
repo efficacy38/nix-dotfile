@@ -5,7 +5,7 @@ let
   pkgs-stable = import inputs.nixpkgs-stable {
     system = "x86_64-linux";
   };
-  mkSystemAtts = config: {
+  mkSystemAtts = isStable: config: {
     specialArgs = {
       inherit
         myLib
@@ -14,15 +14,21 @@ let
         pkgs-stable
         ;
     };
-    modules = [
-      config
-      outputs.nixosModules.default
-      inputs.home-manager.nixosModules.default
-      # use nix-index-database instead of run nix-index individually
-      inputs.nix-index-database.nixosModules.nix-index
-      # optional to also wrap and install comma
-      { programs.nix-index-database.comma.enable = true; }
-    ];
+    modules =
+      [
+        config
+        outputs.nixosModules.default
+        # use nix-index-database instead of run nix-index individually
+        inputs.nix-index-database.nixosModules.nix-index
+        # optional to also wrap and install comma
+        { programs.nix-index-database.comma.enable = true; }
+      ]
+      ++ inputs.nixpkgs.lib.optionals isStable [
+        inputs.home-manager-stable.nixosModules.default
+      ]
+      ++ inputs.nixpkgs.lib.optionals (!isStable) [
+        inputs.home-manager.nixosModules.default
+      ];
   };
 in
 rec {
@@ -35,8 +41,9 @@ rec {
   fileNameOf = path: (builtins.head (builtins.split "\\." (baseNameOf path)));
 
   # ========================== Buildables ========================== #
-  mkSystem = config: inputs.nixpkgs.lib.nixosSystem (mkSystemAtts config);
-  mkStableSystem = config: inputs.nixpkgs-stable.lib.nixosSystem (mkSystemAtts config);
+  mkSystem = config: inputs.nixpkgs.lib.nixosSystem (mkSystemAtts false config);
+
+  mkStableSystem = config: inputs.nixpkgs-stable.lib.nixosSystem (mkSystemAtts true config);
 
   # ========================== Extenders =========================== #
 
