@@ -28,6 +28,7 @@
   my-steam.hidpi = false;
   my-desktop.enable = true;
   my-desktop.zramEnable = false;
+  my-desktop.hyprlandEnable = true;
   cscc-work.enable = true;
   my-tailscale.enable = true;
   my-tailscale.asRouter = false;
