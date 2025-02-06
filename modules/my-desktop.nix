@@ -7,6 +7,8 @@
 }:
 let
   cfg = config.my-desktop;
+
+  secretpath = builtins.toString inputs.nix-secrets;
 in
 {
   options.my-desktop = {
@@ -91,7 +93,13 @@ in
         stylix = {
           enable = true;
           base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
-          image = ./suisei-january-wallpaper.png;
+          image = ./suisei.jpg;
+        };
+
+        sops.secrets.suisei-january-wallpaper = {
+          format = "binary";
+          sopsFile = "${secretpath}/secrets/wallpapers/suisei-january-wallpaper.png";
+          path = "/usr/share/wallpapers/suisei-january-wallpaper.png";
         };
       };
 
