@@ -41,7 +41,7 @@
     nix-index-database.url = "github:nix-community/nix-index-database";
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
 
-    stylix.url = "github:danth/stylix";
+    stylix.url = "github:danth/stylix/release-24.11";
   };
 
   outputs =
@@ -58,6 +58,7 @@
         workstation = myLib.mkSystem ./hosts/workstation/configuration.nix;
         homelab-1 = myLib.mkStableSystem ./hosts/homelab-1/configuration.nix;
         homelab-test = myLib.mkStableSystem ./hosts/homelab-test/configuration.nix;
+        stella = myLib.mkSystem ./hosts/stella/configuration.nix;
       };
     };
 }

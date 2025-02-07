@@ -89,6 +89,7 @@ in
           gnused
         ];
       })
+      pkgs.overskride
       pkgs.rofi-calc
       pkgs.rofi-emoji-wayland
       pkgs.kdePackages.breeze
