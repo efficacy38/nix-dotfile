@@ -26,6 +26,7 @@ in
       ../dotfiles/hypr/hypridle.conf
       ../dotfiles/hypr/hyprland.conf
       ../dotfiles/hypr/hyprlock.conf
+      ../dotfiles/hypr/hyprpaper.conf
       ../dotfiles/hypr/mocha.conf
       ../dotfiles/kitty
       ../dotfiles/rofi
@@ -99,5 +100,6 @@ in
     ];
     stylix.targets.waybar.enable = false;
     stylix.targets.waybar.addCss = false;
+    stylix.targets.hyprpaper.enable = false;
   };
 }

@@ -100,6 +100,7 @@ in
           format = "binary";
           sopsFile = "${secretpath}/secrets/wallpapers/suisei-january-wallpaper.png";
           path = "/usr/share/wallpapers/suisei-january-wallpaper.png";
+          mode = "444";
         };
       };
 
@@ -160,7 +161,7 @@ in
         ];
         xdg.portal.enable = true;
         # for better compatibility, check https://wiki.archlinux.org/title/XDG_Desktop_Portal
-        xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-kde ];
+        xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-hyprland ];
 
         security.pam.services.sddm.enableGnomeKeyring = true;
         services.gnome.gnome-keyring.enable = true;
