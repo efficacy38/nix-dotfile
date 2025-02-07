@@ -72,6 +72,7 @@ in
     wayland.windowManager.hyprland.systemd.enable = false;
     home.packages = [
       pkgs.mate.mate-panel-with-applets
+      pkgs.overskride
       (pkgs.writeShellApplication {
         name = "my-audio-control";
         text =
