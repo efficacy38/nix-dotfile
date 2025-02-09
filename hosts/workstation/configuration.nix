@@ -30,6 +30,10 @@
   main-user.userName = "efficacy38";
   my-desktop.enable = true;
   cscc-work.enable = true;
+  programs.mosh = {
+    enable = true;
+    openFirewall = true;
+  };
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
