@@ -8,4 +8,6 @@
     rclone
     kopia
   ];
+
+  services.syncthing.enable = true;
 }

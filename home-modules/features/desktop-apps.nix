@@ -27,7 +27,6 @@
     # qt5.qtwebsockets
     # (python3.withPackages (python-pkgs: [ python-pkgs.websockets ]))
     # ###
-    syncthing
     remmina
     haruna
 
@@ -35,6 +34,4 @@
     prismlauncher
     nextcloud-client
   ];
-
-  services.syncthing.enable = true;
 }
