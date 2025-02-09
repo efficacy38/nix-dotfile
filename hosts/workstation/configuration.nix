@@ -1,4 +1,8 @@
-{ modulesPath, ... }:
+{
+  modulesPath,
+  lib,
+  ...
+}:
 {
   imports = [
     # custom modules
@@ -46,4 +50,5 @@
   # Or disable the firewall altogether.
 
   system.stateVersion = "24.11";
+  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 }
