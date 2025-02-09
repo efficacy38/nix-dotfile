@@ -70,6 +70,7 @@ in
     programs.waybar.enable = true;
     programs.waybar.systemd.enable = true;
     programs.waybar.systemd.target = "graphical-session.target";
+    programs.alacritty.enable = true;
     wayland.windowManager.hyprland.systemd.enable = false;
     home.packages = [
       pkgs.mate.mate-panel-with-applets

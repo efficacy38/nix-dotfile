@@ -23,6 +23,7 @@ in
       common-desktop-config = {
         # enable networkmanager for desktop usage
         networking.networkmanager.enable = true;
+        networking.firewall.enable = true;
 
         # Enable the X11 windowing system.
         # You can disable this if you're only using the Wayland session.
@@ -121,7 +122,7 @@ in
         hardware.opengl.enable = true;
         environment.systemPackages = with pkgs; [
           # hyprland default terminal
-          kitty
+          alacritty
           # maybe other is good also
           # NOTE: remove following terminal emulator if not necessary
           alacritty
