@@ -59,6 +59,11 @@ in
 
     services.dunst = {
       enable = true;
+      settings = {
+        global = {
+          follow = "mouse";
+        };
+      };
     };
 
     # to make nm-applet indicator show up

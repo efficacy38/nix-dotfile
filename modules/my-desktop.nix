@@ -24,6 +24,7 @@ in
         # enable networkmanager for desktop usage
         networking.networkmanager.enable = true;
         networking.firewall.enable = true;
+        services.fwupd.enable = true;
 
         # Enable the X11 windowing system.
         # You can disable this if you're only using the Wayland session.

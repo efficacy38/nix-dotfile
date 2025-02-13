@@ -33,7 +33,7 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.tmp.useTmpfs = true;
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  # boot.kernelPackages = pkgs.linuxPackages_latest;
 
   # Enable networking related
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -51,6 +51,7 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     sof-firmware
+    gparted
   ];
   nixpkgs.config.allowUnfree = true;
   hardware.enableAllFirmware = true;

@@ -40,6 +40,7 @@ in
       shell = pkgs.zsh;
       extraGroups = [ "wheel" ];
       hashedPasswordFile = config.sops.secrets."main_user_passwd_hash".path;
+      linger = true;
     };
 
     home-manager = {

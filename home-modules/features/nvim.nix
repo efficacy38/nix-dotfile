@@ -54,7 +54,7 @@
     astro-language-server
     vtsls
     delve
-    eslint
+    # eslint
     deno
 
     # based on https://github.com/ray-x/go.nvim#go-binaries-install-and-update
