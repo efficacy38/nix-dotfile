@@ -1,10 +1,20 @@
-{ ... }:
+{
+  inputs,
+  pkgs,
+  lib,
+  ...
+}:
 {
   imports = [
     # custom modules
     ../../modules
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
+
+    # nixos-hardware
+    inputs.nixos-hardware.nixosModules.common-cpu-amd
+    inputs.nixos-hardware.nixosModules.common-pc-ssd
+    inputs.nixos-hardware.nixosModules.common-hidpi
   ];
 
   main-user.enable = true;
@@ -14,13 +24,18 @@
   my-steam.hidpi = false;
   my-desktop.enable = true;
   my-desktop.zramEnable = true;
+  my-desktop.kdeEnable = true;
   my-tailscale.enable = true;
   # can be used as exit node
   my-tailscale.asRouter = true;
 
+  # for B580
+  hardware.intel-gpu-tools.enable = true;
+
   # Bootloader.
-  # boot.loader.systemd-boot.enable = true;
+  boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  # boot.kernelPackages = pkgs.linuxPackages_testing;
 
   # Enable networking related
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
