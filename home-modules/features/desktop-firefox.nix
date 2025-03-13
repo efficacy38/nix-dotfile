@@ -4,6 +4,13 @@
   ...
 }:
 {
+  # home.xdg.mimeApps = {
+  #   enable = true;
+  #   defaultApplications = {
+  #     "application/pdf" = [ "firefox.desktop" ];
+  #   };
+  # };
+
   programs.firefox = {
     enable = true;
     profiles.personal = {
@@ -16,6 +23,7 @@
         multi-account-containers
         youtube-shorts-block
         sidebery
+        simple-tab-groups
       ];
 
       search.engines = {

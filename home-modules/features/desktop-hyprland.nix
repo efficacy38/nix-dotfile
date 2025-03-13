@@ -27,6 +27,7 @@ in
       ../dotfiles/hypr/hyprland.conf
       ../dotfiles/hypr/hyprlock.conf
       ../dotfiles/hypr/hyprpaper.conf
+      ../dotfiles/hypr/handle_lid_switch.sh
       ../dotfiles/hypr/mocha.conf
       ../dotfiles/kitty
       ../dotfiles/rofi
