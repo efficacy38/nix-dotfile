@@ -19,10 +19,10 @@
       # 40 is the default value of cache, cache.nixos.org is 30
       # use 0 as personal cache
       extra-substituters = [
-        "http://nix-cache.homelab-1.csjhuang.net?priority=0"
+        "https://nix-cache.csjhuang.net?priority=0"
       ];
       extra-trusted-public-keys = [
-        "nix-cache.homelab-1.csjhuang.net-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+        "nix-cache.csjhuang.net-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
       ];
       trusted-public-keys = [
         "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
@@ -38,6 +38,8 @@
   };
 
   environment.variables.EDITOR = "vim";
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
 
   # enable sshd
   services.openssh.enable = true;
@@ -139,41 +141,44 @@
 
   # my rootca
   security.pki.certificates = [
+    # personal CA
     ''
       -----BEGIN CERTIFICATE-----
-      MIIGITCCBAmgAwIBAgIUL4rJG5NS4E4kf1BevI6vIeAsSO8wDQYJKoZIhvcNAQEL
-      BQAwgZ8xCzAJBgNVBAYTAlRXMQ8wDQYDVQQIDAZUYWl3YW4xFjAUBgNVBAcMDUhz
-      aW4tY2h1IENpdHkxGTAXBgNVBAoMEGNzamh1YW5nIGhvbWVsYWIxFDASBgNVBAsM
-      C1BlcnNvbmFsIENBMREwDwYDVQQDDAhqZXJyeS5oczEjMCEGCSqGSIb3DQEJARYU
-      ZWZmaWNhY3kzOEBnbWFpbC5jb20wHhcNMjQwOTAzMTY0MTM0WhcNMjcwNjI0MTY0
-      MTM0WjCBnzELMAkGA1UEBhMCVFcxDzANBgNVBAgMBlRhaXdhbjEWMBQGA1UEBwwN
-      SHNpbi1jaHUgQ2l0eTEZMBcGA1UECgwQY3NqaHVhbmcgaG9tZWxhYjEUMBIGA1UE
-      CwwLUGVyc29uYWwgQ0ExETAPBgNVBAMMCGplcnJ5LmhzMSMwIQYJKoZIhvcNAQkB
-      FhRlZmZpY2FjeTM4QGdtYWlsLmNvbTCCAiIwDQYJKoZIhvcNAQEBBQADggIPADCC
-      AgoCggIBAL2JVM9go4mbm/RHqLotvoCjp9GBD/LyIh1sB545VTk3jOdbTXmprFcm
-      ZABYWM/Ufiu1vDmfKxKS7LCYrFX+C9TfZ/85F1vKnTw2KiRY8zpI8RbhFlj3aB6U
-      iTu/FbJSo8DiU3RRIW7qQ4j8KkOFUMy9KdA+CG62wx7pJ0jR1DY34N7LsXj3UEGk
-      IqMnKuWJuNCwMEGZB5OeV7ReN9ZUAzEyUZ8sInPaTJzHiu9VFjDjhtIylYN7lxL5
-      beTBqtsbXQS2svtNoVj9/0VxfSVE5o3LWqgFF8ifB5svCpR0KHdkRnR9kbSiftIM
-      EnaPZGoiD9WHZUHXVzBcZLQHPE9aPIV5brnHbkPYa/5OPTEkZ9QwrZmXHlDahxmj
-      wyX1lJT3gkJLvajufGZ6GHVDvUwcKC9yfpNJMZU6xeCnVjXUMQnDN5bEYn1AqyZZ
-      +FgcT1dp1T82lfET5zyyBO/K6N+w+Sbc+EvNYlatbc4SE/hLvBgIoIXpQNZQpOMU
-      0WQk40dNu6lsnOwDQ8nl4bFyxNvXqsHFbx8MXdIbwJF5AqAPNJNUXdzakNQ88C1c
-      5YN3hX8fAQaReF+88zctRzA6OiDIqhTwGpCxz2hncbySUZeBZwL3YRS+eRBp0ZM9
-      JNQFuKtsY0F+AxFZYDQ2OZLcmdivZrAc7FkEewBMFbD8O4d0OMyRAgMBAAGjUzBR
-      MB0GA1UdDgQWBBTnpMT3mkCvg5qKZvKzqGXhQTH5ljAfBgNVHSMEGDAWgBTnpMT3
-      mkCvg5qKZvKzqGXhQTH5ljAPBgNVHRMBAf8EBTADAQH/MA0GCSqGSIb3DQEBCwUA
-      A4ICAQBIVz7cHVvqYHyWmX/W1jgsvCBXgFcHT3doDguiMz5+c24VSyrWA6bQ6Kjb
-      +w/KAmpRMg/COK7zwpN7pWdi8N0p74GkWajy3hg9fmaVZhURApgoWkO26fCFiUbq
-      hRd7qXuGWckLNL2uepV4mQ/GFPu/RmxZQy2v9JJgpN6M6FwiIzreN3k5vyaWMI3L
-      yBDsDQjZznYJSvM/dx6o0lVIp/6YZFYqhQuH9vqxShCmucxdf/nLbm7hPKzKuYIK
-      7ZqMTRyfUMBGKwDG/vQAbfn/abudgJ43e6uDr4JraJ7lZDnUXAM0BC1JMFPSZ8nA
-      d5/2v6oaXa/I9oAnsIxzklsOngCM4NMhr0KWkMjoFruybSLpgmjmcjOMY8TMqeyW
-      3SlrfiWlbAValLJ34t1Wx9rrlmD1S7q7jHEXsjPZoU6cPJJCKNaDUvCvRbX45ylm
-      UObTl5c1Y57+Y7GuAYQzjkZO3RcukY2WzwDh18OOjUo4f3qdHOqlDjUH6B6kKvkr
-      Z28qVmKtDPnRN57Ve+/M1MekQld//C04kSGsSovMCFYXKfuW6vPmZZy2UiNTtD0k
-      CLaR/mj4RSYX+gXiM6+a1Dh7JYA5L6rB3Y64/9VIWKc4D25z/vwEXqB/KlzIgxPP
-      13Il6iJselUShUIPVlk5zss1b8L1UjicNPuH9+Er5JsK4gQ3yw==
+      MIIGcTCCBFmgAwIBAgIUSJABWck58e5IIe/sO/hbJguXj78wDQYJKoZIhvcNAQEL
+      BQAwgb8xJDAiBgNVBAMMG3Jvb3QuaG9tZWxhYi0xLmNzamh1YW5nLm5ldDELMAkG
+      A1UEBhMCVFcxDzANBgNVBAgMBlRhaXdhbjEUMBIGA1UEBwwLVGFpbmFuIENpdHkx
+      IDAeBgNVBAoMF0NhaS1TaWFuIEpodWFuZyBIb21lbGFiMRwwGgYDVQQLDBNob21l
+      bGFiLTEsIGtleXN0b3JlMSMwIQYJKoZIhvcNAQkBFhRlZmZpY2FjeTM4QHByb3Rv
+      bi5tZTAeFw0yNTAyMTUyMTI3MTZaFw00NTAyMTAyMTI3MTZaMIG/MSQwIgYDVQQD
+      DBtyb290LmhvbWVsYWItMS5jc2podWFuZy5uZXQxCzAJBgNVBAYTAlRXMQ8wDQYD
+      VQQIDAZUYWl3YW4xFDASBgNVBAcMC1RhaW5hbiBDaXR5MSAwHgYDVQQKDBdDYWkt
+      U2lhbiBKaHVhbmcgSG9tZWxhYjEcMBoGA1UECwwTaG9tZWxhYi0xLCBrZXlzdG9y
+      ZTEjMCEGCSqGSIb3DQEJARYUZWZmaWNhY3kzOEBwcm90b24ubWUwggIiMA0GCSqG
+      SIb3DQEBAQUAA4ICDwAwggIKAoICAQC2E0HHCU7MjAbFZx1KxkZS5i7Hb1r12Ekk
+      R/0zKg9++Nyxs4vF55AdfF2J7IEgLpNEH+p6ueLgpugtaLYF3UQgIDPZEJinjWmh
+      V8V/obFrVfMl68vkMkA/DXq7SktYb6NwsNirg6E5F4++ES5+6h4noHLOl1hxIcXN
+      dRddq6U2Pp7dIi/qqtnohlbnm92tH0+UUE3riPRbFKMmHKKr77eYliqUfJ+0bS5D
+      G6afhKpnEi3QMuS0Kv8DbyxwjI6X53B8KYk73pEH6S8dCirHL5Tb+ovKu5I0Stej
+      4OYZXbYxdvXXHdPBmxzsJzK0dYEGMrrF7WO07U8pRkruEeH2VzubabRdTyEcKi14
+      rwOe4i/vaPmuEuCfIWXD1CcTsjGZygbJmSPpnECWMMxhmpUC7aeoGod2Y/Oojtea
+      SCAIuI2xj8Ol45ddSQYCT45EZ0zaPxpSh1nPlGgL1Fv81qXPjy7iIOh7Zxu2PE5J
+      ZiLWH6MNwVzIcrx5kpY8/0OL8GUPLqK2rXaLlStxsapea+JJiEVuIGUCZyksg98M
+      0kxFPbMDyp8IVOBp9goEoRRHNNt8Z7aF4/9Rn5AyDF1wU1kwEHhgPD9e5WHc/J5C
+      3CFHt6y2CE4WDtB1zln+9hFJeGoFgnhUwLeCpd1BaA4w7quB3EqkW1BVkfS9cW2p
+      T4CJ+EAghQIDAQABo2MwYTAdBgNVHQ4EFgQUADc2XmeNL2zh5JX7TOEKyr/9hSgw
+      HwYDVR0jBBgwFoAUADc2XmeNL2zh5JX7TOEKyr/9hSgwDwYDVR0TAQH/BAUwAwEB
+      /zAOBgNVHQ8BAf8EBAMCAYYwDQYJKoZIhvcNAQELBQADggIBAC9Su7GZmIJs1n53
+      9iOmFM93H4XP2FCBT+xz1IXR9ZRoW3ozilG9sE34I5c3B783CwSyHrXYtYfh+zpH
+      F3HXJjFbcjSbE0sxxW4mTjUNCg1kBGb1lgdjp2uWaHE4qoOv8Az4CElKX4x2ofVb
+      1C1/J/9coouDLv44bKHiEDtthHswcsdXAvKzSqtkLphquU33Y+bPgg5kj5iR3UkW
+      Hu6Y+pWzBJG3AAkLQGypKHjQ6JXZQJ0uVz3XU5y926e8i4htQ1bGiCKxMM+1iEKE
+      FnLvy7/Rse6/sBiRu0S+HFjUDTgdyHPW/f+2l9FnCCxES5s1CzaDhhQUqTtxgStt
+      2Ys5DXsWBudpczVtz7uWhsXpofPSl8NbRMtWFjTq86s4LWV+4yMjA1d8W6PVA1i2
+      Wx0cpnFFO8AFSQy/AuSDZjqBZq85Kqna42diJioRpk9TKEQVQHjWplzs4KsNWjnk
+      5yuEbaUuiWctO2+EsGCvZUkDbhbmqfg/zEGb/6ZliojK9KXiHwNS++LdIJx1BFHv
+      jCk6Uq2kT8HGAmj9k1VEDZNxlaCVY/95OZBa3Jlgvt4Z2ckig+aRg0sLtx/r0v+N
+      NiSy3S0n2sjl1JXW1yVMZ8sdbRPrfqjEn05kpJhzHOv8/e5wzUyhW1xxYQWFT7Qp
+      wZCb/WxQ55tpV38MVojsUDuWcS8A
       -----END CERTIFICATE-----
     ''
     # cscc root ca
