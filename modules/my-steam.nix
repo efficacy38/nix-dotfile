@@ -1,6 +1,7 @@
 {
   lib,
   config,
+  pkgs,
   ...
 }:
 let
@@ -19,6 +20,10 @@ in
       dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
       localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
     };
+
+    hardware.opengl.extraPackages = [ pkgs.vaapiVdpau ];
+    hardware.steam-hardware.enable = true;
+
     environment.sessionVariables =
       if cfg.hidpi then
         {
