@@ -11,9 +11,10 @@
 
   programs.git = {
     enable = true;
-    diff-so-fancy = {
-      enable = true;
-    };
+
+    lfs.enable = true;
+    diff-so-fancy.enable = true;
+
     # git-cliff = {
     #   enable = true;
     # };
@@ -56,7 +57,7 @@
       in
       [
         {
-          condition = "hasconfig:remote.*.url:git@gitlab.cc.cs.nctu.edu.tw:10022/**";
+          condition = "hasconfig:remote.*.url:ssh://git@gitlab.cc.cs.nctu.edu.tw:10022/**";
           contents = cscc-git-config;
         }
         {
