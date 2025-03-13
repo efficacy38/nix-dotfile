@@ -167,6 +167,13 @@ in
 
         security.pam.services.sddm.enableGnomeKeyring = true;
         services.gnome.gnome-keyring.enable = true;
+
+        systemd.sleep.extraConfig = ''
+          AllowSuspend=no
+          AllowHibernation=no
+          AllowHybridSleep=no
+          AllowSuspendThenHibernate=no
+        '';
       };
 
       zram-config = {
