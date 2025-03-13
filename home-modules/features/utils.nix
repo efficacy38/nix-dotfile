@@ -15,6 +15,8 @@
     wl-clipboard
     # handle nix cache
     cachix
+
+    entr
   ];
 
   programs.direnv = {
