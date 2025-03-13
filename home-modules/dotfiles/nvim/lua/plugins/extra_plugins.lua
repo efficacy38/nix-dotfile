@@ -21,7 +21,7 @@ return {
         {
           panel = {
             enabled = true,
-            auto_refresh = false,
+            auto_refresh = true,
             keymap = {
               jump_prev = "[[",
               jump_next = "]]",
@@ -36,7 +36,7 @@ return {
           },
           suggestion = {
             enabled = true,
-            auto_trigger = false,
+            auto_trigger = true,
             debounce = 75,
             keymap = {
               accept = "<C-l>",
@@ -48,7 +48,7 @@ return {
             },
           },
           filetypes = {
-            yaml = true,
+            -- yaml = false,
             markdown = false,
             help = false,
             gitcommit = false,
@@ -56,7 +56,7 @@ return {
             hgcommit = false,
             svn = false,
             cvs = false,
-            ["."] = false,
+          ["."] = true,
           },
           copilot_node_command = "node", -- Node.js version must be > 18.x
           server_opts_overrides = {},
