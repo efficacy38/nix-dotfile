@@ -1,6 +1,7 @@
 {
   pkgs,
   inputs,
+  lib,
   ...
 }:
 {
@@ -13,7 +14,8 @@
     inputs.impermanence.nixosModules.impermanence
 
     # nixos-hardware
-    # inputs.nixos-hardware.nixosModules.common-cpu-intel
+    inputs.nixos-hardware.nixosModules.common-cpu-intel
+    inputs.nixos-hardware.nixosModules.common-gpu-intel
   ];
 
   main-user.enable = true;
@@ -30,10 +32,10 @@
   my-tailscale.asRouter = false;
 
   # Bootloader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.tmp.useTmpfs = true;
-  # boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.loader.systemd-boot.enable = lib.mkDefault true;
+  boot.loader.efi.canTouchEfiVariables = lib.mkDefault true;
+  boot.tmp.useTmpfs = lib.mkDefault true;
+  boot.kernelPackages = pkgs.linuxPackages_testing;
 
   # Enable networking related
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -41,9 +43,6 @@
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
   networking.hostName = "stella"; # Define your hostname.
-  networking.extraHosts = ''
-    10.1.0.131   imap.cs.nycu.edu.tw
-  '';
 
   services.solaar.enable = true;
 
