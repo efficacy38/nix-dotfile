@@ -54,7 +54,6 @@
       nixosModules.default = ./modules/default.nix;
       nixosConfigurations = {
         phoenixton = myLib.mkSystem ./hosts/phoenixton/configuration.nix;
-        dorm-desktop = myLib.mkSystem ./hosts/dorm-desktop/configuration.nix;
         workstation = myLib.mkSystem ./hosts/workstation/configuration.nix;
         homelab-1 = myLib.mkStableSystem ./hosts/homelab-1/configuration.nix;
         homelab-test = myLib.mkStableSystem ./hosts/homelab-test/configuration.nix;
