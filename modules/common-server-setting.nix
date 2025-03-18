@@ -43,7 +43,19 @@
 
   # enable sshd
   services.openssh.enable = true;
-  services.fail2ban.enable = true;
+  services.fail2ban = {
+    enable = true;
+    ignoreIP = [
+      # local
+      "192.168.0.0/16"
+
+      # personal vpn
+      "100.64.0.0/24"
+
+      # NCTU ip range
+      "140.113.0.0/16"
+    ];
+  };
 
   # Set your time zone.
   time.timeZone = "Asia/Taipei";
