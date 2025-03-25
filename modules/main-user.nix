@@ -60,7 +60,7 @@ in
           commands =
             map
               (systemd_cmd: {
-                command = "${pkgs.systemd.out}/bin/${systemd_cmd}";
+                command = "${pkgs.systemd}/bin/${systemd_cmd}";
                 options = [ "NOPASSWD" ];
               })
               [
@@ -71,12 +71,11 @@ in
               ]
             ++ [
               {
-                command = "${pkgs.iproute2.out}/bin/ip";
+                command = "${pkgs.iproute2}/bin/ip";
                 options = [ "NOPASSWD" ];
               }
               {
-                command = "/run/current-system/sw/bin/ip";
-                options = [ "NOPASSWD" ];
+                command = "${pkgs.networkmanager}/bin/nmtui";
               }
             ];
           users = [ "${cfg.userName}" ];
@@ -86,6 +85,8 @@ in
         Defaults:${cfg.userName} secure_path="${
           lib.makeBinPath [
             systemd
+            iproute2
+            networkmanager
           ]
         }:/nix/var/nix/profiles/default/bin:/run/current-system/sw/bin"
       '';
