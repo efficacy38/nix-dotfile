@@ -29,7 +29,7 @@ in
       ../dotfiles/hypr/hyprpaper.conf
       ../dotfiles/hypr/handle_lid_switch.sh
       ../dotfiles/hypr/mocha.conf
-      ../dotfiles/kitty
+      # ../dotfiles/kitty
       ../dotfiles/rofi
       ../dotfiles/waybar
     ]
