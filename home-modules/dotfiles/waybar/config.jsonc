@@ -5,12 +5,12 @@
   "modules-right": ["network", "bluetooth", "pulseaudio", "battery", "clock"],
   "clock": {
     "format": "<span foreground='#f5c2e7'>   </span>{:%a %d %H:%M}",
-    "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
+    "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
   },
   "battery": {
     "states": {
       "warning": 30,
-      "critical": 15
+      "critical": 15,
     },
     "format": "<span size='13000' foreground='#a6e3a1'>{icon} </span> {capacity}%",
     "format-warning": "<span size='13000' foreground='#B1E3AD'>{icon} </span> {capacity}%",
@@ -20,33 +20,33 @@
     "format-alt": "<span size='13000' foreground='#B1E3AD'>{icon} </span> {time}",
     "format-full": "<span size='13000' foreground='#B1E3AD'> </span>{capacity}%",
     "format-icons": ["", "", "", "", ""],
-    "tooltip-format": "{time}"
+    "tooltip-format": "{time}",
   },
   "network": {
     "format-wifi": "<span size='13000' foreground='#f5e0dc'>  </span>{essid}",
-    "format-ethernet": "<span size='13000' foreground='#f5e0dc'>󰤭  </span> Disconnected",
+    "format-ethernet": "<span size='13000' foreground='#f5e0dc'>󰤭  </span> {ifname}",
     "format-linked": "{ifname} (No IP) ",
     "format-disconnected": "<span size='13000' foreground='#f5e0dc'>  </span>Disconnected",
     "tooltip-format-wifi": "Signal Strength: {signalStrength}%",
-    "on-click": "nm-connection-editor"
+    "on-click": "alacritty --class floating -e nmtui",
   },
   "pulseaudio": {
-      "format": "{icon}  {volume}%",
-      "format-muted": "",
-      "format-icons": {
-          "default": ["", "", " "]
-      },
-      "on-click": "mate-volume-control"
+    "format": "{icon}  {volume}%",
+    "format-muted": "",
+    "format-icons": {
+      "default": ["", "", " "],
+    },
+    "on-click": "mate-volume-control",
   },
   "bluetooth": {
-	  "format": " {status}",
-	  "format-connected": " {device_alias}",
-	  "format-connected-battery": " {device_alias} {device_battery_percentage}%",
-	  // "format-device-preference": [ "device1", "device2" ], // preference list deciding the displayed device
-	  "tooltip-format": "{controller_alias}\t{controller_address}\n\n{num_connections} connected",
-	  "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{num_connections} connected\n\n{device_enumerate}",
-	  "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
-	  "tooltip-format-enumerate-connected-battery": "{device_alias}\t{device_address}\t{device_battery_percentage}%",
-	  "on-click": "overskride"
-  }
+    "format": " {status}",
+    "format-connected": " {device_alias}",
+    "format-connected-battery": " {device_alias} {device_battery_percentage}%",
+    // "format-device-preference": [ "device1", "device2" ], // preference list deciding the displayed device
+    "tooltip-format": "{controller_alias}\t{controller_address}\n\n{num_connections} connected",
+    "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{num_connections} connected\n\n{device_enumerate}",
+    "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
+    "tooltip-format-enumerate-connected-battery": "{device_alias}\t{device_address}\t{device_battery_percentage}%",
+    "on-click": "overskride",
+  },
 }
