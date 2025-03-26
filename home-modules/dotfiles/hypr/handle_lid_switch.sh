@@ -8,4 +8,6 @@ monitor_count=$(echo "$output" | grep -c "^Monitor")
 # Check if there is more than one monitor
 if [ "$monitor_count" -gt 1 ]; then
     hyprctl keyword monitor "eDP-1, disable"
+else
+    hyprlock
 fi
