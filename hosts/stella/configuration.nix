@@ -30,6 +30,7 @@
   cscc-work.enable = true;
   my-tailscale.enable = true;
   my-tailscale.asRouter = false;
+  my-impermanence.enable = true;
 
   # Bootloader.
   boot.loader.systemd-boot.enable = lib.mkDefault true;
@@ -52,6 +53,7 @@
     sof-firmware
     gparted
   ];
+
   nixpkgs.config.allowUnfree = true;
   hardware.enableAllFirmware = true;
 

@@ -34,6 +34,7 @@ in
   config = lib.mkIf cfg.enable {
     sops.secrets."main_user_passwd_hash".neededForUsers = true;
     sops.secrets."main_user_passwd_hash".sopsFile = "${secretpath}/secrets/common.yaml";
+    users.mutableUsers = false;
     users.users.${cfg.userName} = {
       isNormalUser = true;
       description = "${cfg.userName}(admin)";

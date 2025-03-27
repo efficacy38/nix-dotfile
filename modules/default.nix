@@ -8,6 +8,7 @@
     ./my-desktop.nix
     ./my-tailscale.nix
     ./cscc-work.nix
+    ./my-impremanence.nix
   ];
 
   options = {
