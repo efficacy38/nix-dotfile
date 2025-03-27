@@ -50,7 +50,9 @@
       myLib = import ./myLib/default.nix { inherit inputs; };
     in
     {
+      inherit myLib;
       homeModules.default = ./home-modules/default.nix;
+      impermanence = inputs.impermanence;
       nixosModules.default = ./modules/default.nix;
       nixosConfigurations = {
         phoenixton = myLib.mkSystem ./hosts/phoenixton/configuration.nix;

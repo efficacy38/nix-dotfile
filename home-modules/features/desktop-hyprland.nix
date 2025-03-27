@@ -5,7 +5,7 @@
   ...
 }:
 let
-  dotfilesDir = "${config.home.homeDirectory}/Projects/Personal/nix-dotfile/home-modules/dotfiles";
+  dotfilesDir = "/etc/nixos/nix-dotfile/home-modules/dotfiles";
   mkLinkConfig =
     path:
     let
@@ -107,5 +107,6 @@ in
     stylix.targets.waybar.enable = false;
     stylix.targets.waybar.addCss = false;
     stylix.targets.hyprpaper.enable = false;
+    programs.kitty.enable = false;
   };
 }

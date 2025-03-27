@@ -60,6 +60,17 @@
     neededForBoot = true;
   };
 
+  fileSystems."/home/efficacy38/.cache" = {
+    device = "none";
+    fsType = "tmpfs";
+    options = [
+      "defaults"
+      "size=2G"
+      "mode=744"
+      "uid=1000"
+    ];
+  };
+
   swapDevices = [ ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking

@@ -44,6 +44,7 @@ in
       directories = [
         "/etc/NetworkManager/system-connections"
         "/etc/ssh/"
+        "/etc/nixos"
         "/etc/wireguard/"
         "/var/db/sudo"
         "/var/log"
@@ -62,6 +63,10 @@ in
     };
 
     fileSystems."/etc/ssh".neededForBoot = true;
+
+    # make sure impermanence homemanager module can let root or other use
+    # access home directories
+    programs.fuse.userAllowOther = true;
 
     systemd.tmpfiles.rules = [
       "d /mnt 0770 root root -"

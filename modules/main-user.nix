@@ -50,6 +50,7 @@ in
         imports = [
           (import cfg.userConfig)
           inputs.self.outputs.homeModules.default
+          inputs.self.outputs.impermanence.homeManagerModules.impermanence
         ];
       };
     };

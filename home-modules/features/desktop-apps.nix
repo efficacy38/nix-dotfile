@@ -32,7 +32,6 @@
 
     # minecraft
     prismlauncher
-    nextcloud-client
     moonlight-qt
     parsec-bin
   ];
