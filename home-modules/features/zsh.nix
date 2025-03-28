@@ -178,9 +178,7 @@
 
   home.file = {
     ".p10k.zsh" = {
-      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/Projects/Personal/nix-dotfile/home-modules/dotfiles/p10k.zsh";
+      source = config.lib.file.mkOutOfStoreSymlink "/etc/nixos/nix-dotfile/home-modules/dotfiles/p10k.zsh";
     };
   };
-
-  programs.kitty.enable = true;
 }
