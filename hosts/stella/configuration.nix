@@ -16,6 +16,9 @@
     # nixos-hardware
     inputs.nixos-hardware.nixosModules.common-cpu-intel
     inputs.nixos-hardware.nixosModules.common-gpu-intel
+    # TODO: although framework is ultra 1xx, we were ultra 2xx
+    # but it still good for us
+    inputs.nixos-hardware.nixosModules.framework-intel-core-ultra-series1
   ];
 
   main-user.enable = true;
