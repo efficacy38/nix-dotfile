@@ -19,6 +19,9 @@
     # TODO: although framework is ultra 1xx, we were ultra 2xx
     # but it still good for us
     inputs.nixos-hardware.nixosModules.framework-intel-core-ultra-series1
+
+    # FIXME: current we use patched version of fprintd driver
+    ../../overlays/fprintd.nix
   ];
 
   main-user.enable = true;
@@ -64,6 +67,11 @@
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
+
+  services.fprintd = {
+    enable = true;
+    package = pkgs.fprintd-elanmoc2;
+  };
 
   system.stateVersion = "24.11";
 }
