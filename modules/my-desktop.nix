@@ -7,7 +7,6 @@
 }:
 let
   cfg = config.my-desktop;
-
   secretpath = builtins.toString inputs.nix-secrets;
 in
 {
@@ -104,6 +103,9 @@ in
           path = "/usr/share/wallpapers/suisei-january-wallpaper.png";
           mode = "444";
         };
+
+        # make yubikey touch popup notification shown
+        programs.yubikey-touch-detector.enable = true;
       };
 
       kde-config = {
