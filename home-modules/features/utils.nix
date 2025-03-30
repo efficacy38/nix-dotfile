@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-{
+{ pkgs, ... }: {
   home.packages = with pkgs; [
     curl
     wget
@@ -17,6 +16,9 @@
     cachix
 
     entr
+
+    # personal script
+    personal-script
   ];
 
   programs.direnv = {
