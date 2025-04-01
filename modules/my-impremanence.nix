@@ -43,9 +43,10 @@ in
       hideMounts = true;
       directories = [
         "/etc/NetworkManager/system-connections"
-        "/etc/ssh/"
+        "/etc/ssh"
+        "/etc/asusd"
         "/etc/nixos"
-        "/etc/wireguard/"
+        "/etc/wireguard"
         "/var/db/sudo"
         "/var/log"
         "/var/lib/bluetooth"

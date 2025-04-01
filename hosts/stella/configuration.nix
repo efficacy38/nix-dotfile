@@ -57,6 +57,8 @@
     gparted
   ];
 
+  services.asusd.enable = true;
+
   nixpkgs.config.allowUnfree = true;
   hardware.enableAllFirmware = true;
 
