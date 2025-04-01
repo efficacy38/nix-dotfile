@@ -78,7 +78,7 @@ in
     programs.alacritty.enable = true;
     wayland.windowManager.hyprland.systemd.enable = false;
     home.packages = [
-      pkgs.mate.mate-panel-with-applets
+      pkgs.mate.mate-media
       pkgs.overskride
       (pkgs.writeShellApplication {
         name = "my-audio-control";
@@ -107,6 +107,6 @@ in
     stylix.targets.waybar.enable = false;
     stylix.targets.waybar.addCss = false;
     stylix.targets.hyprpaper.enable = false;
-    programs.kitty.enable = false;
+    stylix.targets.kde.enable = false;
   };
 }
