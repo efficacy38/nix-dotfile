@@ -51,6 +51,11 @@
             set -g status-right-length 60
             set -g status-left '#[fg=color140]❐ #(echo "session: ")#{session_name} #[default]'
             set -g status-justify centre
+
+            # M- means "hold Meta/Alt"
+            set -g @floax-bind '-n M-p'
+            set -g @floax-bind-menu 'P'
+
             # set -g status-justify left
           '';
         }
@@ -60,6 +65,7 @@
         battery
         prefix-highlight
         urlview
+        tmux-floax
         # resurrect
       ];
       newSession = true;
