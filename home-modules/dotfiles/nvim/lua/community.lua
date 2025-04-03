@@ -5,6 +5,7 @@
 ---@type LazySpec
 return {
   "AstroNvim/astrocommunity",
+  -- import/override with your plugins folder
   { import = "astrocommunity.pack.astro" },
   { import = "astrocommunity.pack.ansible" },
   { import = "astrocommunity.pack.bash" },
@@ -17,5 +18,4 @@ return {
   { import = "astrocommunity.pack.terraform" },
   { import = "astrocommunity.pack.typescript" },
   { import = "astrocommunity.git.git-blame-nvim" },
-  -- import/override with your plugins folder
 }

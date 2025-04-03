@@ -56,7 +56,7 @@ return {
             hgcommit = false,
             svn = false,
             cvs = false,
-          ["."] = true,
+            ["."] = true,
           },
           copilot_node_command = "node", -- Node.js version must be > 18.x
           server_opts_overrides = {},
