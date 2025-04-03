@@ -1,5 +1,4 @@
 {
-  inputs,
   config,
   lib,
   myLib,
@@ -40,10 +39,5 @@ in
     nixpkgs.config.allowUnfree = true;
   };
 
-  imports =
-    [
-      # inputs.stylix.homeManagerModules.stylix
-    ]
-    ++ features
-    ++ bundles;
+  imports = [ ] ++ features ++ bundles;
 }
