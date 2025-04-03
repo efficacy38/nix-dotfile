@@ -4,15 +4,11 @@
 {
   config,
   lib,
-  pkgs,
   modulesPath,
   ...
 }:
-
 {
-  imports = [
-    (modulesPath + "/installer/scan/not-detected.nix")
-  ];
+  imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
   boot.initrd.availableKernelModules = [
     "xhci_pci"
@@ -29,12 +25,6 @@
     device = "/dev/disk/by-uuid/d09c7fde-1b73-4810-b66f-eb52c7d83e87";
     fsType = "btrfs";
     options = [ "subvol=@" ];
-  };
-
-  fileSystems."/home" = {
-    device = "/dev/disk/by-uuid/d09c7fde-1b73-4810-b66f-eb52c7d83e87";
-    fsType = "btrfs";
-    options = [ "subvol=@home" ];
   };
 
   fileSystems."/boot" = {
