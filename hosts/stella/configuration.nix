@@ -58,6 +58,9 @@
   ];
 
   services.asusd.enable = true;
+  services.asusd.enableUserService = true;
+  # don't know why enable asusd module don't auto start asusd service
+  systemd.services.asusd.enable = true;
 
   nixpkgs.config.allowUnfree = true;
   hardware.enableAllFirmware = true;
