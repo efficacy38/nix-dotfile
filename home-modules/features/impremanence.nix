@@ -7,34 +7,38 @@ let
 in
 {
   home.persistence."/persistent/home/efficacy38" = {
-    directories = [
-      "Downloads"
-      "Music"
-      "Pictures"
-      "Documents"
-      "Videos"
-      "Sync"
-      "Postman"
-      ".gnupg"
-      ".ssh"
-      ".nixops"
-      # TODO: tmporary add .local/share, we should add data when using some
-      # application
-      ".local/share"
-      # ".local/share/rime"
-      # ".local/share/zsh"
-      ".config/Moonlight\ Game\ Streaming\ Project"
-      ".local/state"
-      ".config/rambox"
-      ".config/solaar"
-      ".krew"
-      ".kube"
-      ".mozilla"
-      "Projects"
-      ".thunderbird"
-      (symDirectory ".local/share/Steam")
-    ];
     allowOther = true;
+
+    directories =
+      [
+        "Postman"
+        ".gnupg"
+        ".ssh"
+        ".nixops"
+        # TODO: tmporary add .local/share, we should add data when using some
+        # application
+        ".local/share"
+        # ".local/share/rime"
+        # ".local/share/zsh"
+        ".config/Moonlight\ Game\ Streaming\ Project"
+        ".local/state"
+        ".config/rambox"
+        ".config/solaar"
+        ".krew"
+        ".kube"
+        ".mozilla"
+        ".thunderbird"
+      ]
+      ++ (map symDirectory [
+        "Music"
+        "Downloads"
+        "Pictures"
+        "Projects"
+        "Documents"
+        "Videos"
+        "Sync"
+        ".local/share/Steam"
+      ]);
 
     files = [
     ];
