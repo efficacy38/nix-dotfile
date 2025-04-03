@@ -76,6 +76,7 @@
       dates = "weekly";
       extraArgs = "--keep 14 --keep-since 14d";
     };
+    flake = "/etc/nixos/nix-dotfile";
   };
 
   i18n.extraLocaleSettings = {
@@ -98,12 +99,6 @@
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
-
-  # this is for nix-helper(nh)
-  environment.sessionVariables = {
-    # TODO: use main user module to control this
-    FLAKE = "/home/efficacy38/Projects/Personal/nix-dotfile";
-  };
 
   environment.systemPackages = with pkgs; [
     # management utils
