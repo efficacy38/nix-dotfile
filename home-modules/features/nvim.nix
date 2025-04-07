@@ -72,6 +72,9 @@
     ginkgo
     richgo
     govulncheck
+
+    # better prompt of copilot
+    lynx
   ];
 
   home.sessionVariables = {

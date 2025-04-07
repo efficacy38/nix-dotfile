@@ -59,6 +59,7 @@ return {
             ["."] = true,
           },
           copilot_node_command = "node", -- Node.js version must be > 18.x
+          copilot_model = "gpt-4o-copilot",
           server_opts_overrides = {},
         },
       }
