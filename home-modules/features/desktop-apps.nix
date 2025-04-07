@@ -34,5 +34,6 @@
     prismlauncher
     moonlight-qt
     parsec-bin
+    vscode
   ];
 }
