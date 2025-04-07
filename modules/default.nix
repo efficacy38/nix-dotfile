@@ -6,6 +6,7 @@
     ./common-server-setting.nix
     ./my-steam.nix
     ./my-desktop.nix
+    ./my-impremanence.nix
     ./my-tailscale.nix
     ./cscc-work.nix
     ./my-impremanence.nix

@@ -4,10 +4,10 @@
   ...
 }:
 let
-  cfg = config.my-impermanence;
+  cfg = config.my-impremanence;
 in
 {
-  options.my-impermanence = {
+  options.my-impremanence = {
     enable = lib.mkEnableOption "enable impermanence";
   };
 
