@@ -103,6 +103,7 @@ in
       pkgs.kdePackages.breeze
       pkgs.kdePackages.breeze-icons
       pkgs.kdePackages.qtsvg
+      pkgs.gawk
     ];
     stylix.targets.waybar.enable = false;
     stylix.targets.waybar.addCss = false;
