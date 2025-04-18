@@ -165,12 +165,14 @@
       # overriding alias
       aliasIfExist vim nvim
       aliasIfExist vi vim
+      aliasIfExist podman 'uwsm app -- podman'
       aliasIfExist docker-compose podman-compose
       aliasIfExist docker podman
       alias kreload='kquitapp5 plasmashell; plasmashell --replace &'
       export PATH=$HOME/.local/bin:$PATH:$HOME/.krew/bin
       alias s=systemctl
       alias chknix="pushd $(nix registry list | grep 'system flake:nixpkgs' | cut -d' ' -f 3 | cut -d':' -f 2) && vim . && popd"
+      alias gen_meeting_minute=$(podman run -it --rm dockersource.cc.cs.nctu.edu.tw/csjhuang/gen_meeting_minute)
 
       source <(fzf --zsh)
     '';
