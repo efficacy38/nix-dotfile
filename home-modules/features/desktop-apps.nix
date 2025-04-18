@@ -35,5 +35,8 @@
     moonlight-qt
     parsec-bin
     vscode
+
+    zotero
+    zotero-translation-server
   ];
 }

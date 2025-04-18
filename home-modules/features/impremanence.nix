@@ -57,6 +57,7 @@ in
         "Documents"
         "Videos"
         "Sync"
+        "Zotero"
         ".local/share/Steam"
         ".local/share/containers"
       ]);
