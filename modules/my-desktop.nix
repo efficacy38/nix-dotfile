@@ -163,9 +163,6 @@ in
           pkgs.kdePackages.dolphin
           pkgs.kdePackages.ark
         ];
-        xdg.portal.enable = true;
-        # for better compatibility, check https://wiki.archlinux.org/title/XDG_Desktop_Portal
-        xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-hyprland ];
 
         security.pam.services.sddm.enableGnomeKeyring = true;
         services.gnome.gnome-keyring.enable = true;
