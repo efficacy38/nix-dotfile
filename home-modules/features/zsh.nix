@@ -7,6 +7,7 @@
   home.packages = with pkgs; [
     fzf
     fzf-zsh
+    zsh-defer
   ];
 
   programs.zoxide = {
@@ -17,8 +18,14 @@
     enableZshIntegration = true;
   };
 
+  programs.command-not-found.enable = false;
+
   programs.zsh = {
     enable = true;
+    # zprof.enable = true;
+    # disable compInit due to ohMyZsh would do this for us
+    completionInit = "";
+
     plugins = [
       {
         name = "zsh-completions";
@@ -60,8 +67,16 @@
       ];
     };
 
+    initExtraBeforeCompInit = ''
+      ZSH_DISABLE_COMPFIX=true
+    '';
+
     initExtra = ''
+      source "${pkgs.zsh-defer}/share/zsh-defer/zsh-defer.plugin.zsh"
       [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+      if [[ -r "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh" ]]; then
+        source "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh"
+      fi
       # ------------------------ self defined unctions ----------------------------
       # function to create a new tmux session with the name of the current directory
       function tat {
@@ -130,11 +145,16 @@
 
       # $1: alias
       # $2: command
-      function aliasIfExist(){
-        command_base="$(echo $2 | cut -d' ' -f1)"
-        if command -v "$command_base" >/dev/null; then
-          alias $1=$2
-        fi
+      function aliasIfExist() {
+        local alias_name=$1
+        local command_str=$2
+        local command_base="''${2%% *}"
+
+        zsh-defer -c "
+          if command -v ''${command_base} >/dev/null; then
+            alias ''${alias_name}="''${command_str}"
+          fi
+        "
       }
 
       function gen-new-sshkey() {
@@ -171,10 +191,11 @@
       alias kreload='kquitapp5 plasmashell; plasmashell --replace &'
       export PATH=$HOME/.local/bin:$PATH:$HOME/.krew/bin
       alias s=systemctl
-      alias chknix="pushd $(nix registry list | grep 'system flake:nixpkgs' | cut -d' ' -f 3 | cut -d':' -f 2) && vim . && popd"
-      alias gen_meeting_minute=$(podman run -it --rm dockersource.cc.cs.nctu.edu.tw/csjhuang/gen_meeting_minute)
+      alias chknix='pushd $(nix registry list | grep 'system flake:nixpkgs' | cut -d' ' -f 3 | cut -d':' -f 2) && vim . && popd'
+      alias gen_meeting_minute='podman run -it --rm dockersource.cc.cs.nctu.edu.tw/csjhuang/gen_meeting_minute'
 
-      source <(fzf --zsh)
+      # enable command not found prompt when bootstraped
+      # source ${pkgs.nix-index}/etc/profile.d/command-not-found.sh
     '';
   };
 
