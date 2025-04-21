@@ -106,6 +106,9 @@ in
 
         # make yubikey touch popup notification shown
         programs.yubikey-touch-detector.enable = true;
+
+        # enable wireshark on every desktop
+        programs.wireshark.enable = true;
       };
 
       kde-config = {
@@ -162,6 +165,8 @@ in
           # kde application
           pkgs.kdePackages.dolphin
           pkgs.kdePackages.ark
+
+          wireshark
         ];
 
         security.pam.services.sddm.enableGnomeKeyring = true;

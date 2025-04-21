@@ -75,7 +75,8 @@ in
     programs.waybar.enable = true;
     programs.waybar.systemd.enable = true;
     programs.waybar.systemd.target = "graphical-session.target";
-    programs.alacritty.enable = true;
+    # programs.alacritty.enable = true;
+    programs.kitty.enable = true;
     wayland.windowManager.hyprland.systemd.enable = false;
     home.packages = [
       pkgs.mate.mate-media
