@@ -39,9 +39,16 @@ in
       isNormalUser = true;
       description = "${cfg.userName}(admin)";
       shell = pkgs.zsh;
-      extraGroups = [ "wheel" ];
+      extraGroups = [
+        "wheel"
+        "wireshark"
+      ];
       hashedPasswordFile = config.sops.secrets."main_user_passwd_hash".path;
       linger = true;
+    };
+
+    users.users."root" = {
+      hashedPasswordFile = config.sops.secrets."main_user_passwd_hash".path;
     };
 
     home-manager = {

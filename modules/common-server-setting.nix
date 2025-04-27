@@ -1,8 +1,4 @@
-{
-  pkgs,
-  lib,
-  ...
-}:
+{ pkgs, lib, ... }:
 {
   # enable nix flake
   nix = {
@@ -19,7 +15,7 @@
       # 40 is the default value of cache, cache.nixos.org is 30
       # use 0 as personal cache
       extra-substituters = [
-        "https://nix-cache.csjhuang.net?priority=0"
+        # "https://nix-cache.csjhuang.net?priority=0"
       ];
       extra-trusted-public-keys = [
         "nix-cache.csjhuang.net-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
@@ -130,9 +126,7 @@
   ];
   sops.defaultSopsFile = ../secrets/default.yaml;
   sops.defaultSopsFormat = "yaml";
-  sops.age.sshKeyPaths = [
-    "/etc/ssh/ssh_host_ed25519_key"
-  ];
+  sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
 
   networking.nftables.enable = true;
   networking.firewall.enable = lib.mkDefault true;
