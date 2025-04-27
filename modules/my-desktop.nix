@@ -109,6 +109,9 @@ in
 
         # enable wireshark on every desktop
         programs.wireshark.enable = true;
+
+        # enable podman
+        virtualisation.podman.enable = true;
       };
 
       kde-config = {
@@ -129,9 +132,9 @@ in
         environment.systemPackages = with pkgs; [
           # hyprland default terminal
           alacritty
+
           # maybe other is good also
           # NOTE: remove following terminal emulator if not necessary
-          alacritty
           wezterm
           networkmanagerapplet
 
