@@ -24,6 +24,8 @@ let
         { programs.nix-index-database.comma.enable = true; }
         inputs.stylix.nixosModules.stylix
 
+        inputs.solaar.nixosModules.default
+        inputs.impermanence.nixosModules.impermanence
         # common overlays
         ../overlays/personal-scripts/personal-scripts.nix
       ]

@@ -9,8 +9,6 @@
     ../../modules
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
-    inputs.solaar.nixosModules.default
-    inputs.impermanence.nixosModules.impermanence
 
     # nixos-hardware
     inputs.nixos-hardware.nixosModules.common-cpu-amd

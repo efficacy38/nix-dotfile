@@ -10,8 +10,6 @@
     ../../modules
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
-    inputs.solaar.nixosModules.default
-    inputs.impermanence.nixosModules.impermanence
 
     # nixos-hardware
     inputs.nixos-hardware.nixosModules.common-cpu-intel
@@ -58,9 +56,10 @@
   ];
 
   services.asusd.enable = true;
+
   services.asusd.enableUserService = true;
   # don't know why enable asusd module don't auto start asusd service
-  systemd.services.asusd.enable = true;
+  systemd.services.asusd.enable = lib.mkForce true;
 
   nixpkgs.config.allowUnfree = true;
   hardware.enableAllFirmware = true;
@@ -69,6 +68,12 @@
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
+
+  networking.extraHosts = ''
+    10.2.2.99   minio-backup.test.cc.cs.nctu.edu.tw
+  '';
+
+  networking.firewall.enable = lib.mkForce false;
 
   system.stateVersion = "24.11";
 }
