@@ -8,6 +8,7 @@
     fzf
     fzf-zsh
     zsh-defer
+    kitty.terminfo
   ];
 
   programs.zoxide = {
@@ -146,13 +147,13 @@
       # $1: alias
       # $2: command
       function aliasIfExist() {
-        local alias_name=$1
-        local command_str=$2
+        local alias_name="$1"
+        local command_str="$2"
         local command_base="''${2%% *}"
 
         zsh-defer -c "
           if command -v ''${command_base} >/dev/null; then
-            alias ''${alias_name}="''${command_str}"
+            alias ''${alias_name}=\"''${command_str}\"
           fi
         "
       }
