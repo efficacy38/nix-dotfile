@@ -32,6 +32,7 @@
 
   main-user.enable = true;
   main-user.userName = "efficacy38";
+  main-user.userConfig = ./home.nix;
   my-desktop.enable = true;
   cscc-work.enable = true;
   programs.mosh = {
