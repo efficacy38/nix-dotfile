@@ -19,19 +19,21 @@
     inputs.nixos-hardware.nixosModules.framework-intel-core-ultra-series1
   ];
 
-  main-user.enable = true;
-  main-user.userName = "efficacy38";
-  main-user.userConfig = ./home.nix;
-  my-steam.enable = true;
-  my-steam.hidpi = false;
-  my-desktop.enable = true;
-  my-desktop.zramEnable = false;
-  my-desktop.hyprlandEnable = true;
-  my-desktop.kdeEnable = false;
-  cscc-work.enable = true;
-  my-tailscale.enable = true;
-  my-tailscale.asRouter = false;
-  my-impremanence.enable = true;
+  # myNixos bundles
+  myNixos.bundles.minimal.enable = true;
+
+  # myNixos.main-user.enable = true;
+  # main-user.userName = "efficacy38";
+  # main-user.userConfig = ./home.nix;
+  # my-steam.enable = true;
+  # my-desktop.enable = true;
+  # my-desktop.zramEnable = false;
+  # my-desktop.hyprlandEnable = true;
+  # my-desktop.kdeEnable = false;
+  # cscc-work.enable = true;
+  # my-tailscale.enable = true;
+  # my-tailscale.asRouter = false;
+  # my-impremanence.enable = true;
 
   # Bootloader.
   boot.loader.systemd-boot.enable = lib.mkDefault true;

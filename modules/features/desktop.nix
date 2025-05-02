@@ -6,11 +6,11 @@
   ...
 }:
 let
-  cfg = config.my-desktop;
+  cfg = config.myNixos.desktop;
   secretpath = builtins.toString inputs.nix-secrets;
 in
 {
-  options.my-desktop = {
+  options.desktop = {
     enable = lib.mkEnableOption "enable desktop Environment";
     zramEnable = lib.mkEnableOption "enable zram";
     hyprlandEnable = lib.mkEnableOption "enable hyprland(system)";

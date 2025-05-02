@@ -1,28 +1,42 @@
-{ inputs, ... }:
 {
-  imports = [
-    inputs.sops-nix.nixosModules.sops
-    ./main-user.nix
-    ./common-server-setting.nix
-    ./my-steam.nix
-    ./my-desktop.nix
-    ./my-impremanence.nix
-    ./my-tailscale.nix
-    ./cscc-work.nix
-    ./my-impremanence.nix
-  ];
+  inputs,
+  config,
+  lib,
+  myLib,
+  ...
+}:
+let
 
-  options = {
-    # Option declarations.
-    # Declare what settings a user of this module can set.
-    # Usually this includes a global "enable" option which defaults to false.
-  };
+  cfg = config.myNixos;
+  # Taking all modules in ./features and adding enables to them
+  features = myLib.extendModules (name: {
+    extraOptions = {
+      myNixos.${name}.enable = lib.mkEnableOption "enable my ${name} configuration";
+    };
+
+    configExtension = config: (lib.mkIf cfg.${name}.enable config);
+  }) (myLib.filesIn ./features);
+
+  bundles = myLib.extendModules (name: {
+    extraOptions = {
+      myNixos.bundles.${name}.enable = lib.mkEnableOption "enable my ${name} configuration";
+    };
+
+    configExtension = config: (lib.mkIf cfg.bundles.${name}.enable config);
+  }) (myLib.filesIn ./bundles);
+in
+{
 
   config = {
-    # Option definitions.
-    # Define what other settings, services and resources should be active.
-    # Usually these depend on whether a user of this module chose to "enable" it
-    # using the "option" above.
-    # Options for modules imported in "imports" can be set here.
+    # enable shells
+    # programs.bash.enable = true;
+    nixpkgs.config.allowUnfree = true;
   };
+
+  imports =
+    [
+      inputs.sops-nix.nixosModules.sops
+    ]
+    ++ features
+    ++ bundles;
 }
