@@ -3,7 +3,7 @@
 output=$(hyprctl monitors)
 
 # Use grep to count the occurrences of the word "Monitor," which indicates a new monitor entry
-monitor_count=$(echo "$output" | grep -c "^Monitor")
+monitor_count=$(cat /sys/class/drm/*/status | grep -c ^connected)
 lid_state="$(awk '{print $2}' < /proc/acpi/button/lid/LID/state)"
 
 # Check if there is more than one monitor
