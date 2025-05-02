@@ -62,7 +62,9 @@
   # enable nix-ld
   programs.nix-ld = {
     enable = true;
-    libraries = with pkgs; [ ];
+    libraries = with pkgs; [
+      libgcc.lib
+    ];
   };
 
   programs.nh = {
