@@ -33,7 +33,6 @@
     shellcheck
     shfmt
     ruff
-    ruff-lsp
     nixfmt-rfc-style
     clang-tools
     nodePackages.prettier
