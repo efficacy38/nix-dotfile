@@ -205,4 +205,6 @@
       source = config.lib.file.mkOutOfStoreSymlink "/etc/nixos/nix-dotfile/home-modules/dotfiles/p10k.zsh";
     };
   };
+
+  programs.zsh.history.path = "$HOME/.local/share/zsh/.zsh_history";
 }

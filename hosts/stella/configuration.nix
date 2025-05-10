@@ -31,7 +31,7 @@
   cscc-work.enable = true;
   my-tailscale.enable = true;
   my-tailscale.asRouter = false;
-  my-impremanence.enable = true;
+  my-impermanence.enable = true;
 
   # Bootloader.
   boot.loader.systemd-boot.enable = lib.mkDefault true;

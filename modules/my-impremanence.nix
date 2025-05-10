@@ -4,10 +4,10 @@
   ...
 }:
 let
-  cfg = config.my-impremanence;
+  cfg = config.my-impermanence;
 in
 {
-  options.my-impremanence = {
+  options.my-impermanence = {
     enable = lib.mkEnableOption "enable impermanence";
   };
 
@@ -43,10 +43,9 @@ in
       hideMounts = true;
       directories = [
         "/etc/NetworkManager/system-connections"
-        "/etc/ssh"
-        "/etc/asusd"
+        "/etc/ssh/"
         "/etc/nixos"
-        "/etc/wireguard"
+        "/etc/wireguard/"
         "/var/db/sudo"
         "/var/log"
         "/var/lib/bluetooth"
@@ -61,6 +60,56 @@ in
       files = [
         "/etc/machine-id"
       ];
+
+      users."efficacy38" = {
+        directories = [
+          "Music"
+          "Downloads"
+          "Pictures"
+          "Projects"
+          "Documents"
+          "Videos"
+          "Sync"
+          "Zotero"
+          "Postman"
+          ".gnupg"
+          ".ssh"
+          ".mozilla"
+          ".nixops"
+          ".krew"
+          ".kube"
+
+          ".config/Moonlight\ Game\ Streaming\ Project"
+          ".config/fcitx5"
+          ".config/rambox"
+          ".config/solaar"
+
+          ".local/share/fcitx5"
+          ".local/share/zoxide"
+          ".local/share/zsh"
+          ".local/state"
+          ".local/share/PrismLauncher"
+          ".local/share/Steam"
+          ".local/share/Trash"
+          ".local/share/containers"
+          ".local/share/direnv"
+          ".local/share/dolphin"
+          ".local/share/fish"
+          ".local/share/kate"
+          ".local/share/k9s"
+          ".local/share/mc"
+          ".local/share/nvim"
+          ".local/share/pnpm"
+          ".local/share/podman"
+          ".local/share/sddm"
+          ".local/share/tldr"
+          ".local/share/rime"
+          ".local/share/remmina"
+          ".local/share/yarn"
+          ".mc"
+          ".thunderbird"
+        ];
+      };
     };
 
     fileSystems."/etc/ssh".neededForBoot = true;
