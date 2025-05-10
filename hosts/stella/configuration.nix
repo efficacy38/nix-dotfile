@@ -55,9 +55,14 @@
     gparted
   ];
 
-  services.asusd.enable = true;
+  services.tlp = {
+    enable = true;
+    settings = {
+      START_CHARGE_THRESH_BAT0 = 30;
+      STOP_CHARGE_THRESH_BAT0 = 80;
+    };
+  };
 
-  services.asusd.enableUserService = true;
   # don't know why enable asusd module don't auto start asusd service
   systemd.services.asusd.enable = lib.mkForce true;
 
