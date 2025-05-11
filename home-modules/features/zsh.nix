@@ -187,8 +187,6 @@
       aliasIfExist vim nvim
       aliasIfExist vi vim
       aliasIfExist podman 'uwsm app -- podman'
-      aliasIfExist docker-compose podman-compose
-      aliasIfExist docker podman
       alias kreload='kquitapp5 plasmashell; plasmashell --replace &'
       export PATH=$HOME/.local/bin:$PATH:$HOME/.krew/bin
       alias s=systemctl
