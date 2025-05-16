@@ -1,4 +1,10 @@
-{ lib, config, pkgs, inputs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
 let
   cfg = config.cscc-work;
   secretpath = builtins.toString inputs.nix-secrets;
@@ -38,7 +44,7 @@ in
         # use-resolvconf = 1
         # set-dns = 1
         pppd-use-peerdns = 0
-        trusted-cert = d986835a97df3d16cad088a22c6ac8de5a9f80aef1d2c1cde873d068867a03a6
+        trusted-cert = d9921fc2c7702e215826ea75b17511f3d59b7d5ed328b92e29b79307e90c84f9
         pppd-ifname = ppp0
       '';
 
@@ -54,7 +60,7 @@ in
         # use-resolvconf = 1
         # set-dns = 1
         pppd-use-peerdns = 0
-        trusted-cert = d986835a97df3d16cad088a22c6ac8de5a9f80aef1d2c1cde873d068867a03a6
+        trusted-cert = d9921fc2c7702e215826ea75b17511f3d59b7d5ed328b92e29b79307e90c84f9 
         pppd-ifname = ppp1
       '';
 
@@ -71,7 +77,10 @@ in
       enable = true;
       description = "OpenFortiVPN for %I";
       after = [ "network-online.target" ];
-      wants = [ "network-online.target" "systemd-networkd-wait-online.service" ];
+      wants = [
+        "network-online.target"
+        "systemd-networkd-wait-online.service"
+      ];
 
       serviceConfig = {
         ExecStart = ''
@@ -84,8 +93,10 @@ in
       };
     };
 
-    environment.etc."openfortivpn/cscc_test.conf".source = "${config.sops.templates."cscc_test_vpn.conf".path}";
-    environment.etc."openfortivpn/cscc_prod.conf".source = "${config.sops.templates."cscc_prod_vpn.conf".path}";
+    environment.etc."openfortivpn/cscc_test.conf".source =
+      "${config.sops.templates."cscc_test_vpn.conf".path}";
+    environment.etc."openfortivpn/cscc_prod.conf".source =
+      "${config.sops.templates."cscc_prod_vpn.conf".path}";
 
     security.pki.certificates = [
       ''
