@@ -42,6 +42,8 @@
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
 
     stylix.url = "github:danth/stylix/release-24.11";
+
+    zen-browser.url = "github:youwen5/zen-browser-flake";
   };
 
   outputs =

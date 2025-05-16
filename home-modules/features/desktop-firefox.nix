@@ -17,41 +17,9 @@
 
   programs.firefox = {
     enable = true;
-    policies = {
-      ExtensionSettings =
-        let
-          navExtIds = [
-            # rabby wallet
-            "{743634b5-5b80-4035-a92b-e6aac3fc32ed}"
-            "keepassxc-browser@keepassxc.org"
-            "simple-tab-groups@drive4ik"
-            "addon@darkreader.org"
-          ];
+    package = inputs.zen-browser.packages."${pkgs.system}".default;
+    configPath = ".zen";
 
-          menuExtIds = [
-            "uBlock0@raymondhill.net"
-            "sponsorBlocker@ajay.app"
-          ];
-
-          posExtNav = extId: {
-            extId = {
-              default_area = "navbar";
-            };
-          };
-
-          posExtMenu = extId: {
-            extId = {
-              default_area = "menupanel";
-            };
-          };
-
-          merged = lib.foldl' lib.recursiveUpdate { } (
-            (map posExtNav navExtIds) ++ (map posExtMenu menuExtIds)
-          );
-        in
-        merged;
-
-    };
     profiles.personal = {
       extensions = with inputs.firefox-addons.packages."${pkgs.system}"; [
         keepassxc-browser

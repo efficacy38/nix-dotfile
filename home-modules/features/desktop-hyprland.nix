@@ -77,6 +77,9 @@ in
     programs.waybar.systemd.target = "graphical-session.target";
     # programs.alacritty.enable = true;
     programs.kitty.enable = true;
+    programs.kitty.extraConfig = ''
+      include /home/efficacy38/test-kitty.conf
+    '';
     wayland.windowManager.hyprland.systemd.enable = false;
     home.packages = [
       pkgs.mate.mate-media
@@ -109,6 +112,7 @@ in
     stylix.targets.waybar.enable = false;
     stylix.targets.waybar.addCss = false;
     stylix.targets.hyprpaper.enable = false;
+    stylix.targets.firefox.enable = false;
     stylix.targets.kde.enable = false;
   };
 }

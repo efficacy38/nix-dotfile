@@ -487,6 +487,22 @@
         "type": "github"
       }
     },
+    "nixpkgs_4": {
+      "locked": {
+        "lastModified": 1747179050,
+        "narHash": "sha256-qhFMmDkeJX9KJwr5H32f1r7Prs7XbQWtO0h3V0a0rFY=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "adaa24fbf46737f3f1b5497bf64bae750f82942e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "firefox-addons": "firefox-addons",
@@ -500,7 +516,8 @@
         "nixpkgs-stable": "nixpkgs-stable",
         "solaar": "solaar",
         "sops-nix": "sops-nix",
-        "stylix": "stylix"
+        "stylix": "stylix",
+        "zen-browser": "zen-browser"
       }
     },
     "snowfall-lib": {
@@ -676,6 +693,24 @@
       "original": {
         "owner": "tinted-theming",
         "repo": "tinted-tmux",
+        "type": "github"
+      }
+    },
+    "zen-browser": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_4"
+      },
+      "locked": {
+        "lastModified": 1747282003,
+        "narHash": "sha256-UlCfXNncIYwUvPxHngoH6pY4fiZlU8Z2Ve/gUEn6h+o=",
+        "owner": "youwen5",
+        "repo": "zen-browser-flake",
+        "rev": "952ca99903f19a7096a3709f2938d9c7840a5f91",
+        "type": "github"
+      },
+      "original": {
+        "owner": "youwen5",
+        "repo": "zen-browser-flake",
         "type": "github"
       }
     }
