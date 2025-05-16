@@ -193,6 +193,11 @@
       alias chknix='pushd $(nix registry list | grep 'system flake:nixpkgs' | cut -d' ' -f 3 | cut -d':' -f 2) && vim . && popd'
       alias gen_meeting_minute='podman run -it --rm dockersource.cc.cs.nctu.edu.tw/csjhuang/gen_meeting_minute'
 
+      zsh-defer -c "
+        aliasIfExist 'ssh' 'kitty +kitten ssh'
+        source <(fzf --zsh)
+      "
+
       # enable command not found prompt when bootstraped
       # source ${pkgs.nix-index}/etc/profile.d/command-not-found.sh
     '';
