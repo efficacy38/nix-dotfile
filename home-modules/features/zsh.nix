@@ -196,6 +196,7 @@
       zsh-defer -c "
         aliasIfExist 'ssh' 'kitty +kitten ssh'
         source <(fzf --zsh)
+        complete -C tofu tofu
       "
 
       # enable command not found prompt when bootstraped

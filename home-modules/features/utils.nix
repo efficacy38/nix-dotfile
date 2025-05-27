@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   home.packages = with pkgs; [
     curl
     wget
@@ -10,6 +11,7 @@
     cfssl
     dnsutils
     ansible
+    mosh
 
     wl-clipboard
     # handle nix cache
