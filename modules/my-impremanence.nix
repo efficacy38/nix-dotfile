@@ -74,7 +74,7 @@ in
           "Postman"
           ".gnupg"
           ".ssh"
-          ".mozilla"
+          ".zen"
           ".nixops"
           ".krew"
           ".kube"
