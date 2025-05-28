@@ -1,6 +1,5 @@
 {
   pkgs,
-  lib,
   inputs,
   ...
 }:
@@ -8,10 +7,10 @@
   xdg.mimeApps = {
     enable = true;
     defaultApplications = {
-      "x-scheme-handler/http" = [ "firefox.desktop" ];
-      "x-scheme-handler/https" = [ "firefox.desktop" ];
-      "text/html" = [ "firefox.desktop" ];
-      "application/pdf" = [ "firefox.desktop" ];
+      "x-scheme-handler/http" = [ "zen.desktop" ];
+      "x-scheme-handler/https" = [ "zen.desktop" ];
+      "text/html" = [ "zen.desktop" ];
+      "application/pdf" = [ "zen.desktop" ];
     };
   };
 
@@ -21,7 +20,7 @@
     configPath = ".zen";
 
     profiles.personal = {
-      extensions = with inputs.firefox-addons.packages."${pkgs.system}"; [
+      extensions.packages = with inputs.firefox-addons.packages."${pkgs.system}"; [
         keepassxc-browser
         ublock-origin
         sponsorblock
