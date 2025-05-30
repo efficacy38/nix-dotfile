@@ -21,7 +21,6 @@
     chromium
 
     # utils
-    rambox
     # ### wallpaper-engine-plugin
     # wallpaper-engine-kde-plugin
     # qt5.qtwebsockets

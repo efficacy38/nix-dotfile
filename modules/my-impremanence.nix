@@ -81,7 +81,6 @@ in
 
           ".config/Moonlight\ Game\ Streaming\ Project"
           ".config/fcitx5"
-          ".config/rambox"
           ".config/solaar"
 
           ".local/share/fcitx5"
