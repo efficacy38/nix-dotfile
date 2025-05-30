@@ -12,11 +12,11 @@
     dnsutils
     ansible
     mosh
+    s3cmd
 
     wl-clipboard
     # handle nix cache
     cachix
-
     entr
 
     # personal script
