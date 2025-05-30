@@ -22,6 +22,7 @@
 
         registries = {
           search = [
+            "mirror.gcr.io"
             "docker.io"
             "quay.io"
             "gcr.io"
