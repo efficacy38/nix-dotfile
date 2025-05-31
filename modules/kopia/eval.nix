@@ -13,4 +13,4 @@ let
   };
   cfg = evaled.config.services.kopia;
 in
-builtins.trace (builtins.toJSON cfg) null
+builtins.toJSON cfg

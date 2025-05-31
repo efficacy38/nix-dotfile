@@ -15,7 +15,9 @@ let
   };
 in
 {
-  imports = [ ];
+  imports = [
+    ./repositories.nix
+  ];
 
   options.services.kopia = {
     enabled = lib.mkEnableOption "Enable Kopia backup";
@@ -31,6 +33,10 @@ in
         s3 = {
           name = "default";
           enabled = true;
+          repository = {
+            # s3.s3 = "default-bar-value";
+            azure.azure = "default-azure-value";
+          };
         };
       };
     };
