@@ -1,16 +1,26 @@
 let
   pkgs = import <nixpkgs> { };
-  evaled = pkgs.lib.evalModules {
+  evalConfig = import <nixpkgs/nixos/lib/eval-config.nix>;
+
+  system = evalConfig {
     modules = [
+      ./default.nix
+
+      # Set `system.stateVersion` and dummy fileSystems
       (
         { config, ... }:
         {
-          config._module.args = { inherit pkgs; };
+          fileSystems."/" = {
+            device = "fake";
+            fsType = "tmpfs";
+          };
+          system.stateVersion = "24.11";
+          nixpkgs.system = "x86_64-linux";
+          nixpkgs.pkgs = pkgs;
         }
       )
-      ./default.nix
     ];
   };
-  cfg = evaled.config.services.kopia;
 in
-builtins.toJSON cfg
+builtins.toJSON system.config.services.kopia
+# builtins.toJSON system.config.systemd.services.kopia-repository-s3

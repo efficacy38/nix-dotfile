@@ -11,6 +11,11 @@ let
         description = "Name of the Kopia instance.";
       };
       enabled = lib.mkEnableOption "Enable Kopia instance";
+      password = lib.mkOption {
+        type = lib.types.str;
+        default = "default-password";
+        description = "Password for the Kopia instance.";
+      };
     };
   };
 in
@@ -27,18 +32,5 @@ in
   };
 
   config = {
-    services.kopia = {
-      enabled = true;
-      instances = {
-        s3 = {
-          name = "default";
-          enabled = true;
-          repository = {
-            # s3.s3 = "default-bar-value";
-            azure.azure = "default-azure-value";
-          };
-        };
-      };
-    };
   };
 }

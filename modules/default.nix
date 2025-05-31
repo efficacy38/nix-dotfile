@@ -10,6 +10,7 @@
     ./my-tailscale.nix
     ./cscc-work.nix
     ./my-impremanence.nix
+    ./kopia
   ];
 
   options = {
@@ -24,5 +25,21 @@
     # Usually these depend on whether a user of this module chose to "enable" it
     # using the "option" above.
     # Options for modules imported in "imports" can be set here.
+
+    services.kopia = {
+      enabled = true;
+      instances = {
+        s3 = {
+          name = "default";
+          enabled = true;
+          repository = {
+            s3.password = "default-password-value";
+            s3.endpoint = "default-bar-value";
+            s3.accessKey = "accessKey";
+            s3.secretKey = "secretKey";
+          };
+        };
+      };
+    };
   };
 }
