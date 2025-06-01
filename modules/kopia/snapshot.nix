@@ -45,6 +45,10 @@ in
             '';
             serviceConfig = {
               Type = "simple";
+              User = "${instance.user}";
+              EnvironmentFile = "/etc/default/kopia-repository-${name}";
+              WorkingDirectory = "~";
+              SetLoginEnvironment = true;
             };
           };
       in

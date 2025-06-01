@@ -12,9 +12,14 @@ let
       };
       enabled = lib.mkEnableOption "Enable Kopia instance";
       password = lib.mkOption {
-        type = lib.types.str;
-        default = "default-password";
+        type = lib.types.nullOr lib.types.str;
+        default = null;
         description = "Password for the Kopia instance.";
+      };
+      passwordFile = lib.mkOption {
+        type = lib.types.nullOr lib.types.path;
+        default = null;
+        description = "File containing the password for the Kopia instance, content in this file would override instance.<name>.password.";
       };
     };
   };
