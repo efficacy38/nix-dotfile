@@ -111,10 +111,6 @@ in
             lib.attrsets.nameValuePair "kopia-repository-${name}" {
               description = "Kopia S3 repository service";
               wantedBy = [ "multi-user.target" ];
-              environment = {
-                # TODO: setup HOME environment of selected user
-                HOME = "/root";
-              };
               script = ''
                 if ! ${pkgs.kopia}/bin/kopia repository connect s3 ${lib.concatStringsSep " " (mkRepositoryArgs name instance)}; then
                   ${pkgs.kopia}/bin/kopia repository create s3 ${lib.concatStringsSep " " (mkRepositoryArgs name instance)};

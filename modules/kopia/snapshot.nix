@@ -36,10 +36,6 @@ in
             description = "Kopia S3 snapshot service";
             wants = [ "kopia-repository-${name}.service" ];
             after = [ "kopia-repository-${name}.service" ];
-            environment = {
-              # TODO: setup HOME environment of selected user
-              HOME = "/root";
-            };
             script = ''
               ${pkgs.kopia}/bin/kopia snapshot create ${instance.path} --description "Snapshot for ${name}";
             '';

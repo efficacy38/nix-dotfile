@@ -5,11 +5,6 @@
 let
   instanceType = lib.types.submodule {
     options = {
-      name = lib.mkOption {
-        type = lib.types.str;
-        default = "default";
-        description = "Name of the Kopia instance.";
-      };
       enabled = lib.mkEnableOption "Enable Kopia instance";
       password = lib.mkOption {
         type = lib.types.nullOr lib.types.str;
@@ -20,6 +15,11 @@ let
         type = lib.types.nullOr lib.types.path;
         default = null;
         description = "File containing the password for the Kopia instance, content in this file would override instance.<name>.password.";
+      };
+      user = lib.mkOption {
+        type = lib.types.str;
+        default = "root";
+        description = "User under which the Kopia instance runs.";
       };
     };
   };
