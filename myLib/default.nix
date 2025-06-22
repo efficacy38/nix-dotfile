@@ -26,7 +26,6 @@ let
 
         inputs.solaar.nixosModules.default
         inputs.impermanence.nixosModules.impermanence
-        inputs.determinate.nixosModules.default
         # common overlays
         ../overlays/personal-scripts/personal-scripts.nix
       ]

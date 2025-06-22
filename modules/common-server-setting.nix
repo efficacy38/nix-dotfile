@@ -16,7 +16,6 @@
       # use 0 as personal cache
       extra-substituters = [
         # "https://nix-cache.csjhuang.net?priority=0"
-        "https://install.determinate.systems?priority=40"
       ];
       extra-trusted-public-keys = [
         "nix-cache.csjhuang.net-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="

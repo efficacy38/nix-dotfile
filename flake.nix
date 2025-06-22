@@ -45,7 +45,6 @@
 
     zen-browser.url = "github:youwen5/zen-browser-flake";
 
-    determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
   };
 
   outputs =
