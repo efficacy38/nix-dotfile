@@ -21,7 +21,6 @@
 
     nix-secrets = {
       url = "git+ssh://git@github.com/efficacy38/nix-secret.git?ref=main&shallow=1";
-      # url = "git+ssh://git@gitlab.com/emergentmind/nix-secrets.git?ref=main&shallow=1";
       inputs = { };
       flake = false;
     };
@@ -45,6 +44,10 @@
 
     zen-browser.url = "github:youwen5/zen-browser-flake";
 
+    mic92.url = "github:Mic92/nur-packages";
+
+    # my personal packages
+    efficacy38.url = "github:efficacy38/nur-packages";
   };
 
   outputs =
