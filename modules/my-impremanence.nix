@@ -82,6 +82,7 @@ in
           ".config/Moonlight\ Game\ Streaming\ Project"
           ".config/fcitx5"
           ".config/solaar"
+          ".config/incus"
 
           ".local/share/fcitx5"
           ".local/share/zoxide"
