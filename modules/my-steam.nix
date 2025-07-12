@@ -21,7 +21,7 @@ in
       localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
     };
 
-    hardware.opengl.extraPackages = [ pkgs.vaapiVdpau ];
+    hardware.graphics.extraPackages = [ pkgs.vaapiVdpau ];
     hardware.steam-hardware.enable = true;
 
     environment.sessionVariables =

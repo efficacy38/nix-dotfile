@@ -45,7 +45,6 @@ in
         };
 
         # Enable sound with pipewire.
-        hardware.pulseaudio.enable = false;
         security.rtkit.enable = true;
         services.pipewire = {
           enable = true;
@@ -128,7 +127,7 @@ in
           withUWSM = true;
         };
 
-        hardware.opengl.enable = true;
+        hardware.graphics.enable = true;
         environment.systemPackages = with pkgs; [
           # hyprland default terminal
           alacritty

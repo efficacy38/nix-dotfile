@@ -21,7 +21,7 @@
     j = "just -g";
   };
 
-  programs.zsh.initExtra = ''
+  programs.zsh.initContent = ''
     source <(just --completions zsh)
   '';
 }
