@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  lib,
   ...
 }:
 {
@@ -68,11 +69,9 @@
       ];
     };
 
-    initExtraBeforeCompInit = ''
+    initContent = ''
       ZSH_DISABLE_COMPFIX=true
-    '';
 
-    initExtra = ''
       source "${pkgs.zsh-defer}/share/zsh-defer/zsh-defer.plugin.zsh"
       [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
       if [[ -r "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh" ]]; then

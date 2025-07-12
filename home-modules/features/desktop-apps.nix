@@ -13,15 +13,14 @@
     # desktop apps
     keepassxc
     thunderbird
-    protonmail-bridge
-    protonmail-bridge-gui
-    protonmail-desktop
-    youtube-music
+    # protonmail-bridge
+    # protonmail-bridge-gui
+    # protonmail-desktop
+    # youtube-music
     obs-studio
     chromium
 
     # utils
-    rambox
     # ### wallpaper-engine-plugin
     # wallpaper-engine-kde-plugin
     # qt5.qtwebsockets
