@@ -2,8 +2,17 @@
   pkgs,
   inputs,
   lib,
+  config,
   ...
 }:
+let
+
+  secretpath = builtins.toString inputs.nix-secrets;
+  personal-s3-secret = {
+    sopsFile = "${secretpath}/secrets/backup.yaml";
+    format = "yaml";
+  };
+in
 {
   imports = [
     # custom modules
@@ -29,6 +38,29 @@
   my-tailscale.enable = true;
   my-tailscale.asRouter = false;
   my-impermanence.enable = true;
+
+  services.lldpd.enable = true;
+
+  sops.secrets."homelab-1/password" = personal-s3-secret;
+  sops.secrets."homelab-1/accessKey" = personal-s3-secret;
+  sops.secrets."homelab-1/secretKey" = personal-s3-secret;
+
+  services.kopia = {
+    enabled = true;
+    instances = {
+      s3 = {
+        enabled = true;
+        passwordFile = config.sops.secrets."homelab-1/password".path;
+        path = "/persistent/";
+        repository = {
+          s3.bucket = "personal-backups";
+          s3.endpoint = "s3.csjhuang.net";
+          s3.accessKeyFile = config.sops.secrets."homelab-1/accessKey".path;
+          s3.secretKeyFile = config.sops.secrets."homelab-1/secretKey".path;
+        };
+      };
+    };
+  };
 
   # Bootloader.
   boot.loader.systemd-boot.enable = lib.mkDefault true;
