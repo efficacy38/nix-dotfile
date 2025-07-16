@@ -67,6 +67,26 @@
         "type": "github"
       }
     },
+    "efficacy38-nur": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1752691083,
+        "narHash": "sha256-WrZzY7ulDpAwEF4O9smlSsde6Z6e2i9+ZWy8Y0W3Q7Y=",
+        "owner": "efficacy38",
+        "repo": "nur-packages",
+        "rev": "944a558b7e6588a62d465de625ff0e0861d3d124",
+        "type": "github"
+      },
+      "original": {
+        "owner": "efficacy38",
+        "repo": "nur-packages",
+        "type": "github"
+      }
+    },
     "firefox-addons": {
       "inputs": {
         "nixpkgs": [
@@ -307,10 +327,10 @@
     "nix-secrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1748758539,
-        "narHash": "sha256-ctq2oXrbMF7vccd9L664/EXVn5fuIWX4xqEiNe06QZ0=",
+        "lastModified": 1752691539,
+        "narHash": "sha256-GJ6vL1ktEa67DQE9cotvwNFoAY1pLRNu7HNARfklSUo=",
         "ref": "main",
-        "rev": "b73818dea217056e1c628842e3a417cdcd0121c7",
+        "rev": "e4bb6847214daa74394e9d6e4c0b730b04876adf",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/efficacy38/nix-secret.git"
@@ -445,6 +465,7 @@
     },
     "root": {
       "inputs": {
+        "efficacy38-nur": "efficacy38-nur",
         "firefox-addons": "firefox-addons",
         "home-manager": "home-manager",
         "home-manager-stable": "home-manager-stable",
