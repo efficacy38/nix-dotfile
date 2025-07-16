@@ -26,6 +26,7 @@ let
 
         inputs.solaar.nixosModules.default
         inputs.impermanence.nixosModules.impermanence
+        inputs.efficacy38-nur.nixosModules.kopia
         # common overlays
         ../overlays/personal-scripts/personal-scripts.nix
       ]
