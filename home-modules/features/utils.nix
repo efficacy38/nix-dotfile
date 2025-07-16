@@ -21,6 +21,8 @@
 
     # personal script
     personal-script
+
+    nixos-shell
   ];
 
   programs.direnv = {
