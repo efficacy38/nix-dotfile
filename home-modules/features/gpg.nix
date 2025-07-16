@@ -55,7 +55,7 @@ with lib;
     default = [ ];
   };
   config.home.packages = [ pkgs.yubikey-manager ] ++ aliasScript;
-  config.programs.zsh.initExtra = lib.mkAfter (
+  config.programs.zsh.initContent = lib.mkAfter (
     lib.concatStrings (lib.lists.forEach aliasScript (script: "compdef ${script.name}=gpg\n"))
   );
 }
