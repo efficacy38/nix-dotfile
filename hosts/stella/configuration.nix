@@ -48,15 +48,40 @@ in
   services.kopia = {
     enabled = true;
     instances = {
-      s3 = {
+      homelab = {
         enabled = true;
         passwordFile = config.sops.secrets."homelab-1/password".path;
-        path = "/persistent/";
+        path = "/persistent";
         repository = {
           s3.bucket = "personal-backups";
           s3.endpoint = "s3.csjhuang.net";
           s3.accessKeyFile = config.sops.secrets."homelab-1/accessKey".path;
           s3.secretKeyFile = config.sops.secrets."homelab-1/secretKey".path;
+        };
+
+        policy = {
+          retention = {
+            keepLatest = 5;
+            keepDaily = 30;
+            keepWeekly = 4;
+            keepMonthly = 3;
+            keepAnnual = 0;
+          };
+
+          compression = {
+            compressorName = "pgzip";
+            neverCompress = [
+              "*.zip"
+              "*.tar"
+              "*.gz"
+              "*.tgz"
+              "*.xz"
+              "*.bz2"
+              "*.7z"
+              "*.rar"
+              "*.iso"
+            ];
+          };
         };
       };
     };
