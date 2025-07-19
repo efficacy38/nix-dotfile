@@ -81,9 +81,12 @@ in
 
           ".cache/keepassxc"
           ".config/Moonlight\ Game\ Streaming\ Project"
+          ".config/incus"
+          ".config/lazygit/config.yml"
           ".config/fcitx5"
           ".config/rambox"
           ".config/solaar"
+          ".config/github-copilot"
 
           ".local/state"
           ".local/share/fcitx5"
@@ -97,6 +100,7 @@ in
           ".local/share/direnv"
           ".local/share/dolphin"
           ".local/share/fish"
+          ".local/share/hyprland"
           ".local/share/kate"
           ".local/share/k9s"
           ".local/share/lazygit"
