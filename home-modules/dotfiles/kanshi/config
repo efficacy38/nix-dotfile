@@ -1,0 +1,22 @@
+output "Dell Inc. DELL U2724DE 3J1XL04" {
+  mode 2560x1440@120.00Hz
+  position 1920,0
+  alias $DELL_27
+}
+
+output "Dell Inc. DELL U2422HE B7FMNM3" {
+  mode 1920x1080@60.00Hz
+  position 4480,0
+  transform 90
+  alias $DELL_24
+}
+
+profile ec320 {
+  output "eDP-1" disable
+  output $DELL_24 enable
+  output $DELL_27 enable
+}
+
+profile undocked {
+  output "eDP-1" enable mode 2560x1600@60.00Hz position 0,0 scale 1.3333333
+}

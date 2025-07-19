@@ -43,6 +43,7 @@ in
           ../dotfiles/hypr/mocha.conf
           ../dotfiles/rofi
           ../dotfiles/waybar
+          ../dotfiles/kanshi/config
         ]
       );
 
@@ -67,6 +68,10 @@ in
             follow = "mouse";
           };
         };
+      };
+
+      services.kanshi = {
+        enable = true;
       };
 
       # to make nm-applet indicator show up
