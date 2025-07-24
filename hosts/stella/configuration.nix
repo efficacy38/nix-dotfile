@@ -39,8 +39,6 @@ in
   my-tailscale.asRouter = false;
   my-impermanence.enable = true;
 
-  services.lldpd.enable = true;
-
   sops.secrets."homelab-1/password" = personal-s3-secret;
   sops.secrets."homelab-1/accessKey" = personal-s3-secret;
   sops.secrets."homelab-1/secretKey" = personal-s3-secret;
