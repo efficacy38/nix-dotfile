@@ -16,6 +16,7 @@
     wl-clipboard
     # handle nix cache
     cachix
+    statix
 
     entr
 
