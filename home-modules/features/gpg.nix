@@ -33,15 +33,17 @@ let
     script;
 
   myGpgUtilOpts = with lib; {
-    options.usage = mkOption { type = types.str; };
-    options.keyCapacity = mkOption {
-      type = types.enum [
-        "sign"
-        "enc"
-        "auth"
-      ];
+    options = {
+      usage = mkOption { type = types.str; };
+      keyCapacity = mkOption {
+        type = types.enum [
+          "sign"
+          "enc"
+          "auth"
+        ];
+      };
+      subkeyId = mkOption { type = types.str; };
     };
-    options.subkeyId = mkOption { type = types.str; };
   };
 
   aliasScript = lib.lists.forEach my-gpg (

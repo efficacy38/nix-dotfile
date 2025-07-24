@@ -1,5 +1,4 @@
-_:
-{
+_: {
   nixpkgs = {
     config = {
       # allowUnfree = true;
@@ -7,10 +6,14 @@ _:
     };
   };
 
-  myHomeManager.bundles.minimal.enable = true;
-  myHomeManager.backup.enable = true;
-  myHomeManager.podman.enable = true;
-  myHomeManager.utils.enable = true;
-  myHomeManager.zsh.enable = true;
-  myHomeManager.k8s.enable = true;
+  myHomeManager = {
+    bundles.minimal.enable = true;
+
+    backup.enable = true;
+    podman.enable = true;
+    utils.enable = true;
+    zsh.enable = true;
+    k8s.enable = true;
+  };
+
 }

@@ -1,8 +1,9 @@
-_:
-{
-  myHomeManager.bundles.minimal.enable = true;
-  myHomeManager.desktop-apps.enable = true;
-  myHomeManager.desktop-zen.enable = true;
-  myHomeManager.desktop-hyprland.enable = true;
-  myHomeManager.nvim.enable = true;
+_: {
+  myHomeManager = {
+    bundles.minimal.enable = true;
+    desktop-apps.enable = true;
+    desktop-zen.enable = true;
+    desktop-hyprland.enable = true;
+    nvim.enable = true;
+  };
 }

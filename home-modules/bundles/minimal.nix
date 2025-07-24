@@ -1,5 +1,4 @@
-_:
-{
+_: {
   nixpkgs = {
     config = {
       # allowUnfree = true;
@@ -7,10 +6,12 @@ _:
     };
   };
 
-  myHomeManager.git.enable = true;
-  myHomeManager.gpg.enable = true;
-  myHomeManager.incus.enable = true;
-  myHomeManager.just.enable = true;
-  myHomeManager.tmux.enable = true;
-  myHomeManager.zsh.enable = true;
+  myHomeManager = {
+    git.enable = true;
+    gpg.enable = true;
+    incus.enable = true;
+    just.enable = true;
+    tmux.enable = true;
+    zsh.enable = true;
+  };
 }

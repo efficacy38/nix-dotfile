@@ -35,24 +35,26 @@
 
   stylix.enable = lib.mkDefault false;
 
-  environment.variables.EDITOR = "vim";
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
   # enable sshd
-  services.openssh.enable = true;
-  services.fail2ban = {
-    enable = true;
-    ignoreIP = [
-      # local
-      "192.168.0.0/16"
+  services = {
+    pcscd.enable = true;
+    openssh.enable = true;
+    fail2ban = {
+      enable = true;
+      ignoreIP = [
+        # local
+        "192.168.0.0/16"
 
-      # personal vpn
-      "100.64.0.0/24"
+        # personal vpn
+        "100.64.0.0/24"
 
-      # NCTU ip range
-      "140.113.0.0/16"
-    ];
+        # NCTU ip range
+        "140.113.0.0/16"
+      ];
+    };
   };
 
   # Set your time zone.
@@ -60,24 +62,6 @@
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
-
-  # enable nix-ld
-  programs.nix-ld = {
-    enable = true;
-    libraries = with pkgs; [
-      libgcc.lib
-    ];
-  };
-
-  programs.nh = {
-    enable = true;
-    clean = {
-      enable = true;
-      dates = "weekly";
-      extraArgs = "--keep 14 --keep-since 14d";
-    };
-    flake = "/etc/nixos/nix-dotfile";
-  };
 
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "zh_TW.UTF-8";
@@ -100,49 +84,70 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  environment.systemPackages = with pkgs; [
-    # management utils
-    vim
-    neovim
-    git
-    wget
-    curl
-    htop
+  environment = {
+    # add completion for zsh, links completion to $HOME/.nix-profile/share/zsh
+    pathsToLink = [ "/share/zsh" ];
+    variables.EDITOR = "vim";
+    systemPackages = with pkgs; [
+      # management utils
+      vim
+      neovim
+      git
+      wget
+      curl
+      htop
 
-    # compression
-    unzip
-    gnutar
+      # compression
+      unzip
+      gnutar
 
-    # system utils
-    man-db
-    wireguard-tools
-    tcpdump
-    nftables
+      # system utils
+      man-db
+      wireguard-tools
+      tcpdump
+      nftables
 
-    # sops
-    sops
-    gnupg
-    age
+      # sops
+      sops
+      gnupg
+      age
 
-    # vpn
-    openfortivpn
-    wireguard-tools
-  ];
-  sops.defaultSopsFile = ../secrets/default.yaml;
-  sops.defaultSopsFormat = "yaml";
-  sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+      # vpn
+      openfortivpn
+      wireguard-tools
+    ];
+  };
+
+  sops = {
+    defaultSopsFile = ../secrets/default.yaml;
+    defaultSopsFormat = "yaml";
+    age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+  };
 
   networking.nftables.enable = true;
   networking.firewall.enable = lib.mkDefault true;
 
-  programs.zsh.enable = true;
-  # add completion for zsh, links completion to $HOME/.nix-profile/share/zsh
-  environment.pathsToLink = [ "/share/zsh" ];
-
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  programs.mtr.enable = true;
-  services.pcscd.enable = true;
+  programs = {
+    zsh.enable = true;
+    # Some programs need SUID wrappers, can be configured further or are
+    # started in user sessions.
+    mtr.enable = true;
+    nix-ld = {
+      enable = true;
+      libraries = with pkgs; [
+        libgcc.lib
+      ];
+    };
+    nh = {
+      enable = true;
+      clean = {
+        enable = true;
+        dates = "weekly";
+        extraArgs = "--keep 14 --keep-since 14d";
+      };
+      flake = "/etc/nixos/nix-dotfile";
+    };
+  };
 
   # my rootca
   security.pki.certificates = [

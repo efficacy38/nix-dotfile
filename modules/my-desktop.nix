@@ -23,12 +23,14 @@ in
         # enable networkmanager for desktop usage
         networking.networkmanager.enable = true;
         networking.firewall.enable = true;
-        services.fwupd.enable = true;
+        services = {
+          fwupd.enable = true;
 
-        # Enable the X11 windowing system.
-        # You can disable this if you're only using the Wayland session.
-        services.xserver.enable = true;
-        services.displayManager.sddm.enable = true;
+          # Enable the X11 windowing system.
+          # You can disable this if you're only using the Wayland session.
+          xserver.enable = true;
+          displayManager.sddm.enable = true;
+        };
 
         # Configure keymap in X11
         services.xserver.xkb = {
@@ -76,9 +78,17 @@ in
 
         # Some programs need SUID wrappers, can be configured further or are
         # started in user sessions.
-        programs.gnupg.agent = {
-          enable = true;
-          enableSSHSupport = true;
+        programs = {
+          gnupg.agent = {
+            enable = true;
+            enableSSHSupport = true;
+          };
+
+          # make yubikey touch popup notification shown
+          yubikey-touch-detector.enable = true;
+
+          # enable wireshark on every desktop
+          wireshark.enable = true;
         };
 
         # unlock gnome keyring when logined(hyprland)
@@ -101,12 +111,6 @@ in
           path = "/usr/share/wallpapers/suisei-january-wallpaper.png";
           mode = "444";
         };
-
-        # make yubikey touch popup notification shown
-        programs.yubikey-touch-detector.enable = true;
-
-        # enable wireshark on every desktop
-        programs.wireshark.enable = true;
 
         # enable podman
         virtualisation.podman.enable = true;

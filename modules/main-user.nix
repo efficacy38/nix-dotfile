@@ -34,21 +34,27 @@ in
   config = lib.mkIf cfg.enable {
     sops.secrets."main_user_passwd_hash".neededForUsers = true;
     sops.secrets."main_user_passwd_hash".sopsFile = "${secretpath}/secrets/common.yaml";
-    users.mutableUsers = false;
-    users.users.${cfg.userName} = {
-      isNormalUser = true;
-      description = "${cfg.userName}(admin)";
-      shell = pkgs.zsh;
-      extraGroups = [
-        "wheel"
-        "wireshark"
-      ];
-      hashedPasswordFile = config.sops.secrets."main_user_passwd_hash".path;
-      linger = true;
-    };
+    users = {
 
-    users.users."root" = {
-      hashedPasswordFile = config.sops.secrets."main_user_passwd_hash".path;
+      mutableUsers = false;
+      users = {
+        ${cfg.userName} = {
+          isNormalUser = true;
+          description = "${cfg.userName}(admin)";
+          shell = pkgs.zsh;
+          extraGroups = [
+            "wheel"
+            "wireshark"
+          ];
+          hashedPasswordFile = config.sops.secrets."main_user_passwd_hash".path;
+          linger = true;
+        };
+
+        "root" = {
+          hashedPasswordFile = config.sops.secrets."main_user_passwd_hash".path;
+        };
+
+      };
     };
 
     home-manager = {
