@@ -195,11 +195,11 @@ in
         };
       };
     in
-    (lib.mkMerge [
+    lib.mkMerge [
       common-desktop-config
       (lib.mkIf cfg.kdeEnable kde-config)
       (lib.mkIf cfg.hyprlandEnable hyprland-config)
       (lib.mkIf cfg.zramEnable zram-config)
-    ])
+    ]
   );
 }

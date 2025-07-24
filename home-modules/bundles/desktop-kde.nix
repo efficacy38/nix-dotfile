@@ -1,4 +1,4 @@
-{ ... }:
+_:
 {
   myHomeManager.bundles.minimal.enable = true;
   myHomeManager.desktop-apps.enable = true;

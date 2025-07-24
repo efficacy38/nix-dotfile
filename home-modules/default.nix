@@ -39,5 +39,5 @@ in
     nixpkgs.config.allowUnfree = true;
   };
 
-  imports = [ ] ++ features ++ bundles;
+  imports = features ++ bundles;
 }

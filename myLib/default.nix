@@ -1,7 +1,7 @@
 { inputs }:
 let
   myLib = (import ./default.nix) { inherit inputs; };
-  outputs = inputs.self.outputs;
+  inherit (inputs.self) outputs;
   pkgs-stable = import inputs.nixpkgs-stable {
     system = "x86_64-linux";
   };
@@ -58,7 +58,7 @@ rec {
   #  wrapper function that return extended Module
   extendModule =
     { path, ... }@args:
-    { ... }@margs:
+    margs:
     let
       # evaluated final result
       eval = if (builtins.isString path) || (builtins.isPath path) then import path margs else path margs;
@@ -72,7 +72,7 @@ rec {
         if (builtins.hasAttr "extraOptions" args) || (builtins.hasAttr "extraConfig" args) then
           [
             (
-              { ... }:
+              _:
               {
                 options = args.extraOptions or { };
                 config = args.extraConfig or { };
@@ -108,6 +108,6 @@ rec {
       let
         name = fileNameOf f;
       in
-      (extendModule ((extension name) // { path = f; }))
+      extendModule ((extension name) // { path = f; })
     ) modules;
 }

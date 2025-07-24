@@ -52,7 +52,7 @@
   };
 
   outputs =
-    { ... }@inputs:
+    inputs:
     let
       myLib = import ./myLib/default.nix { inherit inputs; };
     in
