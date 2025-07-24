@@ -79,10 +79,10 @@ in
           ".krew"
           ".kube"
 
-          ".cache/keepassxc"
           ".config/Moonlight\ Game\ Streaming\ Project"
           ".config/incus"
-          ".config/lazygit/config.yml"
+          ".config/keepassxc"
+          ".config/lazygit"
           ".config/fcitx5"
           ".config/rambox"
           ".config/solaar"
@@ -100,7 +100,6 @@ in
           ".local/share/direnv"
           ".local/share/dolphin"
           ".local/share/fish"
-          ".local/share/hyprland"
           ".local/share/kate"
           ".local/share/k9s"
           ".local/share/lazygit"
@@ -115,6 +114,8 @@ in
           ".local/share/yarn"
           ".mc"
           ".thunderbird"
+
+          ".cache/keepassxc"
         ];
       };
     };

@@ -1,6 +1,10 @@
 { pkgs, ... }:
 {
   fonts.fontconfig.enable = true;
+  programs.keepassxc = {
+    enable = true;
+  };
+
   home.packages = with pkgs; [
     # input methods and fonts
     fcitx5-rime
@@ -11,7 +15,6 @@
     noto-fonts-cjk-serif
 
     # desktop apps
-    keepassxc
     thunderbird
     # protonmail-bridge
     # protonmail-bridge-gui
