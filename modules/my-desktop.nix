@@ -29,7 +29,13 @@ in
           # Enable the X11 windowing system.
           # You can disable this if you're only using the Wayland session.
           xserver.enable = true;
-          displayManager.sddm.enable = true;
+          displayManager.sddm = {
+            enable = true;
+            wayland.enable = true;
+            theme = "catppuccin-mocha";
+            enableHidpi = true;
+            package = pkgs.kdePackages.sddm;
+          };
         };
 
         # Configure keymap in X11
@@ -171,6 +177,7 @@ in
           pkgs.kdePackages.dolphin
           pkgs.kdePackages.ark
 
+          catppuccin-sddm
           wireshark
         ];
 
