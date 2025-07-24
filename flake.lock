@@ -327,10 +327,10 @@
     "nix-secrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1752691539,
-        "narHash": "sha256-GJ6vL1ktEa67DQE9cotvwNFoAY1pLRNu7HNARfklSUo=",
+        "lastModified": 1753377232,
+        "narHash": "sha256-79/C80obIKZxbMvhiYXnog8EeqIDe1+NA5TUlZszMIU=",
         "ref": "main",
-        "rev": "e4bb6847214daa74394e9d6e4c0b730b04876adf",
+        "rev": "0d143775a18594e58820f8bf52c024481efc756f",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/efficacy38/nix-secret.git"
