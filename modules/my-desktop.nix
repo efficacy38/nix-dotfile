@@ -120,6 +120,7 @@ in
 
         # enable podman
         virtualisation.podman.enable = true;
+        virtualisation.docker.enable = true;
       };
 
       kde-config = {

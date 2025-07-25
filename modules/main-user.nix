@@ -43,6 +43,7 @@ in
           description = "${cfg.userName}(admin)";
           shell = pkgs.zsh;
           extraGroups = [
+            "docker"
             "wheel"
             "wireshark"
           ];
