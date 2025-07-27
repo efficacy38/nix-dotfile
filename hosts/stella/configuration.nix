@@ -44,10 +44,10 @@ in
   sops.secrets."homelab-1/secretKey" = personal-s3-secret;
 
   services.kopia = {
-    enabled = true;
+    enable = true;
     instances = {
       homelab = {
-        enabled = true;
+        enable = true;
         passwordFile = config.sops.secrets."homelab-1/password".path;
         path = "/persistent";
         repository = {

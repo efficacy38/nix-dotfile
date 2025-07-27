@@ -49,6 +49,8 @@
     stylix.url = "github:danth/stylix/release-25.05";
 
     zen-browser.url = "github:youwen5/zen-browser-flake";
+
+    determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
   };
 
   outputs =
