@@ -14,28 +14,28 @@ let
         pkgs-stable
         ;
     };
-    modules =
-      [
-        config
-        outputs.nixosModules.default
-        # use nix-index-database instead of run nix-index individually
-        inputs.nix-index-database.nixosModules.nix-index
-        # optional to also wrap and install comma
-        { programs.nix-index-database.comma.enable = true; }
-        inputs.stylix.nixosModules.stylix
+    modules = [
+      config
+      outputs.nixosModules.default
+      # use nix-index-database instead of run nix-index individually
+      inputs.nix-index-database.nixosModules.nix-index
+      # optional to also wrap and install comma
+      { programs.nix-index-database.comma.enable = true; }
+      inputs.stylix.nixosModules.stylix
 
-        inputs.solaar.nixosModules.default
-        inputs.impermanence.nixosModules.impermanence
-        inputs.efficacy38-nur.nixosModules.kopia
-        # common overlays
-        ../overlays/personal-scripts/personal-scripts.nix
-      ]
-      ++ inputs.nixpkgs.lib.optionals isStable [
-        inputs.home-manager-stable.nixosModules.default
-      ]
-      ++ inputs.nixpkgs.lib.optionals (!isStable) [
-        inputs.home-manager.nixosModules.default
-      ];
+      inputs.solaar.nixosModules.default
+      inputs.impermanence.nixosModules.impermanence
+      inputs.efficacy38-nur.nixosModules.kopia
+      inputs.determinate.nixosModules.default
+      # common overlays
+      ../overlays/personal-scripts/personal-scripts.nix
+    ]
+    ++ inputs.nixpkgs.lib.optionals isStable [
+      inputs.home-manager-stable.nixosModules.default
+    ]
+    ++ inputs.nixpkgs.lib.optionals (!isStable) [
+      inputs.home-manager.nixosModules.default
+    ];
   };
 in
 rec {
@@ -71,13 +71,10 @@ rec {
       extra =
         if (builtins.hasAttr "extraOptions" args) || (builtins.hasAttr "extraConfig" args) then
           [
-            (
-              _:
-              {
-                options = args.extraOptions or { };
-                config = args.extraConfig or { };
-              }
-            )
+            (_: {
+              options = args.extraOptions or { };
+              config = args.extraConfig or { };
+            })
           ]
         else
           [ ];
