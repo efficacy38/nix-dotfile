@@ -175,7 +175,6 @@
         # alias cscc_work='sudo $HOME/.local/bin/cscc_work'
         aliasIfExist 'cdt' 'cd ~/Tmp'
         alias chproj='incus project switch'
-        # aliasIfExist ssh "kitty +kitten ssh"
 
         if [ "$XDG_SESSION_TYPE" = "wayland" ]; then
           aliasIfExist 'copy' 'wl-copy'
@@ -194,7 +193,6 @@
         alias gen_meeting_minute='podman run -it --rm dockersource.cc.cs.nctu.edu.tw/csjhuang/gen_meeting_minute'
 
         zsh-defer -c "
-          aliasIfExist 'ssh' 'kitty +kitten ssh'
           source <(fzf --zsh)
           complete -C tofu tofu
         "
