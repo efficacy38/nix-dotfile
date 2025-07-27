@@ -68,6 +68,7 @@
         homelab-1 = myLib.mkStableSystem ./hosts/homelab-1/configuration.nix;
         homelab-test = myLib.mkStableSystem ./hosts/homelab-test/configuration.nix;
         stella = myLib.mkStableSystem ./hosts/stella/configuration.nix;
+        iso = myLib.mkIsoSystem ./hosts/iso/configuration.nix;
       };
     };
 }

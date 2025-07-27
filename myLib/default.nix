@@ -52,6 +52,8 @@ rec {
 
   mkStableSystem = config: inputs.nixpkgs-stable.lib.nixosSystem (mkSystemAtts true config);
 
+  mkIsoSystem = config: inputs.nixpkgs-stable.lib.nixosSystem { modules = [ config ]; };
+
   # ========================== Extenders =========================== #
 
   # Evaluates nixos/home-manager module and extends it's options / config

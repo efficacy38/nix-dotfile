@@ -23,5 +23,5 @@ nh os switch --hostname=phoenixton
 
 ## build minimal iso image
 ```
-nix build .#nixosConfigurations.minimal-latest-iso.config.system.build.isoImage
+nix build .#nixosConfigurations.iso.config.system.build.isoImage
 ```
