@@ -8,9 +8,17 @@ let
   );
 in
 {
+
+  programs = {
+    kubecolor = {
+      enable = true;
+      enableZshIntegration = true;
+    };
+  };
+
   home.packages = with pkgs; [
-    fluxcd
     kubectl
+    fluxcd
     kubernetes-helm
     kustomize
     jq
@@ -30,6 +38,7 @@ in
     kubectl-validate
     kube-prompt
     kyverno
+    calicoctl
 
     # google cloud
     gdk
