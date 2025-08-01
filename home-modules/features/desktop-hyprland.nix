@@ -128,11 +128,11 @@ in
   }
   // lib.optionalAttrs (builtins.hasAttr "stylix" options) {
     stylix.targets = {
-      waybar.enable = false;
-      waybar.addCss = false;
-      hyprpaper.enable = false;
-      firefox.enable = false;
-      kde.enable = false;
+      waybar.enable = lib.mkDefault false;
+      waybar.addCss = lib.mkDefault false;
+      hyprpaper.enable = lib.mkDefault false;
+      firefox.enable = lib.mkDefault false;
+      kde.enable = lib.mkDefault false;
     };
   };
 }
