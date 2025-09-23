@@ -40,7 +40,7 @@
           user = {
             name = "Cai-Sian Jhuang";
             email = "csjhuang@cs.nctu.edu.tw";
-            signingkey = "~/.ssh/cscc.id_ed25519.pub";
+            signingkey = "~/.ssh/keys/cscc.id_ed25519.pub";
           };
           commit.gpgsign = "true";
           gpg.format = "ssh";
@@ -49,7 +49,7 @@
           user = {
             name = "efficacy38";
             email = "efficacy38@gmail.com";
-            signingkey = "~/.ssh/gh.id_ed25519.pub";
+            signingkey = "~/.ssh/keys/gh.id_ed25519.pub";
           };
           commit.gpgsign = "true";
           gpg.format = "ssh";
