@@ -11,10 +11,20 @@ output "Dell Inc. DELL U2422HE B7FMNM3" {
   alias $DELL_24
 }
 
+output "HDMI-A-1" {
+  mode 2560x1440@100.00Hz
+  alias $HDMI
+}
+
 profile ec320 {
   output "eDP-1" disable
   output $DELL_24 enable
   output $DELL_27 enable
+}
+
+profile ec319 {
+  output "eDP-1" disable
+  output $HDMI
 }
 
 profile undocked {
