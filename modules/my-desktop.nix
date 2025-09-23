@@ -22,7 +22,7 @@ in
       common-desktop-config = {
         # enable networkmanager for desktop usage
         networking.networkmanager.enable = true;
-        networking.firewall.enable = true;
+        networking.firewall.enable = lib.mkDefault true;
         services = {
           fwupd.enable = true;
 
