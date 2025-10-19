@@ -12,6 +12,9 @@
     dnsutils
     ansible
     mosh
+    gemini-cli
+    claude-code
+    # claude-monitor
 
     wl-clipboard
     # handle nix cache
