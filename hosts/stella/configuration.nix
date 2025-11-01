@@ -2,12 +2,8 @@
   pkgs,
   inputs,
   lib,
-  config,
   ...
 }:
-let
-
-in
 {
   imports = [
     # custom modules
@@ -33,10 +29,6 @@ in
   myNixOS.backup.enable = true;
   myNixOS.battery-health.enable = true;
 
-  # Bootloader.
-  boot.loader.systemd-boot.enable = lib.mkDefault true;
-  boot.loader.efi.canTouchEfiVariables = lib.mkDefault true;
-  boot.tmp.useTmpfs = lib.mkDefault true;
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
   # Enable networking related
@@ -57,9 +49,6 @@ in
 
   # don't know why enable asusd module don't auto start asusd service
   systemd.services.asusd.enable = lib.mkForce true;
-
-  nixpkgs.config.allowUnfree = true;
-  hardware.enableAllFirmware = true;
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];

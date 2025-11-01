@@ -8,10 +8,6 @@
   ];
 
   # Bootloader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  # boot.supportedFilesystems = [ "bcachefs" "zfs" ];
-  # boot.kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
   boot.supportedFilesystems = [ "zfs" ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.tmp.useTmpfs = true;
@@ -42,18 +38,7 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    neovim
-    man-db
-    git
-    vim
-    wget
-    curl
-    htop
-    openfortivpn
     incus-lts
-    tcpdump
-
-    bcachefs-tools
     nut
   ];
   environment.variables.EDITOR = "vim";

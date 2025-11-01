@@ -31,8 +31,6 @@
   myNixOS.impermanence.enable = true;
 
   # Bootloader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelParams = [
     "reboot=bios"
     "amdgpu.sg_display=0"
@@ -58,8 +56,8 @@
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs; [
-  ];
+  # environment.systemPackages = with pkgs; [
+  # ];
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];

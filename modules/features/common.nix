@@ -53,8 +53,10 @@ in
 
     stylix.enable = lib.mkDefault false;
 
-    boot.loader.systemd-boot.enable = true;
-    boot.loader.efi.canTouchEfiVariables = true;
+    # Bootloader.
+    boot.loader.systemd-boot.enable = lib.mkDefault true;
+    boot.loader.efi.canTouchEfiVariables = lib.mkDefault true;
+    boot.tmp.useTmpfs = lib.mkDefault true;
 
     # enable sshd
     services = {
@@ -101,6 +103,7 @@ in
 
     # Allow unfree packages
     nixpkgs.config.allowUnfree = true;
+    hardware.enableAllFirmware = true;
 
     environment = {
       # add completion for zsh, links completion to $HOME/.nix-profile/share/zsh

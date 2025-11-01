@@ -20,9 +20,6 @@ in
     ./hardware-configuration.nix
   ];
 
-  # Bootloader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
   # boot.supportedFilesystems = [ "bcachefs" "zfs" ];
   # boot.kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
   boot.supportedFilesystems = [ "zfs" ];
@@ -97,21 +94,7 @@ in
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs; [
-    neovim
-    man-db
-    git
-    vim
-    wget
-    curl
-    htop
-    openfortivpn
-    incus-lts
-    tcpdump
-
-    bcachefs-tools
-    nut
-  ];
+  # environment.systemPackages = with pkgs; [ ];
   environment.variables.EDITOR = "vim";
 
   programs.zsh.enable = true;
