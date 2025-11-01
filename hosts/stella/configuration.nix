@@ -34,6 +34,7 @@ in
   my-desktop.zramEnable = false;
   my-desktop.hyprlandEnable = true;
   my-desktop.kdeEnable = false;
+  my-fprintd.enable = true;
   cscc-work.enable = true;
   my-tailscale.enable = true;
   my-tailscale.asRouter = false;
