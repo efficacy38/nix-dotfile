@@ -27,7 +27,6 @@
   };
 
   myNixOS.bundles.common.enable = true;
-  myNixOS.desktop.enable = true;
   myNixOS.cscc-work.enable = true;
 
   # List packages installed in system profile. To search, run:

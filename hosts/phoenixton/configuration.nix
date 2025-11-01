@@ -21,12 +21,10 @@
 
   myNixOS.bundles.common.enable = true;
   myNixOS.main-user.userConfig = ./home.nix;
+  myNixOS.bundles.desktop-hyprland.enable = true;
 
   myNixOS.steam.enable = true;
   myNixOS.steam.hidpi = false;
-  myNixOS.desktop.enable = true;
-  myNixOS.desktop.zramEnable = false;
-  myNixOS.desktop.hyprlandEnable = true;
   myNixOS.cscc-work.enable = true;
   myNixOS.tailscale.enable = true;
   myNixOS.tailscale.asRouter = false;
