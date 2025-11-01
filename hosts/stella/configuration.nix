@@ -27,10 +27,10 @@ in
 
   myNixOS.bundles.common.enable = true;
   myNixOS.bundles.desktop-hyprland.enable = true;
+  myNixOS.bundles.steam.enable = true;
+
   myNixOS.main-user.userConfig = ./home.nix;
 
-  myNixOS.steam.enable = true;
-  myNixOS.steam.hidpi = false;
   myNixOS.fprintd.enable = true;
   myNixOS.cscc-work.enable = true;
   myNixOS.tailscale.enable = true;

@@ -13,6 +13,7 @@
     ./features/fprintd.nix
 
     ./bundles/common.nix
+    ./bundles/steam.nix
     ./bundles/desktop-hyprland.nix
     ./bundles/desktop-kde.nix
   ];

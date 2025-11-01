@@ -9,9 +9,8 @@
 
   myNixOS.bundles.common.enable = true;
   myNixOS.bundles.desktop-hyprland.enable = true;
+  myNixOS.bundles.steam.enable = true;
 
-  myNixOS.steam.enable = true;
-  myNixOS.steam.hidpi = true;
   myNixOS.tailscale.enable = true;
   # can be used as exit node
   myNixOS.tailscale.asRouter = true;
