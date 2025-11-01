@@ -2,15 +2,15 @@
 {
   imports = [
     inputs.sops-nix.nixosModules.sops
-    ./main-user.nix
-    ./common.nix
-    ./steam.nix
-    ./desktop.nix
-    ./impremanence.nix
-    ./tailscale.nix
-    ./cscc-work.nix
-    ./impremanence.nix
-    ./fprintd.nix
+    ./features/main-user.nix
+    ./features/common.nix
+    ./features/steam.nix
+    ./features/desktop.nix
+    ./features/impremanence.nix
+    ./features/tailscale.nix
+    ./features/cscc-work.nix
+    ./features/impremanence.nix
+    ./features/fprintd.nix
   ];
 
   options = {
