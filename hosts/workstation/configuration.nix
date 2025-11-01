@@ -8,7 +8,7 @@
     # custom modules
     ../../modules
     # Include the default lxd configuration.
-    "${modulesPath}/virtualisation/lxd-virtual-machine.nix"
+    "${modulesPath}/virtualisation/incus-virtual-machine.nix"
   ];
 
   networking = {
@@ -33,7 +33,6 @@
   myNixOS.main-user.enable = true;
   myNixOS.main-user.userName = "efficacy38";
   myNixOS.main-user.userConfig = ./home.nix;
-  myNixOS.desktop.enable = true;
   myNixOS.cscc-work.enable = true;
   programs.mosh = {
     enable = true;
