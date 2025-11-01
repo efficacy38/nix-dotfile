@@ -64,8 +64,7 @@ in
   };
 
   # module related options
-  myNixOS.main-user.enable = true;
-  myNixOS.main-user.userName = "efficacy38";
+  myNixOS.bundles.common.enable = true;
   myNixOS.steam.enable = false;
   myNixOS.desktop.enable = false;
   myNixOS.desktop.zramEnable = false;

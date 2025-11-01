@@ -25,9 +25,9 @@ in
     inputs.nixos-hardware.nixosModules.common-gpu-intel
   ];
 
-  myNixOS.main-user.enable = true;
-  myNixOS.main-user.userName = "efficacy38";
+  myNixOS.bundles.common.enable = true;
   myNixOS.main-user.userConfig = ./home.nix;
+
   myNixOS.steam.enable = true;
   myNixOS.steam.hidpi = false;
   myNixOS.desktop.enable = true;

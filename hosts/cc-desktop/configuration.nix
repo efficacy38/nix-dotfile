@@ -7,10 +7,8 @@
     ./hardware-configuration.nix
   ];
 
-  myNixOS.main-user.enable = true;
-  myNixOS.main-user.userName = "efficacy38";
-  myNixOS.main-user.devProgEnable = true;
-  myNixOS.main-user.desktopEnable = true;
+  myNixOS.bundles.common.enable = true;
+
   myNixOS.steam.enable = true;
   myNixOS.steam.hidpi = true;
   myNixOS.desktop.enable = true;

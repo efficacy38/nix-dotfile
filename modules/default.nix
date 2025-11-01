@@ -11,6 +11,8 @@
     ./features/cscc-work.nix
     ./features/impremanence.nix
     ./features/fprintd.nix
+
+    ./bundles/common.nix
   ];
 
   options = {

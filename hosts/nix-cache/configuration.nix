@@ -26,8 +26,7 @@
     };
   };
 
-  myNixOS.main-user.enable = true;
-  myNixOS.main-user.userName = "efficacy38";
+  myNixOS.bundles.common.enable = true;
   myNixOS.desktop.enable = true;
   myNixOS.cscc-work.enable = true;
 
