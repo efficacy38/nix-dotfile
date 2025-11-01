@@ -2,6 +2,7 @@
 {
   imports = [
     inputs.sops-nix.nixosModules.sops
+    ./features/backup.nix
     ./features/main-user.nix
     ./features/common.nix
     ./features/steam.nix
