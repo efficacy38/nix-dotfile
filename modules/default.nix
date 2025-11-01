@@ -12,6 +12,7 @@
     ./features/cscc-work.nix
     ./features/impremanence.nix
     ./features/fprintd.nix
+    ./features/battery-health.nix
 
     ./bundles/common.nix
     ./bundles/steam.nix
