@@ -50,6 +50,7 @@ in
         "/var/log"
         "/var/lib/bluetooth"
         "/var/lib/fail2ban"
+        "/var/lib/fprint"
         "/var/lib/nixos"
         "/var/lib/power-profiles-daemon"
         "/var/lib/sddm"

@@ -10,6 +10,7 @@
     ./my-tailscale.nix
     ./cscc-work.nix
     ./my-impremanence.nix
+    ./my-fprintd.nix
   ];
 
   options = {
