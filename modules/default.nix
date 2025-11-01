@@ -1,16 +1,16 @@
-{ inputs, ... }:
+{ inputs, lib, ... }:
 {
   imports = [
     inputs.sops-nix.nixosModules.sops
     ./main-user.nix
-    ./common-server-setting.nix
-    ./my-steam.nix
-    ./my-desktop.nix
-    ./my-impremanence.nix
-    ./my-tailscale.nix
+    ./common.nix
+    ./steam.nix
+    ./desktop.nix
+    ./impremanence.nix
+    ./tailscale.nix
     ./cscc-work.nix
-    ./my-impremanence.nix
-    ./my-fprintd.nix
+    ./impremanence.nix
+    ./fprintd.nix
   ];
 
   options = {
@@ -25,5 +25,7 @@
     # Usually these depend on whether a user of this module chose to "enable" it
     # using the "option" above.
     # Options for modules imported in "imports" can be set here.
+
+    myNixOS.common.enable = true;
   };
 }

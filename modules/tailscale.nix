@@ -4,10 +4,10 @@
   ...
 }:
 let
-  cfg = config.my-tailscale;
+  cfg = config.myNixOS.tailscale;
 in
 {
-  options.my-tailscale = {
+  options.myNixOS.tailscale = {
     enable = lib.mkEnableOption "enable personal tailscale config module";
     asRouter = lib.mkEnableOption "set vpn intf rpfilter(1) and forwarding sysctl otherwise disable forwarding sysctl";
   };

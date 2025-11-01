@@ -6,7 +6,7 @@
   ...
 }:
 let
-  cfg = config.cscc-work;
+  cfg = config.myNixOS.cscc-work;
   secretpath = builtins.toString inputs.nix-secrets;
   nycuSecret = {
     sopsFile = "${secretpath}/secrets/desktop.yaml";
@@ -14,7 +14,7 @@ let
   };
 in
 {
-  options.cscc-work = {
+  options.myNixOS.cscc-work = {
     enable = lib.mkEnableOption "enable cscc change vpn script module";
   };
 

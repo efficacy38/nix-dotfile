@@ -1,4 +1,4 @@
-{ ... }:
+{ lib, ... }:
 {
   imports = [
     # custom modules
@@ -7,17 +7,18 @@
     ./hardware-configuration.nix
   ];
 
-  main-user.enable = true;
-  main-user.userName = "efficacy38";
-  main-user.devProgEnable = true;
-  main-user.desktopEnable = true;
-  my-steam.enable = true;
-  my-steam.hidpi = true;
-  my-desktop.enable = true;
-  my-desktop.zramEnable = true;
-  my-tailscale.enable = true;
+  myNixOS.main-user.enable = true;
+  myNixOS.main-user.userName = "efficacy38";
+  myNixOS.main-user.devProgEnable = true;
+  myNixOS.main-user.desktopEnable = true;
+  myNixOS.steam.enable = true;
+  myNixOS.steam.hidpi = true;
+  myNixOS.desktop.enable = true;
+  myNixOS.desktop.zramEnable = true;
+  myNixOS.tailscale.enable = true;
   # can be used as exit node
-  my-tailscale.asRouter = true;
+  myNixOS.tailscale.asRouter = true;
+  myNixOS.common-server-setting.enable = true;
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -42,4 +43,5 @@
   # programs.ssh.enable = true;
 
   system.stateVersion = "24.11";
+  stylix.enable = lib.mkForce false;
 }

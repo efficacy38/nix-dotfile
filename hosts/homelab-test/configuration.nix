@@ -17,12 +17,12 @@
   boot.tmp.useTmpfs = true;
 
   # module related options
-  main-user.enable = true;
-  main-user.userName = "efficacy38";
-  my-steam.enable = false;
-  my-desktop.enable = false;
-  my-desktop.zramEnable = false;
-  cscc-work.enable = false;
+  myNixOS.main-user.enable = true;
+  myNixOS.main-user.userName = "efficacy38";
+  myNixOS.steam.enable = false;
+  myNixOS.desktop.enable = false;
+  myNixOS.desktop.zramEnable = false;
+  myNixOS.cscc-work.enable = false;
 
   # systemd-resolved
   services.resolved = {

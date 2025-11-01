@@ -4,10 +4,10 @@
   ...
 }:
 let
-  cfg = config.my-impermanence;
+  cfg = config.myNixOS.impermanence;
 in
 {
-  options.my-impermanence = {
+  options.myNixOS.impermanence = {
     enable = lib.mkEnableOption "enable impermanence";
   };
 

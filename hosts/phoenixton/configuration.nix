@@ -19,18 +19,18 @@
     inputs.nixos-hardware.nixosModules.common-hidpi
   ];
 
-  main-user.enable = true;
-  main-user.userName = "efficacy38";
-  main-user.userConfig = ./home.nix;
-  my-steam.enable = true;
-  my-steam.hidpi = false;
-  my-desktop.enable = true;
-  my-desktop.zramEnable = false;
-  my-desktop.hyprlandEnable = true;
-  cscc-work.enable = true;
-  my-tailscale.enable = true;
-  my-tailscale.asRouter = false;
-  my-impremanence.enable = true;
+  myNixOS.main-user.enable = true;
+  myNixOS.main-user.userName = "efficacy38";
+  myNixOS.main-user.userConfig = ./home.nix;
+  myNixOS.steam.enable = true;
+  myNixOS.steam.hidpi = false;
+  myNixOS.desktop.enable = true;
+  myNixOS.desktop.zramEnable = false;
+  myNixOS.desktop.hyprlandEnable = true;
+  myNixOS.cscc-work.enable = true;
+  myNixOS.tailscale.enable = true;
+  myNixOS.tailscale.asRouter = false;
+  myNixOS.impermanence.enable = true;
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;

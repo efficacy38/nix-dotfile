@@ -1,11 +1,17 @@
-{ inputs, config, pkgs, ... }: let
-    secretpath = builtins.toString inputs.nix-secrets;
+{
+  inputs,
+  config,
+  pkgs,
+  ...
+}:
+let
+  secretpath = builtins.toString inputs.nix-secrets;
 
-    common-secret = {
-      sopsFile = "${secretpath}/secrets/common.yaml";
-      format = "yaml";
-    };
-  in
+  common-secret = {
+    sopsFile = "${secretpath}/secrets/common.yaml";
+    format = "yaml";
+  };
+in
 {
   imports = [
     # custom modules
@@ -38,8 +44,8 @@
     users = {
       admin = {
         passwordFile = config.sops.secrets."nut_sever_password".path;
-        instcmds = ["all"];
-        actions = ["set"];
+        instcmds = [ "all" ];
+        actions = [ "set" ];
       };
     };
     upsd.listen = [
@@ -58,14 +64,14 @@
   };
 
   # module related options
-  main-user.enable = true;
-  main-user.userName = "efficacy38";
-  my-steam.enable = false;
-  my-desktop.enable = false;
-  my-desktop.zramEnable = false;
-  cscc-work.enable = false;
-  my-tailscale.enable = true;
-  my-tailscale.asRouter = true;
+  myNixOS.main-user.enable = true;
+  myNixOS.main-user.userName = "efficacy38";
+  myNixOS.steam.enable = false;
+  myNixOS.desktop.enable = false;
+  myNixOS.desktop.zramEnable = false;
+  myNixOS.cscc-work.enable = false;
+  myNixOS.tailscale.enable = true;
+  myNixOS.tailscale.asRouter = true;
   # services.kopia.enable = false;
 
   # systemd-resolved

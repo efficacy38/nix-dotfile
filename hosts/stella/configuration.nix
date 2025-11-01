@@ -25,20 +25,20 @@ in
     inputs.nixos-hardware.nixosModules.common-gpu-intel
   ];
 
-  main-user.enable = true;
-  main-user.userName = "efficacy38";
-  main-user.userConfig = ./home.nix;
-  my-steam.enable = true;
-  my-steam.hidpi = false;
-  my-desktop.enable = true;
-  my-desktop.zramEnable = false;
-  my-desktop.hyprlandEnable = true;
-  my-desktop.kdeEnable = false;
-  my-fprintd.enable = true;
-  cscc-work.enable = true;
-  my-tailscale.enable = true;
-  my-tailscale.asRouter = false;
-  my-impermanence.enable = true;
+  myNixOS.main-user.enable = true;
+  myNixOS.main-user.userName = "efficacy38";
+  myNixOS.main-user.userConfig = ./home.nix;
+  myNixOS.steam.enable = true;
+  myNixOS.steam.hidpi = false;
+  myNixOS.desktop.enable = true;
+  myNixOS.desktop.zramEnable = false;
+  myNixOS.desktop.hyprlandEnable = true;
+  myNixOS.desktop.kdeEnable = false;
+  myNixOS.fprintd.enable = true;
+  myNixOS.cscc-work.enable = true;
+  myNixOS.tailscale.enable = true;
+  myNixOS.tailscale.asRouter = false;
+  myNixOS.impermanence.enable = true;
 
   sops.secrets."homelab-1/password" = personal-s3-secret;
   sops.secrets."homelab-1/accessKey" = personal-s3-secret;

@@ -7,11 +7,11 @@
   ...
 }:
 let
-  cfg = config.main-user;
+  cfg = config.myNixOS.main-user;
   secretpath = builtins.toString inputs.nix-secrets;
 in
 {
-  options.main-user = {
+  options.myNixOS.main-user = {
     enable = lib.mkEnableOption "enable user module";
 
     userName = lib.mkOption {

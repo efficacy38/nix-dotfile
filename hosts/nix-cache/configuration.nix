@@ -26,10 +26,10 @@
     };
   };
 
-  main-user.enable = true;
-  main-user.userName = "efficacy38";
-  my-desktop.enable = true;
-  cscc-work.enable = true;
+  myNixOS.main-user.enable = true;
+  myNixOS.main-user.userName = "efficacy38";
+  myNixOS.desktop.enable = true;
+  myNixOS.cscc-work.enable = true;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
