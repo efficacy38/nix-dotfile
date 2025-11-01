@@ -2,17 +2,11 @@
 let
   myLib = (import ./default.nix) { inherit inputs; };
   inherit (inputs.self) outputs;
-  pkgs-stable = import inputs.nixpkgs-stable {
-    system = "x86_64-linux";
-  };
   mkSystemAtts = isStable: config: {
     specialArgs = {
       inherit
         myLib
-        inputs
-        outputs
-        pkgs-stable
-        ;
+        inputs;
     };
     modules = [
       config

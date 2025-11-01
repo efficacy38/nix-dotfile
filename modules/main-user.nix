@@ -55,11 +55,33 @@ in
           hashedPasswordFile = config.sops.secrets."main_user_passwd_hash".path;
         };
 
+        "gaming" = {
+          isNormalUser = true;
+          description = "gaming user";
+          shell = pkgs.zsh;
+          extraGroups = [
+            "docker"
+            "wheel"
+            "wireshark"
+          ];
+          hashedPasswordFile = config.sops.secrets."main_user_passwd_hash".path;
+          linger = true;
+        };
       };
     };
 
     home-manager = {
-      extraSpecialArgs = { inherit inputs myLib pkgs; };
+      extraSpecialArgs = {
+        # used at home-modules/**/*.nix
+        pkgs-stable = inputs.self.outputs.pkgs-stable; # pkgs-stable
+        pkgs-unstable = inputs.self.outputs.pkgs-unstable; # pkgs-unstable
+
+        inherit
+          inputs
+          myLib
+          pkgs
+          ;
+      };
       users."${cfg.userName}" = {
         imports = [
           (import cfg.userConfig)
