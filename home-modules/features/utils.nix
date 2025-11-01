@@ -1,6 +1,6 @@
-{ pkgs, ... }:
+{ pkgs, pkgs-unstable, ... }:
 {
-  home.packages = with pkgs; [
+  home.packages = with pkgs-unstable; [
     curl
     wget
     ripgrep
@@ -14,7 +14,7 @@
     mosh
     gemini-cli
     claude-code
-    # claude-monitor
+    claude-monitor
 
     wl-clipboard
     # handle nix cache
@@ -24,7 +24,7 @@
     entr
 
     # personal script
-    personal-script
+    pkgs.personal-script
 
     nixos-shell
   ];

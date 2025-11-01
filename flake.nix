@@ -41,9 +41,18 @@
     inputs:
     let
       myLib = import ./myLib/default.nix { inherit inputs; };
+
+      pkgs-stable = import inputs.nixpkgs-stable {
+        system = "x86_64-linux";
+        config.allowUnfree = true;
+      };
+      pkgs-unstable = import inputs.nixpkgs {
+        system = "x86_64-linux";
+        config.allowUnfree = true;
+      };
     in
     {
-      inherit myLib;
+      inherit myLib pkgs-stable pkgs-unstable;
       homeModules.default = ./home-modules/default.nix;
       nixosModules.default = ./modules/default.nix;
       nixosConfigurations = {
