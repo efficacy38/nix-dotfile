@@ -27,6 +27,13 @@ profile ec319 {
   output $HDMI
 }
 
+profile ec319-open {
+  output "eDP-1" enable
+  output $HDMI
+}
+
+
+
 profile undocked {
   output "eDP-1" enable mode 2560x1600@60.00Hz position 0,0 scale 1.3333333
 }
