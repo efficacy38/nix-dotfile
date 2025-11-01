@@ -7,11 +7,11 @@
   ...
 }:
 let
-  cfg = config.main-user;
+  cfg = config.myNixOS.main-user;
   secretpath = builtins.toString inputs.nix-secrets;
 in
 {
-  options.main-user = {
+  options.myNixOS.main-user = {
     enable = lib.mkEnableOption "enable user module";
 
     userName = lib.mkOption {
@@ -22,7 +22,7 @@ in
     };
 
     userConfig = lib.mkOption {
-      default = ../hosts/homelab-1/home.nix;
+      default = ../../hosts/homelab-1/home.nix;
       description = ''
         main user's home configuration, include both myHomeManager and
         home-manager module, default user homelab-1's userConfig, it should be

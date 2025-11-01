@@ -8,21 +8,16 @@
   ];
 
   # Bootloader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  # boot.supportedFilesystems = [ "bcachefs" "zfs" ];
-  # boot.kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
   boot.supportedFilesystems = [ "zfs" ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.tmp.useTmpfs = true;
 
   # module related options
-  main-user.enable = true;
-  main-user.userName = "efficacy38";
-  my-steam.enable = false;
-  my-desktop.enable = false;
-  my-desktop.zramEnable = false;
-  cscc-work.enable = false;
+  myNixOS.bundles.common.enable = true;
+  myNixOS.steam.enable = false;
+  myNixOS.desktop.enable = false;
+  myNixOS.desktop.zramEnable = false;
+  myNixOS.cscc-work.enable = false;
 
   # systemd-resolved
   services.resolved = {
@@ -43,18 +38,7 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    neovim
-    man-db
-    git
-    vim
-    wget
-    curl
-    htop
-    openfortivpn
     incus-lts
-    tcpdump
-
-    bcachefs-tools
     nut
   ];
   environment.variables.EDITOR = "vim";

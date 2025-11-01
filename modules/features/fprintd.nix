@@ -5,10 +5,10 @@
   ...
 }:
 let
-  cfg = config.my-fprintd;
+  cfg = config.myNixOS.fprintd;
 in
 {
-  options.my-fprintd = {
+  options.myNixOS.fprintd = {
     enable = lib.mkEnableOption "enable cscc change vpn script module";
   };
 

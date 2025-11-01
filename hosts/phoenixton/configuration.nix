@@ -19,22 +19,18 @@
     inputs.nixos-hardware.nixosModules.common-hidpi
   ];
 
-  main-user.enable = true;
-  main-user.userName = "efficacy38";
-  main-user.userConfig = ./home.nix;
-  my-steam.enable = true;
-  my-steam.hidpi = false;
-  my-desktop.enable = true;
-  my-desktop.zramEnable = false;
-  my-desktop.hyprlandEnable = true;
-  cscc-work.enable = true;
-  my-tailscale.enable = true;
-  my-tailscale.asRouter = false;
-  my-impremanence.enable = true;
+  myNixOS.bundles.common.enable = true;
+  myNixOS.main-user.userConfig = ./home.nix;
+  myNixOS.bundles.desktop-hyprland.enable = true;
+
+  myNixOS.steam.enable = true;
+  myNixOS.steam.hidpi = false;
+  myNixOS.cscc-work.enable = true;
+  myNixOS.tailscale.enable = true;
+  myNixOS.tailscale.asRouter = false;
+  myNixOS.impermanence.enable = true;
 
   # Bootloader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelParams = [
     "reboot=bios"
     "amdgpu.sg_display=0"
@@ -60,8 +56,8 @@
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs; [
-  ];
+  # environment.systemPackages = with pkgs; [
+  # ];
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];

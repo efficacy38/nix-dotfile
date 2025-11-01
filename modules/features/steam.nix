@@ -5,10 +5,10 @@
   ...
 }:
 let
-  cfg = config.my-steam;
+  cfg = config.myNixOS.steam;
 in
 {
-  options.my-steam = {
+  options.myNixOS.steam = {
     enable = lib.mkEnableOption "enable steam";
     hidpi = lib.mkEnableOption "enable to scale steam due to hidpi";
   };
@@ -21,7 +21,7 @@ in
       localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
     };
 
-    hardware.graphics.extraPackages = [ pkgs.vaapiVdpau ];
+    hardware.graphics.extraPackages = [ pkgs.libva-vdpau-driver ];
     hardware.steam-hardware.enable = true;
 
     environment.sessionVariables =

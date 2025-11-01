@@ -1,11 +1,12 @@
 {
   config,
-  pkgs,
+  pkgs-unstable,
+  pkgs-stable,
   ...
 }:
 {
   home = {
-    packages = with pkgs; [
+    packages = with pkgs-unstable; [
       neovim
       yamllint
       nodejs # copilot
@@ -18,13 +19,13 @@
       lua-language-server
       terraform-ls
       yaml-language-server
-      ansible-language-server
+      pkgs-stable.ansible-language-server
       gopls
       nodePackages.bash-language-server
       golangci-lint
       docker-compose-language-service
       docker-ls
-      taplo-lsp
+      taplo
       sqls
       marksman
       selene

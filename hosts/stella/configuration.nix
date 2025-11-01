@@ -2,17 +2,8 @@
   pkgs,
   inputs,
   lib,
-  config,
   ...
 }:
-let
-
-  secretpath = builtins.toString inputs.nix-secrets;
-  personal-s3-secret = {
-    sopsFile = "${secretpath}/secrets/backup.yaml";
-    format = "yaml";
-  };
-in
 {
   imports = [
     # custom modules
@@ -25,71 +16,19 @@ in
     inputs.nixos-hardware.nixosModules.common-gpu-intel
   ];
 
-  main-user.enable = true;
-  main-user.userName = "efficacy38";
-  main-user.userConfig = ./home.nix;
-  my-steam.enable = true;
-  my-steam.hidpi = false;
-  my-desktop.enable = true;
-  my-desktop.zramEnable = false;
-  my-desktop.hyprlandEnable = true;
-  my-desktop.kdeEnable = false;
-  my-fprintd.enable = true;
-  cscc-work.enable = true;
-  my-tailscale.enable = true;
-  my-tailscale.asRouter = false;
-  my-impermanence.enable = true;
+  myNixOS.bundles.common.enable = true;
+  myNixOS.bundles.desktop-hyprland.enable = true;
+  myNixOS.bundles.steam.enable = true;
 
-  sops.secrets."homelab-1/password" = personal-s3-secret;
-  sops.secrets."homelab-1/accessKey" = personal-s3-secret;
-  sops.secrets."homelab-1/secretKey" = personal-s3-secret;
+  myNixOS.fprintd.enable = true;
+  myNixOS.cscc-work.enable = true;
+  myNixOS.main-user.userConfig = ./home.nix;
+  myNixOS.tailscale.enable = true;
+  myNixOS.tailscale.asRouter = false;
+  myNixOS.impermanence.enable = true;
+  myNixOS.backup.enable = true;
+  myNixOS.battery-health.enable = true;
 
-  services.kopia = {
-    enable = true;
-    instances = {
-      homelab = {
-        enable = true;
-        passwordFile = config.sops.secrets."homelab-1/password".path;
-        path = "/persistent";
-        repository = {
-          s3.bucket = "personal-backups";
-          s3.endpoint = "s3.csjhuang.net";
-          s3.accessKeyFile = config.sops.secrets."homelab-1/accessKey".path;
-          s3.secretKeyFile = config.sops.secrets."homelab-1/secretKey".path;
-        };
-
-        policy = {
-          retention = {
-            keepLatest = 5;
-            keepDaily = 30;
-            keepWeekly = 4;
-            keepMonthly = 3;
-            keepAnnual = 0;
-          };
-
-          compression = {
-            compressorName = "pgzip";
-            neverCompress = [
-              "*.zip"
-              "*.tar"
-              "*.gz"
-              "*.tgz"
-              "*.xz"
-              "*.bz2"
-              "*.7z"
-              "*.rar"
-              "*.iso"
-            ];
-          };
-        };
-      };
-    };
-  };
-
-  # Bootloader.
-  boot.loader.systemd-boot.enable = lib.mkDefault true;
-  boot.loader.efi.canTouchEfiVariables = lib.mkDefault true;
-  boot.tmp.useTmpfs = lib.mkDefault true;
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
   # Enable networking related
@@ -108,31 +47,8 @@ in
     gparted
   ];
 
-  services.tlp = {
-    enable = true;
-    settings = {
-      CPU_SCALING_GOVERNOR_ON_AC = "performance";
-      CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
-
-      CPU_ENERGY_PERF_POLICY_ON_BAT = "power";
-      CPU_ENERGY_PERF_POLICY_ON_AC = "performance";
-
-      CPU_MIN_PERF_ON_AC = 0;
-      CPU_MAX_PERF_ON_AC = 100;
-      CPU_MIN_PERF_ON_BAT = 0;
-      CPU_MAX_PERF_ON_BAT = 60;
-
-      #Optional helps save long term battery health
-      START_CHARGE_THRESH_BAT0 = 40; # 40 and below it starts to charge
-      STOP_CHARGE_THRESH_BAT0 = 80; # 80 and above it stops charging
-    };
-  };
-
   # don't know why enable asusd module don't auto start asusd service
   systemd.services.asusd.enable = lib.mkForce true;
-
-  nixpkgs.config.allowUnfree = true;
-  hardware.enableAllFirmware = true;
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
