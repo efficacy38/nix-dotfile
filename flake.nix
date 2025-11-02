@@ -57,11 +57,23 @@
       nixosModules.default = ./modules/default.nix;
       nixosConfigurations = {
         phoenixton = myLib.mkSystem ./hosts/phoenixton/configuration.nix;
-        workstation = myLib.mkSystem ./hosts/workstation/configuration.nix;
+        workstation = myLib.mkStableSystem ./hosts/workstation/configuration.nix;
         homelab-1 = myLib.mkStableSystem ./hosts/homelab-1/configuration.nix;
         homelab-test = myLib.mkStableSystem ./hosts/homelab-test/configuration.nix;
         stella = myLib.mkStableSystem ./hosts/stella/configuration.nix;
         iso = myLib.mkIsoSystem ./hosts/iso/configuration.nix;
+      };
+      homeConfigurations = {
+        "efficacy38@stealla" = inputs.home-manager.lib.homeManagerConfiguration {
+          pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux;
+          modules = [
+            ./home-modules/default.nix
+            ./hosts/stella/home.nix
+          ];
+          extraSpecialArgs = {
+            inherit pkgs-stable pkgs-unstable;
+          };
+        };
       };
     };
 }
