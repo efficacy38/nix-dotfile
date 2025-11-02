@@ -1,17 +1,14 @@
 {
   "position": "top",
-  "modules-left": [
-    "hyprland/workspaces"
-  ],
-  "modules-center": [
-    "hyprland/window"
-  ],
+  "modules-left": ["hyprland/workspaces"],
+  "modules-center": ["hyprland/window"],
   "modules-right": [
     "network",
     "bluetooth",
     "pulseaudio",
     "battery",
-    "clock"
+    "custom/tlp",
+    "clock",
   ],
   "clock": {
     "format": "<span foreground='#f5c2e7'>   </span>{:%a %d %H:%M}",
@@ -29,13 +26,7 @@
     "format-plugged": "<span size='13000' foreground='#B1E3AD'> </span>{capacity}%",
     "format-alt": "<span size='13000' foreground='#B1E3AD'>{icon} </span> {time}",
     "format-full": "<span size='13000' foreground='#B1E3AD'> </span>{capacity}%",
-    "format-icons": [
-      "",
-      "",
-      "",
-      "",
-      ""
-    ],
+    "format-icons": ["", "", "", "", ""],
     "tooltip-format": "{time}",
   },
   "network": {
@@ -44,17 +35,13 @@
     "format-linked": "{ifname} (No IP) ",
     "format-disconnected": "<span size='13000' foreground='#f5e0dc'>  </span>Disconnected",
     "tooltip-format-wifi": "Signal Strength: {signalStrength}%",
-    "on-click": "kitty --class floating nmtui",
+    "on-click": "kitty --class floating sudo nmtui",
   },
   "pulseaudio": {
     "format": "{icon}  {volume}%",
     "format-muted": "",
     "format-icons": {
-      "default": [
-        "",
-        "",
-        " "
-      ],
+      "default": ["", "", " "],
     },
     "on-click": "mate-volume-control",
   },
@@ -68,5 +55,22 @@
     "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
     "tooltip-format-enumerate-connected-battery": "{device_alias}\t{device_address}\t{device_battery_percentage}%",
     "on-click": "overskride",
+  },
+  // ---- Custom TLP ----
+  // https://github.com/Alexays/Waybar/wiki/Module:-Custom
+  "custom/tlp": {
+    "format": "{icon} {text}",
+    "format-icons": {
+      "battery": " ",
+      "AC": " ",
+    },
+    "exec": "~/.config/waybar/tlp-ctl.sh get --json",
+    "exec": "/tmp/test.sh get --json",
+    "exec-on-event": true,
+    "return-type": "json",
+    // We need to run every now and then in case there are outside changes.
+    "interval": 5,
+    "on-click": "~/.config/waybar/tlp-ctl.sh toggle",
+    "on-click-right": "~/.config/waybar/tlp-ctl.sh set auto",
   },
 }

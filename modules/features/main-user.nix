@@ -115,6 +115,9 @@ in
               {
                 command = "${pkgs.networkmanager}/bin/nmtui";
               }
+              {
+                command = "/run/current-system/sw/bin/tlp";
+              }
             ];
           users = [ "${cfg.userName}" ];
         }
