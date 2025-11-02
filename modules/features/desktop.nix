@@ -184,7 +184,9 @@ in
         services.gnome.gnome-keyring.enable = true;
 
         systemd.sleep.extraConfig = ''
-          AllowSuspend=no
+          # suspend to RAM
+          AllowSuspend=yes
+          # hibernate to disk
           AllowHibernation=no
           AllowHybridSleep=no
           AllowSuspendThenHibernate=no
