@@ -13,6 +13,7 @@
     ./features/impremanence.nix
     ./features/fprintd.nix
     ./features/battery-health.nix
+    ./features/systemd-initrd.nix
 
     ./bundles/common.nix
     ./bundles/steam.nix

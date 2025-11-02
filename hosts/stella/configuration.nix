@@ -26,6 +26,8 @@
   myNixOS.tailscale.enable = true;
   myNixOS.tailscale.asRouter = false;
   myNixOS.impermanence.enable = true;
+  myNixOS.systemd-initrd.enable = true;
+  # myNixOS.systemd-initrd.debugEnable = true;
   myNixOS.backup.enable = true;
   myNixOS.battery-health.enable = true;
 
