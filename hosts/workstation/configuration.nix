@@ -39,6 +39,8 @@
     openFirewall = true;
   };
 
+  myNixOS.systemd-initrd.enable = true;
+
   virtualisation.docker.enable = true;
 
   # List packages installed in system profile. To search, run:
