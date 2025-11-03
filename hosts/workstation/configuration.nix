@@ -30,6 +30,7 @@
     };
   };
 
+  myNixOS.common-server.enable = true;
   myNixOS.main-user.enable = true;
   myNixOS.main-user.userName = "efficacy38";
   myNixOS.main-user.userConfig = ./home.nix;

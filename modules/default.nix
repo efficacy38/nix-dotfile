@@ -14,9 +14,11 @@
     ./features/fprintd.nix
     ./features/battery-health.nix
     ./features/systemd-initrd.nix
+    ./features/common-server.nix
 
     ./bundles/common.nix
     ./bundles/steam.nix
+    ./bundles/server.nix
     ./bundles/desktop-hyprland.nix
     ./bundles/desktop-kde.nix
   ];

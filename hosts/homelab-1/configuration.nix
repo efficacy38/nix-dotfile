@@ -62,10 +62,7 @@ in
 
   # module related options
   myNixOS.bundles.common.enable = true;
-  myNixOS.steam.enable = false;
-  myNixOS.desktop.enable = false;
-  myNixOS.desktop.zramEnable = false;
-  myNixOS.cscc-work.enable = false;
+  myNixOS.bundles.server.enable = true;
   myNixOS.tailscale.enable = true;
   myNixOS.tailscale.asRouter = true;
   # services.kopia.enable = false;
