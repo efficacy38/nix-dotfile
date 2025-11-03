@@ -21,10 +21,12 @@
   myNixOS.bundles.steam.enable = true;
 
   myNixOS.fprintd.enable = true;
-  myNixOS.cscc-work.enable = true;
   myNixOS.main-user.userConfig = ./home.nix;
-  myNixOS.tailscale.enable = true;
-  myNixOS.tailscale.asRouter = false;
+  myNixOS.devpack = {
+    enable = true;
+    csccUtilEnable = true;
+    tailscaleEnable = true;
+  };
   myNixOS.impermanence.enable = true;
   myNixOS.systemd-initrd.enable = true;
   # myNixOS.systemd-initrd.debugEnable = true;
@@ -39,8 +41,6 @@
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
   networking.hostName = "stella"; # Define your hostname.
-
-  services.solaar.enable = true;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
