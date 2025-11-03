@@ -8,6 +8,7 @@
     "pulseaudio",
     "battery",
     "custom/tlp",
+    "idle_inhibitor",
     "clock",
   ],
   "clock": {
@@ -65,12 +66,19 @@
       "AC": " ",
     },
     "exec": "~/.config/waybar/tlp-ctl.sh get --json",
-    "exec": "/tmp/test.sh get --json",
     "exec-on-event": true,
     "return-type": "json",
     // We need to run every now and then in case there are outside changes.
-    "interval": 5,
+    "interval": 10,
     "on-click": "~/.config/waybar/tlp-ctl.sh toggle",
     "on-click-right": "~/.config/waybar/tlp-ctl.sh set auto",
+  },
+  // ---- Idle Inhibitor ----
+  // https://github.com/Alexays/Waybar/wiki/Module:-Idle-Inhibitor
+  "idle_inhibitor": {
+    "format": "{icon}",
+    "format-icons": { "activated": " ", "deactivated": " " },
+    "tooltip-format-activated": "Idle inhibitor: on",
+    "tooltip-format-deactivated": "Idle inhibitor: off",
   },
 }

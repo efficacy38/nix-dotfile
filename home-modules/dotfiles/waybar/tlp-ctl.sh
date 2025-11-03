@@ -6,8 +6,6 @@ if ! command -v tlp >/dev/null; then
   exit 1
 fi
 
-echo "$(whoami) is running tlp-ctl.sh" >&2
-
 # ==== Usage ====
 USAGE="
 Usage: $0 [COMMAND] [ARGUMENTS] [COMMAND_OPTIONS]
