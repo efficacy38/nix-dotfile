@@ -62,6 +62,11 @@ in
     services = {
       pcscd.enable = true;
       openssh.enable = true;
+      # fail2ban would consume logs from rsyslog(/var/log/auth.log)
+      rsyslogd.enable = true;
+      rsyslogd.extraConfig = ''
+        auth,authpriv.* /var/log/auth.log
+      '';
       fail2ban = {
         enable = true;
         ignoreIP = [
