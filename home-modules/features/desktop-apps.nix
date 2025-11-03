@@ -1,9 +1,9 @@
 { pkgs, ... }:
 {
   fonts.fontconfig.enable = true;
-  programs.keepassxc = {
-    enable = true;
-  };
+  # programs.keepassxc = {
+  #   enable = true;
+  # };
 
   home.packages = with pkgs; [
     # input methods and fonts
@@ -40,5 +40,6 @@
 
     zotero
     zotero-translation-server
+    keepassxc
   ];
 }
