@@ -41,6 +41,7 @@ in
         ];
 
         lazy-trees = true;
+        eval-cores = 0;
       };
 
       extraOptions = ''
