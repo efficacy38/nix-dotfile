@@ -118,9 +118,7 @@ in
           mode = "444";
         };
 
-        # enable podman
-        virtualisation.podman.enable = true;
-        virtualisation.docker.enable = true;
+        services.solaar.enable = true;
       };
 
       kde-config = {
