@@ -35,7 +35,6 @@
     # minecraft
     prismlauncher
     moonlight-qt
-    parsec-bin
     vscode
 
     zotero

@@ -28,11 +28,10 @@ profile ec319 {
 }
 
 profile ec319-open {
-  output "eDP-1" enable
+  # at the bottom of the external monitor
+  output "eDP-1" enable mode 2560x1600@60.00Hz position 0,1440 scale 1.3333333 
   output $HDMI
 }
-
-
 
 profile undocked {
   output "eDP-1" enable mode 2560x1600@60.00Hz position 0,0 scale 1.3333333

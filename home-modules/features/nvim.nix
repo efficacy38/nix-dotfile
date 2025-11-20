@@ -14,6 +14,9 @@
       pyright
       # treesitter needs an compiler
       gcc
+      texpresso
+      edukai
+      ttf-tw-moe
 
       # based on ./suggested-pkgs.json
       lua-language-server

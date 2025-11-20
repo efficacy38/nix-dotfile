@@ -34,4 +34,6 @@
     nix-direnv.enable = true;
     enableZshIntegration = true;
   };
+
+  programs.emacs.enable = true;
 }

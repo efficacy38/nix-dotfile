@@ -136,6 +136,7 @@ in
         fzf.enable = lib.mkDefault true;
         gedit.enable = lib.mkDefault true;
         kitty.enable = lib.mkDefault true;
+        emacs.enable = lib.mkDefault true;
       };
     };
   };
