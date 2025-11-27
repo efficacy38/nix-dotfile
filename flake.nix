@@ -35,6 +35,8 @@
 
     nix-index-database.url = "github:nix-community/nix-index-database";
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
+
+    disko.url = "github:nix-community/disko";
   };
 
   outputs =
@@ -60,6 +62,8 @@
         homelab-1 = myLib.mkStableSystem ./hosts/homelab-1/configuration.nix;
         homelab-test = myLib.mkStableSystem ./hosts/homelab-test/configuration.nix;
         stella = myLib.mkStableSystem ./hosts/stella/configuration.nix;
+        cc-desktop = myLib.mkStableSystem ./hosts/cc-desktop/configuration.nix;
+        cc-container-vps = myLib.mkSystem ./hosts/cc-container-vps/configuration.nix;
         iso = myLib.mkIsoSystem ./hosts/iso/configuration.nix;
       };
       homeConfigurations = {

@@ -1,0 +1,3 @@
+[submodule "nix-secret"]
+	path = nix-secret
+	url = git@github.com:efficacy38/nix-secret.git

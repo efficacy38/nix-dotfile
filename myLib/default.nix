@@ -6,7 +6,8 @@ let
     specialArgs = {
       inherit
         myLib
-        inputs;
+        inputs
+        ;
     };
     modules = [
       config
@@ -21,6 +22,7 @@ let
       inputs.impermanence.nixosModules.impermanence
       inputs.efficacy38-nur.nixosModules.kopia
       inputs.determinate.nixosModules.default
+      inputs.disko.nixosModules.disko
       # common overlays
       ../overlays/personal-scripts/personal-scripts.nix
     ]
