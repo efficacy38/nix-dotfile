@@ -15,8 +15,10 @@ return {
   { import = "astrocommunity.pack.json" },
   { import = "astrocommunity.pack.nix" },
   { import = "astrocommunity.pack.sql" },
+  { import = "astrocommunity.pack.python" },
   { import = "astrocommunity.pack.terraform" },
   { import = "astrocommunity.pack.typescript" },
   { import = "astrocommunity.git.git-blame-nvim" },
   { import = "astrocommunity.editing-support.copilotchat-nvim" },
+  { import = "astrocommunity.markdown-and-latex.texpresso-vim" },
 }

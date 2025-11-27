@@ -1,11 +1,11 @@
-{ pkgs, ... }:
+{ pkgs-unstable, ... }:
 {
   fonts.fontconfig.enable = true;
   # programs.keepassxc = {
   #   enable = true;
   # };
 
-  home.packages = with pkgs; [
+  home.packages = with pkgs-unstable; [
     # input methods and fonts
     fcitx5-rime
     nerd-fonts.hack
@@ -35,7 +35,6 @@
     # minecraft
     prismlauncher
     moonlight-qt
-    parsec-bin
     vscode
 
     zotero

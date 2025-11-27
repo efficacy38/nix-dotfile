@@ -57,6 +57,7 @@ in
               ".kube"
 
               ".config/Moonlight\ Game\ Streaming\ Project"
+              ".config/superProductivity"
               ".config/incus"
               ".config/keepassxc"
               ".config/lazygit"

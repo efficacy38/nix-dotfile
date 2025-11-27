@@ -178,6 +178,9 @@ in
 
           catppuccin-sddm
           wireshark
+
+          # todo-lists
+          pkgs.super-productivity
         ];
 
         security.pam.services.sddm.enableGnomeKeyring = true;
