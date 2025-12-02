@@ -7,7 +7,6 @@
 
   home.packages = with pkgs-unstable; [
     # input methods and fonts
-    fcitx5-rime
     nerd-fonts.hack
     nerd-fonts.fira-mono
     nerd-fonts.fira-code
