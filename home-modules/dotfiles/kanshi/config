@@ -34,5 +34,5 @@ profile ec319-open {
 }
 
 profile undocked {
-  output "eDP-1" enable mode 2560x1600@60.00Hz position 0,0 scale 1.3333333
+  output "eDP-1" enable mode 2560x1600@144.00Hz position 0,0 scale 1.3333333
 }

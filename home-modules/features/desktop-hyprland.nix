@@ -100,7 +100,6 @@ in
     wayland.windowManager.hyprland.systemd.enable = false;
     home.packages = [
       pkgs.mate.mate-media
-      pkgs.overskride
       (pkgs.writeShellApplication {
         name = "my-audio-control";
         text = ''
@@ -117,9 +116,9 @@ in
           gnused
         ];
       })
-      pkgs.overskride
+      pkgs.blueberry
       pkgs.rofi-calc
-      pkgs.rofi-emoji-wayland
+      pkgs.rofi-emoji
       pkgs.kdePackages.breeze
       pkgs.kdePackages.breeze-icons
       pkgs.kdePackages.qtsvg

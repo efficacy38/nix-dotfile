@@ -77,7 +77,7 @@ in
           fcitx5.addons = with pkgs; [
             rime-data
             fcitx5-rime
-            fcitx5-chinese-addons
+            qt6Packages.fcitx5-chinese-addons
             librime
           ];
         };
@@ -164,7 +164,7 @@ in
           brightnessctl
 
           # wayland launcher
-          rofi-wayland
+          rofi
 
           # lock
           hyprlock
