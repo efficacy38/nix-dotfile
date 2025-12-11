@@ -164,7 +164,7 @@ in
       nix-ld = {
         enable = true;
         libraries = with pkgs; [
-          libgcc.lib
+          stdenv.cc.cc
         ];
       };
       nh = {

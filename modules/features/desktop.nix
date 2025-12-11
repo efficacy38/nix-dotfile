@@ -181,6 +181,9 @@ in
 
           # todo-lists
           pkgs.super-productivity
+
+          # crypto
+          tradingview
         ];
 
         security.pam.services.sddm.enableGnomeKeyring = true;
