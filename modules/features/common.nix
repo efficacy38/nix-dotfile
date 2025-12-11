@@ -141,7 +141,6 @@ in
 
         # vpn
         openfortivpn
-        wireguard-tools
       ];
     };
 

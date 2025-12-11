@@ -10,7 +10,6 @@
     ./features/impremanence.nix
     ./features/tailscale.nix
     ./features/cscc-work.nix
-    ./features/impremanence.nix
     ./features/fprintd.nix
     ./features/devpack.nix
     ./features/battery-health.nix

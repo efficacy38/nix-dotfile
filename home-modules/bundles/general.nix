@@ -1,10 +1,4 @@
 _: {
-  nixpkgs = {
-    config = {
-      experimental-features = "nix-command flakes";
-    };
-  };
-
   myHomeManager = {
     bundles.minimal.enable = true;
 
@@ -14,5 +8,4 @@ _: {
     zsh.enable = true;
     k8s.enable = true;
   };
-
 }
