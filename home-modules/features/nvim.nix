@@ -39,7 +39,7 @@
       shfmt
       ruff
       nixfmt-rfc-style
-      clang-tools
+      # clang-tools
       nodePackages.prettier
       stylua
       tflint
