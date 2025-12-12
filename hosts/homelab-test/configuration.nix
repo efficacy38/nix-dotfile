@@ -12,13 +12,7 @@
 
   # module related options
   my.bundles.common.enable = true;
-  my.system.incus.enable = true;
-  my.common.resolvedDnssec = true;
-  my.system.nftables.enable = true;
-  my.desktop.steam.enable = false;
-  my.desktop.enable = false;
-  my.desktop.zram.enable = false;
-  my.devpack.csccUtil.enable = false;
+  my.bundles.homelab.enable = true;
 
   # services
   services.openssh.enable = true;
