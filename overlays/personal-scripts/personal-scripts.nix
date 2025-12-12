@@ -1,7 +1,7 @@
 { pkgs, ... }:
 {
   nixpkgs.overlays = [
-    (final: prev: {
+    (_final: _prev: {
       personal-script = pkgs.callPackage ./package.nix { };
     })
   ];

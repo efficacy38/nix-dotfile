@@ -1,16 +1,7 @@
 {
-  inputs,
-  config,
-  pkgs,
   ...
 }:
 let
-  secretpath = builtins.toString inputs.nix-secrets;
-
-  common-secret = {
-    sopsFile = "${secretpath}/secrets/common.yaml";
-    format = "yaml";
-  };
 in
 {
   imports = [

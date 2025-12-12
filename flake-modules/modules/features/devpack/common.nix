@@ -26,10 +26,7 @@
 
   # Home-manager: devpack options definition
   flake.homeModules.devpack =
-    { lib, config, ... }:
-    let
-      cfg = config.my.devpack;
-    in
+    { lib, ... }:
     {
       options.my.devpack = {
         enable = lib.mkEnableOption "devpack home-manager configuration";
