@@ -5,6 +5,7 @@
   ...
 }:
 let
+  cfg = config.myHomeManager.gpg;
   # would generate alias script
   my-gpg = [
     {
@@ -52,12 +53,19 @@ let
 in
 with lib;
 {
+  options.myHomeManager.gpg = {
+    enable = lib.mkEnableOption "GPG and Yubikey configuration";
+  };
+
   options.my-gpg = mkOption {
     type = types.listOf (types.submodule myGpgUtilOpts);
     default = [ ];
   };
-  config.home.packages = [ pkgs.yubikey-manager ] ++ aliasScript;
-  config.programs.zsh.initContent = lib.mkAfter (
-    lib.concatStrings (lib.lists.forEach aliasScript (script: "compdef ${script.name}=gpg\n"))
-  );
+
+  config = lib.mkIf cfg.enable {
+    home.packages = [ pkgs.yubikey-manager ] ++ aliasScript;
+    programs.zsh.initContent = lib.mkAfter (
+      lib.concatStrings (lib.lists.forEach aliasScript (script: "compdef ${script.name}=gpg\n"))
+    );
+  };
 }

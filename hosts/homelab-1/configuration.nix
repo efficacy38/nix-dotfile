@@ -14,8 +14,6 @@ let
 in
 {
   imports = [
-    # custom modules
-    ../../modules
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
   ];
@@ -61,19 +59,9 @@ in
   };
 
   # module related options
-  myNixOS.bundles.common.enable = true;
-  myNixOS.bundles.server.enable = true;
+  myNixOS.bundles.homelab.enable = true;
   myNixOS.tailscale.enable = true;
   myNixOS.tailscale.asRouter = true;
-  # services.kopia.enable = false;
-
-  # systemd-resolved
-  services.resolved = {
-    enable = true;
-    dnssec = "true";
-    domains = [ "~." ];
-    dnsovertls = "true";
-  };
 
   services.openiscsi = {
     enable = true;
@@ -86,8 +74,6 @@ in
   services.nfs.server.enable = true;
   # Enable networking related
   networking.hostName = "homelab-1"; # Define your hostname.
-  networking.nftables.enable = true;
-  networking.firewall.enable = false;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -95,12 +81,6 @@ in
   environment.variables.EDITOR = "vim";
 
   programs.zsh.enable = true;
-  virtualisation.incus = {
-    enable = true;
-    ui = {
-      enable = true;
-    };
-  };
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];

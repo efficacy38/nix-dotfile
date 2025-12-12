@@ -1,8 +1,6 @@
 { pkgs, ... }:
 {
   imports = [
-    # custom modules
-    ../../modules
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
   ];
@@ -14,42 +12,28 @@
 
   # module related options
   myNixOS.bundles.common.enable = true;
+  myNixOS.incus.enable = true;
+  myNixOS.common.resolvedDnssec = true;
+  myNixOS.nftables.enable = true;
   myNixOS.steam.enable = false;
   myNixOS.desktop.enable = false;
   myNixOS.desktop.zramEnable = false;
   myNixOS.cscc-work.enable = false;
-
-  # systemd-resolved
-  services.resolved = {
-    enable = true;
-    dnssec = "true";
-    domains = [ "~." ];
-    dnsovertls = "true";
-  };
 
   # services
   services.openssh.enable = true;
   services.nfs.server.enable = true;
   # Enable networking related
   networking.hostName = "homelab-test"; # Define your hostname.
-  networking.nftables.enable = true;
-  networking.firewall.enable = false;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    incus-lts
     nut
   ];
   environment.variables.EDITOR = "vim";
 
   programs.zsh.enable = true;
-  virtualisation.incus = {
-    enable = true;
-    ui = {
-      enable = true;
-    };
-  };
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];

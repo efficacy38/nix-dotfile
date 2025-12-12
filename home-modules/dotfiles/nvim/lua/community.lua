@@ -16,6 +16,7 @@ return {
   { import = "astrocommunity.pack.nix" },
   { import = "astrocommunity.pack.sql" },
   { import = "astrocommunity.pack.python" },
+  { import = "astrocommunity.pack.cpp" },
   { import = "astrocommunity.pack.terraform" },
   { import = "astrocommunity.pack.typescript" },
   { import = "astrocommunity.git.git-blame-nvim" },

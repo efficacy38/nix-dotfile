@@ -5,8 +5,6 @@
 }:
 {
   imports = [
-    # custom modules
-    ../../modules
     # Include the default lxd configuration.
     "${modulesPath}/virtualisation/incus-virtual-machine.nix"
   ];

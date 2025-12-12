@@ -1,24 +1,28 @@
 {
   config,
   pkgs,
+  lib,
   ...
 }:
+let
+  cfg = config.myHomeManager.desktop-kde;
+in
 {
-  fonts.fontconfig.enable = true;
+  options.myHomeManager.desktop-kde = {
+    enable = lib.mkEnableOption "KDE desktop packages";
+  };
 
-  home.packages = with pkgs.kdePackages; [
+  config = lib.mkIf cfg.enable {
+    home.packages = with pkgs.kdePackages; [
     okular
     kdeconnect-kde
     elisa
     markdownpart
     kate
-    # markdown preview plugin of kate
-    markdownpart
     yakuake
     kcalc
-    kate
-    yakuake
     ghostwriter
   ];
-  # programs.kdeconnect.enable = true;
+    # programs.kdeconnect.enable = true;
+  };
 }

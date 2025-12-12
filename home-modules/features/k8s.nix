@@ -1,5 +1,11 @@
-{ pkgs, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 let
+  cfg = config.myHomeManager.k8s;
   gdk = pkgs.google-cloud-sdk.withExtraComponents (
     with pkgs.google-cloud-sdk.components;
     [
@@ -8,8 +14,12 @@ let
   );
 in
 {
+  options.myHomeManager.k8s = {
+    enable = lib.mkEnableOption "Kubernetes tools";
+  };
 
-  programs = {
+  config = lib.mkIf cfg.enable {
+    programs = {
     kubecolor = {
       enable = true;
       enableZshIntegration = true;
@@ -44,4 +54,5 @@ in
     gdk
     opentofu
   ];
+  };
 }

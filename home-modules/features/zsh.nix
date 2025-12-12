@@ -4,8 +4,16 @@
   lib,
   ...
 }:
+let
+  cfg = config.myHomeManager.zsh;
+in
 {
-  home.packages = with pkgs; [
+  options.myHomeManager.zsh = {
+    enable = lib.mkEnableOption "zsh configuration";
+  };
+
+  config = lib.mkIf cfg.enable {
+    home.packages = with pkgs; [
     fzf
     fzf-zsh
     zsh-defer
@@ -204,11 +212,12 @@
 
   };
 
-  home.file = {
-    ".p10k.zsh" = {
-      source = config.lib.file.mkOutOfStoreSymlink "/etc/nixos/nix-dotfile/home-modules/dotfiles/p10k.zsh";
+    home.file = {
+      ".p10k.zsh" = {
+        source = config.lib.file.mkOutOfStoreSymlink "/etc/nixos/nix-dotfile/home-modules/dotfiles/p10k.zsh";
+      };
     };
-  };
 
-  programs.zsh.history.path = "$HOME/.local/share/zsh/.zsh_history";
+    programs.zsh.history.path = "$HOME/.local/share/zsh/.zsh_history";
+  };
 }

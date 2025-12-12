@@ -62,7 +62,6 @@ in
               ".config/keepassxc"
               ".config/lazygit"
               ".config/fcitx5"
-              ".config/rambox"
               ".config/solaar"
               ".config/github-copilot"
 
