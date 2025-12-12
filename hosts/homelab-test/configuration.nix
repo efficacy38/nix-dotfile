@@ -11,14 +11,14 @@
   boot.tmp.useTmpfs = true;
 
   # module related options
-  myNixOS.bundles.common.enable = true;
-  myNixOS.incus.enable = true;
-  myNixOS.common.resolvedDnssec = true;
-  myNixOS.nftables.enable = true;
-  myNixOS.steam.enable = false;
-  myNixOS.desktop.enable = false;
-  myNixOS.desktop.zramEnable = false;
-  myNixOS.cscc-work.enable = false;
+  my.bundles.common.enable = true;
+  my.incus.enable = true;
+  my.common.resolvedDnssec = true;
+  my.nftables.enable = true;
+  my.steam.enable = false;
+  my.desktop.enable = false;
+  my.desktop.zramEnable = false;
+  my.cscc-work.enable = false;
 
   # services
   services.openssh.enable = true;

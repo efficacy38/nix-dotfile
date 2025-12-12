@@ -29,14 +29,14 @@ in
   '';
 
   # module related options
-  myNixOS.bundles.common.enable = true;
-  myNixOS.bundles.server.enable = true;
-  myNixOS.bundles.desktop-hyprland.enable = true;
-  myNixOS.incus.enable = true;
-  myNixOS.common.resolvedDnssec = true;
-  myNixOS.nftables.enable = true;
-  myNixOS.tailscale.enable = true;
-  myNixOS.tailscale.asRouter = true;
+  my.bundles.common.enable = true;
+  my.bundles.server.enable = true;
+  my.bundles.desktop-hyprland.enable = true;
+  my.incus.enable = true;
+  my.common.resolvedDnssec = true;
+  my.nftables.enable = true;
+  my.tailscale.enable = true;
+  my.tailscale.asRouter = true;
 
   # services
   services.openssh.enable = true;

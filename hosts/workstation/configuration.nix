@@ -28,16 +28,16 @@
     };
   };
 
-  myNixOS.common-server.enable = true;
-  myNixOS.main-user.enable = true;
-  myNixOS.main-user.userName = "efficacy38";
-  myNixOS.main-user.userConfig = ./home.nix;
-  myNixOS.devpack = {
+  my.common-server.enable = true;
+  my.main-user.enable = true;
+  my.main-user.userName = "efficacy38";
+  my.main-user.userConfig = ./home.nix;
+  my.devpack = {
     enable = true;
     csccUtilEnable = true;
     tailscaleEnable = true;
   };
-  myNixOS.systemd-initrd.enable = true;
+  my.systemd-initrd.enable = true;
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   # environment.systemPackages = with pkgs; [

@@ -59,9 +59,9 @@ in
   };
 
   # module related options
-  myNixOS.bundles.homelab.enable = true;
-  myNixOS.tailscale.enable = true;
-  myNixOS.tailscale.asRouter = true;
+  my.bundles.homelab.enable = true;
+  my.tailscale.enable = true;
+  my.tailscale.asRouter = true;
 
   services.openiscsi = {
     enable = true;
