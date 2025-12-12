@@ -34,25 +34,17 @@ in
   myNixOS.bundles.common.enable = true;
   myNixOS.bundles.server.enable = true;
   myNixOS.bundles.desktop-hyprland.enable = true;
+  myNixOS.incus.enable = true;
+  myNixOS.common.resolvedDnssec = true;
+  myNixOS.nftables.enable = true;
   myNixOS.tailscale.enable = true;
   myNixOS.tailscale.asRouter = true;
-  # services.kopia.enable = false;
-
-  # systemd-resolved
-  services.resolved = {
-    enable = true;
-    dnssec = "true";
-    domains = [ "~." ];
-    dnsovertls = "true";
-  };
 
   # services
   services.openssh.enable = true;
   services.nfs.server.enable = true;
   # Enable networking related
   networking.hostName = "cc-desktop";
-  networking.nftables.enable = true;
-  networking.firewall.enable = false;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -60,12 +52,6 @@ in
   environment.variables.EDITOR = "vim";
 
   programs.zsh.enable = true;
-  virtualisation.incus = {
-    enable = true;
-    ui = {
-      enable = true;
-    };
-  };
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];

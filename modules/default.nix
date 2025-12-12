@@ -15,8 +15,11 @@
     ./features/battery-health.nix
     ./features/systemd-initrd.nix
     ./features/common-server.nix
+    ./features/incus.nix
+    ./features/nftables.nix
 
     ./bundles/common.nix
+    ./bundles/homelab.nix
     ./bundles/steam.nix
     ./bundles/server.nix
     ./bundles/desktop-hyprland.nix

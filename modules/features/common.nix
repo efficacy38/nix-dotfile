@@ -12,6 +12,7 @@ in
   options = {
     myNixOS.common = {
       enable = lib.mkEnableOption "enable common configuration for all nixos";
+      resolvedDnssec = lib.mkEnableOption "enable strict DNSSEC and DNS-over-TLS";
     };
   };
 
@@ -104,7 +105,9 @@ in
     # systemd resolved
     services.resolved = {
       enable = true;
-      dnsovertls = lib.mkDefault "opportunistic";
+      dnssec = if cfg.resolvedDnssec then "true" else lib.mkDefault "false";
+      domains = lib.mkIf cfg.resolvedDnssec [ "~." ];
+      dnsovertls = if cfg.resolvedDnssec then "true" else lib.mkDefault "opportunistic";
     };
 
     # Allow unfree packages
