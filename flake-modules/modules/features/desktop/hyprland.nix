@@ -170,14 +170,13 @@ in
             pkgs.mate.mate-media
             (pkgs.writeShellApplication {
               name = "my-audio-control";
-              text =
-                ''
-                  MUTE_ICON_PATH="${MUTE_ICON_PATH}"
-                  LOW_ICON_PATH="${LOW_ICON_PATH}"
-                  MEDIUM_ICON_PATH="${MEDIUM_ICON_PATH}"
-                  HIGH_ICON_PATH="${HIGH_ICON_PATH}"
-                ''
-                + builtins.readFile (dotfilesBasePath + /dunst/audio-control.sh);
+              text = ''
+                MUTE_ICON_PATH="${MUTE_ICON_PATH}"
+                LOW_ICON_PATH="${LOW_ICON_PATH}"
+                MEDIUM_ICON_PATH="${MEDIUM_ICON_PATH}"
+                HIGH_ICON_PATH="${HIGH_ICON_PATH}"
+              ''
+              + builtins.readFile (dotfilesBasePath + /dunst/audio-control.sh);
               runtimeInputs = with pkgs; [
                 wireplumber
                 coreutils

@@ -150,24 +150,23 @@
     {
       config = lib.mkIf (cfg.enable && cfg.podman.enable) {
         home.packages = with pkgs; [ podman-compose ];
-        services.podman =
-          {
-            enable = true;
-          }
-          // lib.optionalAttrs (builtins.hasAttr "settings" options.services.podman) {
-            settings = {
-              policy = {
-                "default" = [ { "type" = "insecureAcceptAnything"; } ];
-              };
-              registries = {
-                search = [
-                  "docker.io"
-                  "quay.io"
-                  "gcr.io"
-                ];
-              };
+        services.podman = {
+          enable = true;
+        }
+        // lib.optionalAttrs (builtins.hasAttr "settings" options.services.podman) {
+          settings = {
+            policy = {
+              "default" = [ { "type" = "insecureAcceptAnything"; } ];
+            };
+            registries = {
+              search = [
+                "docker.io"
+                "quay.io"
+                "gcr.io"
+              ];
             };
           };
+        };
       };
     };
 

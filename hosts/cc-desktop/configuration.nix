@@ -1,35 +1,31 @@
-{
-  ...
-}:
-let
-in
+{ ... }:
 {
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
   ];
 
-  # boot.supportedFilesystems = [ "bcachefs" "zfs" ];
-  # boot.kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
-  boot.supportedFilesystems = [ "zfs" ];
-  boot.kernelModules = [ "kvm-intel" ];
-  boot.tmp.useTmpfs = true;
-  boot.extraModprobeConfig = ''
-    # only allow 50% arc cache is enabled
-    options zfs zfs_arc_max_percent=50
-  '';
+  boot = {
+    supportedFilesystems = [ "zfs" ];
+    kernelModules = [ "kvm-intel" ];
+    tmp.useTmpfs = true;
+    extraModprobeConfig = ''
+      # only allow 50% arc cache is enabled
+      options zfs zfs_arc_max_percent=50
+    '';
+  };
 
-  # module related options
-  my.bundles.common.enable = true;
-  my.bundles.server.enable = true;
-  my.bundles.desktop-hyprland.enable = true;
-  my.bundles.homelab.enable = true;
-  my.system.nftables.enable = true;
-  my.devpack.tailscale.enable = true;
-  my.devpack.tailscaleAsRouter = true;
+  my = {
+    bundles = {
+      homelab.enable = true;
+      desktop-hyprland.enable = true;
+    };
+    devpack = {
+      tailscale.enable = true;
+      tailscaleAsRouter = true;
+    };
+  };
 
-  # services
-  services.openssh.enable = true;
   services.nfs.server.enable = true;
   # Enable networking related
   networking.hostName = "cc-desktop";

@@ -19,26 +19,30 @@
   my.system.systemdInitrd.debug = true;
 
   services.lvm.enable = true;
-  boot.initrd.kernelModules = [
-    "dm_mod"
-    "dm-snapshot"
-  ];
-  boot.initrd.availableKernelModules = [
-    "nvme"
-    "xhci_pci"
-    "ahci"
-    "usbhid"
-    "usb_storage"
-    "sd_mod"
-  ]
-  # vmware vm
-  ++ [
-    "ata_piix"
-    "vmw_pvscsi"
-    "sr_mod"
-  ];
-  boot.initrd.services.lvm.enable = true;
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot = {
+    initrd = {
+      kernelModules = [
+        "dm_mod"
+        "dm-snapshot"
+      ];
+      availableKernelModules = [
+        "nvme"
+        "xhci_pci"
+        "ahci"
+        "usbhid"
+        "usb_storage"
+        "sd_mod"
+      ]
+      # vmware vm
+      ++ [
+        "ata_piix"
+        "vmw_pvscsi"
+        "sr_mod"
+      ];
+      services.lvm.enable = true;
+    };
+    kernelPackages = pkgs.linuxPackages_latest;
+  };
 
   networking.hostName = lib.mkDefault "TEMPLATE_HOSTNAME";
 

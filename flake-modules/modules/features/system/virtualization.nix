@@ -9,7 +9,9 @@
     in
     {
       options.my.system.incus.enable = lib.mkEnableOption "Incus virtualization";
-      options.my.system.incus.ui.enable = lib.mkEnableOption "Incus web UI" // { default = true; };
+      options.my.system.incus.ui.enable = lib.mkEnableOption "Incus web UI" // {
+        default = true;
+      };
 
       config = lib.mkIf cfg.incus.enable {
         virtualisation.incus = {

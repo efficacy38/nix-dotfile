@@ -28,16 +28,20 @@
     };
   };
 
-  my.common-server.enable = true;
-  my.main-user.enable = true;
-  my.main-user.userName = "efficacy38";
-  my.main-user.userConfig = ./home.nix;
-  my.devpack = {
-    enable = true;
-    csccUtil.enable = true;
-    tailscale.enable = true;
+  my = {
+    common-server.enable = true;
+    main-user = {
+      enable = true;
+      userName = "efficacy38";
+      userConfig = ./home.nix;
+    };
+    devpack = {
+      enable = true;
+      csccUtil.enable = true;
+      tailscale.enable = true;
+    };
+    system.systemdInitrd.enable = true;
   };
-  my.system.systemdInitrd.enable = true;
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   # environment.systemPackages = with pkgs; [
