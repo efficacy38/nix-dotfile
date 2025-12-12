@@ -2,10 +2,19 @@
   config,
   pkgs-unstable,
   pkgs-stable,
+  lib,
   ...
 }:
+let
+  cfg = config.myHomeManager.nvim;
+in
 {
-  home = {
+  options.myHomeManager.nvim = {
+    enable = lib.mkEnableOption "neovim configuration";
+  };
+
+  config = lib.mkIf cfg.enable {
+    home = {
     packages = with pkgs-unstable; [
       neovim
       yamllint
@@ -83,11 +92,11 @@
         EDITOR = "nvim";
       };
 
-    file = {
-      ".config/nvim" = {
-        source = config.lib.file.mkOutOfStoreSymlink "/etc/nixos/nix-dotfile/home-modules/dotfiles/nvim";
+      file = {
+        ".config/nvim" = {
+          source = config.lib.file.mkOutOfStoreSymlink "/etc/nixos/nix-dotfile/home-modules/dotfiles/nvim";
+        };
       };
     };
   };
-
 }

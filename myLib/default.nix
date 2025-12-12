@@ -33,72 +33,11 @@ let
     ];
   };
 in
-rec {
-  # =========================== Helpers ============================ #
-  # Get all files in a directory (still needed for home-modules)
-  filesIn = dir: (map (fname: dir + "/${fname}") (builtins.attrNames (builtins.readDir dir)));
-
+{
   # ========================== Buildables ========================== #
   mkSystem = config: inputs.nixpkgs.lib.nixosSystem (mkSystemAtts false config);
 
   mkStableSystem = config: inputs.nixpkgs-stable.lib.nixosSystem (mkSystemAtts true config);
 
   mkIsoSystem = config: inputs.nixpkgs-stable.lib.nixosSystem { modules = [ config ]; };
-
-  # ========================== Extenders =========================== #
-
-  # Evaluates nixos/home-manager module and extends it's options / config
-  #  wrapper function that return extended Module
-  extendModule =
-    { path, ... }@args:
-    margs:
-    let
-      # evaluated final result
-      eval = if (builtins.isString path) || (builtins.isPath path) then import path margs else path margs;
-      evalNoImports = builtins.removeAttrs eval [
-        "imports"
-        "options"
-      ];
-
-      # do extra* logic, act return value as another modules
-      extra =
-        if (builtins.hasAttr "extraOptions" args) || (builtins.hasAttr "extraConfig" args) then
-          [
-            (_: {
-              options = args.extraOptions or { };
-              config = args.extraConfig or { };
-            })
-          ]
-        else
-          [ ];
-    in
-    {
-      imports = (eval.imports or [ ]) ++ extra;
-
-      options =
-        if builtins.hasAttr "optionsExtension" args then
-          (args.optionsExtension (eval.options or { }))
-        else
-          (eval.options or { });
-
-      config =
-        if builtins.hasAttr "configExtension" args then
-          (args.configExtension (eval.config or evalNoImports))
-        else
-          (eval.config or evalNoImports);
-    };
-
-  # Applies extendModules to all modules
-  # modules can be defined in the same way
-  # as regular imports, or taken from "filesIn"
-  extendModules =
-    extension: modules:
-    map (
-      f:
-      let
-        # Extract filename without extension (inlined fileNameOf)
-        name = builtins.head (builtins.split "\\." (baseNameOf f));
-      in
-      extendModule ((extension name) // { path = f; })
-    ) modules;
 }

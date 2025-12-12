@@ -2,11 +2,19 @@
   pkgs,
   lib,
   inputs,
+  config,
   ...
 }:
+let
+  cfg = config.myHomeManager.desktop-zen;
+in
 {
+  options.myHomeManager.desktop-zen = {
+    enable = lib.mkEnableOption "Zen browser configuration";
+  };
 
-  xdg.mimeApps = lib.mkForce {
+  config = lib.mkIf cfg.enable {
+    xdg.mimeApps = lib.mkForce {
     enable = true;
     defaultApplications = {
       "x-scheme-handler/http" = [ "zen.desktop" ];
@@ -77,6 +85,7 @@
         "privacy.trackingprotection.enabled" = true;
         "signon.rememberSignons" = false;
       };
+    };
     };
   };
 }

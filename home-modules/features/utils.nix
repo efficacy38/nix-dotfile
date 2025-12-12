@@ -1,6 +1,20 @@
-{ pkgs, pkgs-unstable, ... }:
 {
-  home.packages = with pkgs-unstable; [
+  pkgs,
+  pkgs-unstable,
+  lib,
+  config,
+  ...
+}:
+let
+  cfg = config.myHomeManager.utils;
+in
+{
+  options.myHomeManager.utils = {
+    enable = lib.mkEnableOption "utility packages";
+  };
+
+  config = lib.mkIf cfg.enable {
+    home.packages = with pkgs-unstable; [
     curl
     wget
     ripgrep
@@ -35,5 +49,6 @@
     enableZshIntegration = true;
   };
 
-  programs.emacs.enable = true;
+    programs.emacs.enable = true;
+  };
 }

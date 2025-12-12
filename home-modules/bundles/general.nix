@@ -1,11 +1,25 @@
-_: {
-  myHomeManager = {
-    bundles.minimal.enable = true;
+{
+  lib,
+  config,
+  ...
+}:
+let
+  cfg = config.myHomeManager.bundles.general;
+in
+{
+  options.myHomeManager.bundles.general = {
+    enable = lib.mkEnableOption "general bundle (minimal + backup, podman, utils, k8s)";
+  };
 
-    backup.enable = true;
-    podman.enable = true;
-    utils.enable = true;
-    zsh.enable = true;
-    k8s.enable = true;
+  config = lib.mkIf cfg.enable {
+    myHomeManager = {
+      bundles.minimal.enable = true;
+
+      backup.enable = true;
+      podman.enable = true;
+      utils.enable = true;
+      zsh.enable = true;
+      k8s.enable = true;
+    };
   };
 }

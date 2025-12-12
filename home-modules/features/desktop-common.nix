@@ -1,6 +1,19 @@
-{ pkgs-unstable, ... }:
 {
-  fonts.fontconfig.enable = true;
+  pkgs-unstable,
+  lib,
+  config,
+  ...
+}:
+let
+  cfg = config.myHomeManager.desktop-common;
+in
+{
+  options.myHomeManager.desktop-common = {
+    enable = lib.mkEnableOption "common desktop packages";
+  };
+
+  config = lib.mkIf cfg.enable {
+    fonts.fontconfig.enable = true;
   # programs.keepassxc = {
   #   enable = true;
   # };
@@ -40,4 +53,5 @@
     zotero-translation-server
     keepassxc
   ];
+  };
 }

@@ -1,13 +1,23 @@
 {
   config,
   pkgs,
+  lib,
   ...
 }:
+let
+  cfg = config.myHomeManager.backup;
+in
 {
-  home.packages = with pkgs; [
-    rclone
-    kopia
-  ];
+  options.myHomeManager.backup = {
+    enable = lib.mkEnableOption "backup tools (rclone, kopia, syncthing)";
+  };
 
-  services.syncthing.enable = true;
+  config = lib.mkIf cfg.enable {
+    home.packages = with pkgs; [
+      rclone
+      kopia
+    ];
+
+    services.syncthing.enable = true;
+  };
 }

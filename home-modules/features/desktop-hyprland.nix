@@ -6,6 +6,7 @@
   ...
 }:
 let
+  cfg = config.myHomeManager.desktop-hyprland;
   dotfilesDir = "/etc/nixos/nix-dotfile/home-modules/dotfiles";
   mkLinkConfig =
     path:
@@ -22,7 +23,11 @@ let
   HIGH_ICON_PATH = ../dotfiles/dunst/volume-high.png;
 in
 {
-  config = {
+  options.myHomeManager.desktop-hyprland = {
+    enable = lib.mkEnableOption "Hyprland desktop configuration";
+  };
+
+  config = lib.mkIf cfg.enable ({
     # FIXME: This is work-around of hm, check it periodically
     # https://github.com/nix-community/home-manager/issues/2064
     systemd.user.targets.tray = {
@@ -138,5 +143,5 @@ in
         emacs.enable = lib.mkDefault true;
       };
     };
-  };
+  });
 }

@@ -1,10 +1,19 @@
 {
   config,
   pkgs,
+  lib,
   ...
 }:
+let
+  cfg = config.myHomeManager.desktop-kde;
+in
 {
-  home.packages = with pkgs.kdePackages; [
+  options.myHomeManager.desktop-kde = {
+    enable = lib.mkEnableOption "KDE desktop packages";
+  };
+
+  config = lib.mkIf cfg.enable {
+    home.packages = with pkgs.kdePackages; [
     okular
     kdeconnect-kde
     elisa
@@ -14,5 +23,6 @@
     kcalc
     ghostwriter
   ];
-  # programs.kdeconnect.enable = true;
+    # programs.kdeconnect.enable = true;
+  };
 }

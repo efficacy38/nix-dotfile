@@ -1,7 +1,20 @@
-{ pkgs, ... }:
 {
-  programs = {
-    tmux = {
+  pkgs,
+  lib,
+  config,
+  ...
+}:
+let
+  cfg = config.myHomeManager.tmux;
+in
+{
+  options.myHomeManager.tmux = {
+    enable = lib.mkEnableOption "tmux terminal multiplexer";
+  };
+
+  config = lib.mkIf cfg.enable {
+    programs = {
+      tmux = {
       enable = true;
       keyMode = "vi";
       mouse = true;
@@ -66,6 +79,7 @@
       ];
       newSession = true;
       prefix = "C-b";
+    };
     };
   };
 }
