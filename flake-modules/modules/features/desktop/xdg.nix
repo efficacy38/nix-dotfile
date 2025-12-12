@@ -1,6 +1,7 @@
+# XDG portal configuration for desktop
 { ... }:
 {
-  flake.nixosModules.xdg =
+  flake.nixosModules.desktop-xdg =
     {
       pkgs,
       lib,
@@ -8,14 +9,12 @@
       ...
     }:
     let
-      cfg = config.my.xdg;
+      cfg = config.my.desktop;
     in
     {
-      options.my.xdg = {
-        enable = lib.mkEnableOption "Enable xdg module";
-      };
+      options.my.desktop.xdgEnable = lib.mkEnableOption "XDG portal configuration";
 
-      config = lib.mkIf cfg.enable {
+      config = lib.mkIf (cfg.enable && cfg.xdgEnable) {
         xdg.portal.enable = true;
         # for better compatibility, check https://wiki.archlinux.org/title/XDG_Desktop_Portal
         xdg.portal.extraPortals = with pkgs; [

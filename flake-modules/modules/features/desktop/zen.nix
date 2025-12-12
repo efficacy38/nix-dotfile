@@ -1,5 +1,7 @@
+# Zen browser configuration
 { ... }:
 {
+  # Home-manager only: Zen browser config
   flake.homeModules.desktop-zen =
     {
       pkgs,
@@ -9,14 +11,10 @@
       ...
     }:
     let
-      cfg = config.my.desktop-zen;
+      cfg = config.my.desktop;
     in
     {
-      options.my.desktop-zen = {
-        enable = lib.mkEnableOption "Zen browser configuration";
-      };
-
-      config = lib.mkIf cfg.enable {
+      config = lib.mkIf (cfg.enable && cfg.zenEnable) {
         xdg.mimeApps = lib.mkForce {
           enable = true;
           defaultApplications = {

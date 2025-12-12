@@ -1,18 +1,40 @@
+# Boot system configurations: systemd-initrd, impermanence
 { ... }:
 {
-  flake.nixosModules.impermanence =
+  # NixOS: systemd-initrd configuration
+  flake.nixosModules.system-initrd =
     {
       lib,
       config,
       ...
     }:
     let
-      cfg = config.my.impermanence;
+      cfg = config.my.system;
     in
     {
-      options.my.impermanence = {
-        enable = lib.mkEnableOption "enable impermanence";
+      options.my.system.systemdInitrdEnable = lib.mkEnableOption "systemd-initrd";
+      options.my.system.systemdInitrdDebug = lib.mkEnableOption "debug mode for systemd-initrd";
+
+      config = lib.mkIf cfg.systemdInitrdEnable {
+        boot.initrd.systemd = {
+          enable = true;
+          emergencyAccess = cfg.systemdInitrdDebug;
+        };
       };
+    };
+
+  # NixOS: impermanence configuration
+  flake.nixosModules.system-impermanence =
+    {
+      lib,
+      config,
+      ...
+    }:
+    let
+      cfg = config.my.system;
+    in
+    {
+      options.my.system.impermanenceEnable = lib.mkEnableOption "impermanence (btrfs snapshot rollback)";
 
       config =
         let
@@ -101,9 +123,6 @@
             };
 
             fileSystems."/etc/ssh".neededForBoot = true;
-
-            # make sure impermanence homemanager module can let root or other use
-            # access home directories
             programs.fuse.userAllowOther = true;
 
             systemd.tmpfiles.rules = [
@@ -141,28 +160,21 @@
           };
 
           systemd-initrd = {
-            # create impermanence btrfs subvolume in initrd when using systemd initrd
             boot.initrd.systemd.services."rootfs-cleanup" = {
-              wantedBy = [
-                "initrd.target"
-              ];
-              after = [
-                "initrd-root-device.target"
-              ];
-              before = [
-                "sysroot.mount"
-              ];
+              wantedBy = [ "initrd.target" ];
+              after = [ "initrd-root-device.target" ];
+              before = [ "sysroot.mount" ];
               unitConfig.DefaultDependencies = "no";
               serviceConfig.Type = "oneshot";
               script = reset-btrfs-impermanance-script;
             };
           };
         in
-        lib.mkIf cfg.enable (
+        lib.mkIf cfg.impermanenceEnable (
           lib.mkMerge [
             common-impermanence
-            (lib.mkIf (!config.my.systemd-initrd.enable) udev-initrd)
-            (lib.mkIf (config.my.systemd-initrd.enable) systemd-initrd)
+            (lib.mkIf (!cfg.systemdInitrdEnable) udev-initrd)
+            (lib.mkIf cfg.systemdInitrdEnable systemd-initrd)
           ]
         );
     };

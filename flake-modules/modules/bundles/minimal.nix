@@ -22,12 +22,15 @@
         };
 
         my = {
-          git.enable = true;
-          gpg.enable = true;
-          incus.enable = true;
-          just.enable = true;
-          tmux.enable = true;
-          zsh.enable = true;
+          devpack = {
+            enable = true;
+            gitEnable = true;
+            gpgEnable = true;
+            justEnable = true;
+            tmuxEnable = true;
+            zshEnable = true;
+          };
+          system.incusEnable = true;
         };
       };
     };

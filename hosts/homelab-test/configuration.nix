@@ -12,13 +12,13 @@
 
   # module related options
   my.bundles.common.enable = true;
-  my.incus.enable = true;
+  my.system.incusEnable = true;
   my.common.resolvedDnssec = true;
-  my.nftables.enable = true;
-  my.steam.enable = false;
+  my.system.nftablesEnable = true;
+  my.desktop.steamEnable = false;
   my.desktop.enable = false;
   my.desktop.zramEnable = false;
-  my.cscc-work.enable = false;
+  my.devpack.csccUtilEnable = false;
 
   # services
   services.openssh.enable = true;

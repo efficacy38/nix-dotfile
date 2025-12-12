@@ -1,10 +1,80 @@
+# Hyprland desktop environment configuration
 { ... }:
 let
-  # Base path to dotfiles - used for both symlinks and Nix store imports
-  # From flake-modules/modules/features/ -> dotfiles/
-  dotfilesBasePath = ../../../dotfiles;
+  dotfilesBasePath = ../../../../dotfiles;
 in
 {
+  # NixOS: Hyprland system config
+  flake.nixosModules.desktop-hyprland =
+    {
+      lib,
+      config,
+      pkgs,
+      ...
+    }:
+    let
+      cfg = config.my.desktop;
+    in
+    {
+      config = lib.mkIf (cfg.enable && cfg.hyprlandEnable) {
+        programs.hyprland = {
+          enable = true;
+          withUWSM = true;
+        };
+
+        hardware.graphics.enable = true;
+        environment.systemPackages = with pkgs; [
+          # terminals
+          alacritty
+          wezterm
+          networkmanagerapplet
+
+          waybar
+          eww
+
+          # notification
+          dunst
+          libnotify
+
+          # wallpaper
+          hyprpaper
+          hyprshot
+          swaybg
+          wpaperd
+          mpvpaper
+          swww
+          brightnessctl
+
+          # launcher
+          rofi
+
+          # lock & idle
+          hyprlock
+          hypridle
+
+          # kde apps
+          kdePackages.dolphin
+          kdePackages.ark
+
+          catppuccin-sddm
+          wireshark
+          super-productivity
+          tradingview
+        ];
+
+        security.pam.services.sddm.enableGnomeKeyring = true;
+        services.gnome.gnome-keyring.enable = true;
+
+        systemd.sleep.extraConfig = ''
+          AllowSuspend=yes
+          AllowHibernation=no
+          AllowHybridSleep=no
+          AllowSuspendThenHibernate=no
+        '';
+      };
+    };
+
+  # Home-manager: Hyprland user config
   flake.homeModules.desktop-hyprland =
     {
       pkgs,
@@ -14,30 +84,22 @@ in
       ...
     }:
     let
-      cfg = config.my.desktop-hyprland;
-      # Absolute path for runtime symlinks
+      cfg = config.my.desktop;
       dotfilesDir = "/etc/nixos/nix-dotfile/dotfiles";
 
-      # Helper to create symlink config entries
-      # Takes a relative path string (e.g., "hypr/hypridle.conf") and creates the xdg.configFile entry
       mkLinkConfig = relativePath: {
         "${relativePath}".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesDir}/${relativePath}";
       };
 
-      # Icon paths for audio control script (these get copied to Nix store)
       MUTE_ICON_PATH = dotfilesBasePath + /dunst/volume-off.png;
       LOW_ICON_PATH = dotfilesBasePath + /dunst/volume-low.png;
       MEDIUM_ICON_PATH = dotfilesBasePath + /dunst/volume-medium.png;
       HIGH_ICON_PATH = dotfilesBasePath + /dunst/volume-high.png;
     in
     {
-      options.my.desktop-hyprland = {
-        enable = lib.mkEnableOption "Hyprland desktop configuration";
-      };
-
-      config = lib.mkIf cfg.enable (
+      config = lib.mkIf (cfg.enable && cfg.hyprlandEnable) (
         {
-          # FIXME: This is work-around of hm
+          # FIXME: work-around for hm
           # https://github.com/nix-community/home-manager/issues/2064
           systemd.user.targets.tray = {
             Unit = {
@@ -76,17 +138,10 @@ in
 
           services.dunst = {
             enable = true;
-            settings = {
-              global = {
-                follow = "mouse";
-              };
-            };
+            settings.global.follow = "mouse";
           };
 
-          services.kanshi = {
-            enable = true;
-          };
-
+          services.kanshi.enable = true;
           xsession.preferStatusNotifierItems = true;
 
           services = {
@@ -94,6 +149,7 @@ in
             hypridle.enable = true;
             network-manager-applet.enable = true;
           };
+
           programs = {
             waybar = {
               enable = true;
@@ -107,7 +163,9 @@ in
               '';
             };
           };
+
           wayland.windowManager.hyprland.systemd.enable = false;
+
           home.packages = [
             pkgs.mate.mate-media
             (pkgs.writeShellApplication {

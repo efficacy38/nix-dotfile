@@ -1,6 +1,7 @@
+# Steam gaming configuration
 { ... }:
 {
-  flake.nixosModules.steam =
+  flake.nixosModules.desktop-steam =
     {
       lib,
       config,
@@ -8,15 +9,13 @@
       ...
     }:
     let
-      cfg = config.my.steam;
+      cfg = config.my.desktop;
     in
     {
-      options.my.steam = {
-        enable = lib.mkEnableOption "enable steam";
-        hidpi = lib.mkEnableOption "enable to scale steam due to hidpi";
-      };
+      options.my.desktop.steamEnable = lib.mkEnableOption "Steam gaming";
+      options.my.desktop.steamHidpi = lib.mkEnableOption "scale steam for HiDPI";
 
-      config = lib.mkIf cfg.enable {
+      config = lib.mkIf (cfg.enable && cfg.steamEnable) {
         programs.steam = {
           enable = true;
           remotePlay.openFirewall = true;
@@ -27,13 +26,9 @@
         hardware.graphics.extraPackages = [ pkgs.libva-vdpau-driver ];
         hardware.steam-hardware.enable = true;
 
-        environment.sessionVariables =
-          if cfg.hidpi then
-            {
-              STEAM_FORCE_DESKTOPUI_SCALING = "2";
-            }
-          else
-            { };
+        environment.sessionVariables = lib.mkIf cfg.steamHidpi {
+          STEAM_FORCE_DESKTOPUI_SCALING = "2";
+        };
       };
     };
 }

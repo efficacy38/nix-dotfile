@@ -148,7 +148,7 @@
         };
 
         sops = {
-          defaultSopsFile = ../../../modules/secrets/default.yaml;
+          defaultSopsFile = ../../../../modules/secrets/default.yaml;
           defaultSopsFormat = "yaml";
           age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
         };

@@ -1,7 +1,8 @@
+# Backup system configurations
 { ... }:
 {
-  # NixOS module for backup
-  flake.nixosModules.backup =
+  # NixOS: backup configuration (kopia)
+  flake.nixosModules.system-backup =
     {
       inputs,
       lib,
@@ -9,8 +10,7 @@
       ...
     }:
     let
-      cfg = config.my.backup;
-
+      cfg = config.my.system;
       secretpath = builtins.toString inputs.nix-secrets;
       personal-s3-secret = {
         sopsFile = "${secretpath}/secrets/backup.yaml";
@@ -18,11 +18,9 @@
       };
     in
     {
-      options.my.backup = {
-        enable = lib.mkEnableOption "enable backup configuration";
-      };
+      options.my.system.backupEnable = lib.mkEnableOption "backup configuration (kopia)";
 
-      config = lib.mkIf cfg.enable {
+      config = lib.mkIf cfg.backupEnable {
         sops.secrets."homelab-1/password" = personal-s3-secret;
         sops.secrets."homelab-1/accessKey" = personal-s3-secret;
         sops.secrets."homelab-1/secretKey" = personal-s3-secret;
@@ -71,8 +69,8 @@
       };
     };
 
-  # Home-manager module for backup
-  flake.homeModules.backup =
+  # Home-manager: backup tools
+  flake.homeModules.system-backup =
     {
       config,
       pkgs,
@@ -80,14 +78,12 @@
       ...
     }:
     let
-      cfg = config.my.backup;
+      cfg = config.my.system;
     in
     {
-      options.my.backup = {
-        enable = lib.mkEnableOption "backup tools (rclone, kopia, syncthing)";
-      };
+      options.my.system.backupEnable = lib.mkEnableOption "backup tools (rclone, kopia, syncthing)";
 
-      config = lib.mkIf cfg.enable {
+      config = lib.mkIf cfg.backupEnable {
         home.packages = with pkgs; [
           rclone
           kopia
