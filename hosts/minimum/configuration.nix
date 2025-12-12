@@ -12,12 +12,12 @@
     # ./hardware-configuration.nix
   ];
 
-  myNixOS.bundles.common.enable = true;
+  my.bundles.common.enable = true;
 
-  myNixOS.main-user.userConfig = ./home.nix;
-  # myNixOS.impermanence.enable = true;
-  myNixOS.systemd-initrd.enable = true;
-  myNixOS.systemd-initrd.debugEnable = true;
+  my.main-user.userConfig = ./home.nix;
+  # my.impermanence.enable = true;
+  my.systemd-initrd.enable = true;
+  my.systemd-initrd.debugEnable = true;
 
   services.lvm.enable = true;
   boot.initrd.kernelModules = [

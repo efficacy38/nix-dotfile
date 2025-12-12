@@ -14,22 +14,22 @@
     inputs.nixos-hardware.nixosModules.common-gpu-intel
   ];
 
-  myNixOS.bundles.common.enable = true;
-  myNixOS.bundles.desktop-hyprland.enable = true;
-  myNixOS.bundles.steam.enable = true;
+  my.bundles.common.enable = true;
+  my.bundles.desktop-hyprland.enable = true;
+  my.bundles.steam.enable = true;
 
-  myNixOS.fprintd.enable = true;
-  myNixOS.main-user.userConfig = ./home.nix;
-  myNixOS.devpack = {
+  my.fprintd.enable = true;
+  my.main-user.userConfig = ./home.nix;
+  my.devpack = {
     enable = true;
     csccUtilEnable = true;
     tailscaleEnable = true;
   };
-  myNixOS.impermanence.enable = true;
-  myNixOS.systemd-initrd.enable = true;
-  # myNixOS.systemd-initrd.debugEnable = true;
-  myNixOS.backup.enable = true;
-  myNixOS.battery-health.enable = true;
+  my.impermanence.enable = true;
+  my.systemd-initrd.enable = true;
+  # my.systemd-initrd.debugEnable = true;
+  my.backup.enable = true;
+  my.battery-health.enable = true;
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
 

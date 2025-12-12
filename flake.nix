@@ -39,74 +39,35 @@
     disko.url = "github:nix-community/disko";
 
     import-tree.url = "github:vic/import-tree";
+
+    flake-parts.url = "github:hercules-ci/flake-parts";
   };
 
   outputs =
-    inputs:
+    inputs@{ flake-parts, ... }:
     let
       import-tree = import inputs.import-tree;
-
-      pkgs-stable = import inputs.nixpkgs-stable {
-        system = "x86_64-linux";
-        config.allowUnfree = true;
-      };
-      pkgs-unstable = import inputs.nixpkgs {
-        system = "x86_64-linux";
-        config.allowUnfree = true;
-      };
-
-      mkSystem =
-        config:
-        inputs.nixpkgs-stable.lib.nixosSystem {
-          specialArgs = {
-            inherit inputs;
-          };
-          modules = [
-            config
-            # import-tree for nixosModules
-            (import-tree ./modules)
-            inputs.sops-nix.nixosModules.sops
-            { config.myNixOS.common.enable = true; }
-            # use nix-index-database instead of run nix-index individually
-            inputs.nix-index-database.nixosModules.nix-index
-            { programs.nix-index-database.comma.enable = true; }
-            inputs.stylix.nixosModules.stylix
-            inputs.solaar.nixosModules.default
-            inputs.impermanence.nixosModules.impermanence
-            inputs.efficacy38-nur.nixosModules.kopia
-            inputs.determinate.nixosModules.default
-            inputs.disko.nixosModules.disko
-            inputs.home-manager-stable.nixosModules.default
-            # common overlays
-            ./overlays/personal-scripts/personal-scripts.nix
-          ];
-        };
-
-      mkIsoSystem = config: inputs.nixpkgs-stable.lib.nixosSystem { modules = [ config ]; };
     in
-    {
-      inherit pkgs-stable pkgs-unstable;
-      homeModules.default = ./home-modules/default.nix;
-      nixosConfigurations = {
-        workstation = mkSystem ./hosts/workstation/configuration.nix;
-        homelab-1 = mkSystem ./hosts/homelab-1/configuration.nix;
-        homelab-test = mkSystem ./hosts/homelab-test/configuration.nix;
-        stella = mkSystem ./hosts/stella/configuration.nix;
-        cc-desktop = mkSystem ./hosts/cc-desktop/configuration.nix;
-        cc-container-vps = mkSystem ./hosts/cc-container-vps/configuration.nix;
-        iso = mkIsoSystem ./hosts/iso/configuration.nix;
-      };
-      homeConfigurations = {
-        "efficacy38@stealla" = inputs.home-manager.lib.homeManagerConfiguration {
-          pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux;
-          modules = [
-            ./home-modules/default.nix
-            ./hosts/stella/home.nix
-          ];
-          extraSpecialArgs = {
-            inherit pkgs-stable pkgs-unstable;
-          };
+    flake-parts.lib.mkFlake { inherit inputs; } {
+      systems = [
+        "x86_64-linux"
+        "aarch64-linux"
+      ];
+
+      perSystem =
+        { pkgs, ... }:
+        {
+          formatter = pkgs.nixpkgs-fmt;
         };
-      };
+
+      imports = [
+        # Home-manager's flake-parts module (provides homeModules option)
+        inputs.home-manager-stable.flakeModules.home-manager
+        ./flake-modules/nixos-modules.nix
+        ./flake-modules/home-modules.nix
+        ./flake-modules/hosts.nix
+        # New flake-parts modules (features and bundles) via import-tree
+        (import-tree ./flake-modules/modules)
+      ];
     };
 }
