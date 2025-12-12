@@ -1,11 +1,10 @@
 { inputs }:
 let
-  myLib = (import ./default.nix) { inherit inputs; };
   import-tree = import inputs.import-tree;
 
-  mkSystemAtts = isStable: config: {
+  mkSystemAtts = config: {
     specialArgs = {
-      inherit myLib inputs;
+      inherit inputs;
     };
     modules = [
       config
@@ -22,22 +21,15 @@ let
       inputs.efficacy38-nur.nixosModules.kopia
       inputs.determinate.nixosModules.default
       inputs.disko.nixosModules.disko
+      inputs.home-manager-stable.nixosModules.default
       # common overlays
       ../overlays/personal-scripts/personal-scripts.nix
-    ]
-    ++ inputs.nixpkgs.lib.optionals isStable [
-      inputs.home-manager-stable.nixosModules.default
-    ]
-    ++ inputs.nixpkgs.lib.optionals (!isStable) [
-      inputs.home-manager.nixosModules.default
     ];
   };
 in
 {
   # ========================== Buildables ========================== #
-  mkSystem = config: inputs.nixpkgs.lib.nixosSystem (mkSystemAtts false config);
-
-  mkStableSystem = config: inputs.nixpkgs-stable.lib.nixosSystem (mkSystemAtts true config);
+  mkSystem = config: inputs.nixpkgs-stable.lib.nixosSystem (mkSystemAtts config);
 
   mkIsoSystem = config: inputs.nixpkgs-stable.lib.nixosSystem { modules = [ config ]; };
 }

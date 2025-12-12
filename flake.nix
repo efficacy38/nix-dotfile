@@ -44,7 +44,7 @@
   outputs =
     inputs:
     let
-      myLib = import ./myLib/default.nix { inherit inputs; };
+      import-tree = import inputs.import-tree;
 
       pkgs-stable = import inputs.nixpkgs-stable {
         system = "x86_64-linux";
@@ -54,18 +54,47 @@
         system = "x86_64-linux";
         config.allowUnfree = true;
       };
+
+      mkSystem =
+        config:
+        inputs.nixpkgs-stable.lib.nixosSystem {
+          specialArgs = {
+            inherit inputs;
+          };
+          modules = [
+            config
+            # import-tree for nixosModules
+            (import-tree ./modules)
+            inputs.sops-nix.nixosModules.sops
+            { config.myNixOS.common.enable = true; }
+            # use nix-index-database instead of run nix-index individually
+            inputs.nix-index-database.nixosModules.nix-index
+            { programs.nix-index-database.comma.enable = true; }
+            inputs.stylix.nixosModules.stylix
+            inputs.solaar.nixosModules.default
+            inputs.impermanence.nixosModules.impermanence
+            inputs.efficacy38-nur.nixosModules.kopia
+            inputs.determinate.nixosModules.default
+            inputs.disko.nixosModules.disko
+            inputs.home-manager-stable.nixosModules.default
+            # common overlays
+            ./overlays/personal-scripts/personal-scripts.nix
+          ];
+        };
+
+      mkIsoSystem = config: inputs.nixpkgs-stable.lib.nixosSystem { modules = [ config ]; };
     in
     {
-      inherit myLib pkgs-stable pkgs-unstable;
+      inherit pkgs-stable pkgs-unstable;
       homeModules.default = ./home-modules/default.nix;
       nixosConfigurations = {
-        workstation = myLib.mkStableSystem ./hosts/workstation/configuration.nix;
-        homelab-1 = myLib.mkStableSystem ./hosts/homelab-1/configuration.nix;
-        homelab-test = myLib.mkStableSystem ./hosts/homelab-test/configuration.nix;
-        stella = myLib.mkStableSystem ./hosts/stella/configuration.nix;
-        cc-desktop = myLib.mkStableSystem ./hosts/cc-desktop/configuration.nix;
-        cc-container-vps = myLib.mkSystem ./hosts/cc-container-vps/configuration.nix;
-        iso = myLib.mkIsoSystem ./hosts/iso/configuration.nix;
+        workstation = mkSystem ./hosts/workstation/configuration.nix;
+        homelab-1 = mkSystem ./hosts/homelab-1/configuration.nix;
+        homelab-test = mkSystem ./hosts/homelab-test/configuration.nix;
+        stella = mkSystem ./hosts/stella/configuration.nix;
+        cc-desktop = mkSystem ./hosts/cc-desktop/configuration.nix;
+        cc-container-vps = mkSystem ./hosts/cc-container-vps/configuration.nix;
+        iso = mkIsoSystem ./hosts/iso/configuration.nix;
       };
       homeConfigurations = {
         "efficacy38@stealla" = inputs.home-manager.lib.homeManagerConfiguration {

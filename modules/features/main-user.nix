@@ -3,7 +3,6 @@
   config,
   pkgs,
   inputs,
-  myLib,
   ...
 }:
 let
@@ -78,7 +77,6 @@ in
 
         inherit
           inputs
-          myLib
           pkgs
           ;
       };
