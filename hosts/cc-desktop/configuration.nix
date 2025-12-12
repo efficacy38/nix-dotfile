@@ -14,8 +14,6 @@ let
 in
 {
   imports = [
-    # custom modules
-    ../../modules
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
   ];

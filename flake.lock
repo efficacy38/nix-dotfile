@@ -394,6 +394,22 @@
         "type": "github"
       }
     },
+    "import-tree": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1763762820,
+        "narHash": "sha256-ZvYKbFib3AEwiNMLsejb/CWs/OL/srFQ8AogkebEPF0=",
+        "owner": "vic",
+        "repo": "import-tree",
+        "rev": "3c23749d8013ec6daa1d7255057590e9ca726646",
+        "type": "github"
+      },
+      "original": {
+        "owner": "vic",
+        "repo": "import-tree",
+        "type": "github"
+      }
+    },
     "nix": {
       "inputs": {
         "flake-parts": "flake-parts",
@@ -658,6 +674,7 @@
         "home-manager": "home-manager",
         "home-manager-stable": "home-manager-stable",
         "impermanence": "impermanence",
+        "import-tree": "import-tree",
         "nix-index-database": "nix-index-database",
         "nix-secrets": "nix-secrets",
         "nixos-hardware": "nixos-hardware",

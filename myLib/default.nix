@@ -1,23 +1,22 @@
 { inputs }:
 let
   myLib = (import ./default.nix) { inherit inputs; };
-  inherit (inputs.self) outputs;
+  import-tree = import inputs.import-tree;
+
   mkSystemAtts = isStable: config: {
     specialArgs = {
-      inherit
-        myLib
-        inputs
-        ;
+      inherit myLib inputs;
     };
     modules = [
       config
-      outputs.nixosModules.default
+      # import-tree for nixosModules
+      (import-tree ../modules)
+      inputs.sops-nix.nixosModules.sops
+      { config.myNixOS.common.enable = true; }
       # use nix-index-database instead of run nix-index individually
       inputs.nix-index-database.nixosModules.nix-index
-      # optional to also wrap and install comma
       { programs.nix-index-database.comma.enable = true; }
       inputs.stylix.nixosModules.stylix
-
       inputs.solaar.nixosModules.default
       inputs.impermanence.nixosModules.impermanence
       inputs.efficacy38-nur.nixosModules.kopia
@@ -36,12 +35,8 @@ let
 in
 rec {
   # =========================== Helpers ============================ #
+  # Get all files in a directory (still needed for home-modules)
   filesIn = dir: (map (fname: dir + "/${fname}") (builtins.attrNames (builtins.readDir dir)));
-
-  dirsIn =
-    dir: inputs.nixpkgs.lib.filterAttrs (_: value: value == "directory") (builtins.readDir dir);
-
-  fileNameOf = path: (builtins.head (builtins.split "\\." (baseNameOf path)));
 
   # ========================== Buildables ========================== #
   mkSystem = config: inputs.nixpkgs.lib.nixosSystem (mkSystemAtts false config);
@@ -101,7 +96,8 @@ rec {
     map (
       f:
       let
-        name = fileNameOf f;
+        # Extract filename without extension (inlined fileNameOf)
+        name = builtins.head (builtins.split "\\." (baseNameOf f));
       in
       extendModule ((extension name) // { path = f; })
     ) modules;

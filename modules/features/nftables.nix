@@ -13,6 +13,6 @@ in
 
   config = lib.mkIf cfg.enable {
     networking.nftables.enable = true;
-    networking.firewall.enable = lib.mkDefault false;
+    networking.firewall.enable = lib.mkForce false;
   };
 }

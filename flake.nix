@@ -37,6 +37,8 @@
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
 
     disko.url = "github:nix-community/disko";
+
+    import-tree.url = "github:vic/import-tree";
   };
 
   outputs =
@@ -56,7 +58,6 @@
     {
       inherit myLib pkgs-stable pkgs-unstable;
       homeModules.default = ./home-modules/default.nix;
-      nixosModules.default = ./modules/default.nix;
       nixosConfigurations = {
         workstation = myLib.mkStableSystem ./hosts/workstation/configuration.nix;
         homelab-1 = myLib.mkStableSystem ./hosts/homelab-1/configuration.nix;
