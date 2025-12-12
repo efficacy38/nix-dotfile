@@ -16,9 +16,9 @@
 
       config = lib.mkIf cfg.enable {
         my.bundles.server.enable = true;
-        my.incus.enable = true;
+        my.system.incus.enable = true;
         my.common.resolvedDnssec = true;
-        my.nftables.enable = true;
+        my.system.nftables.enable = true;
       };
     };
 }

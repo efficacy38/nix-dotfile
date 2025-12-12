@@ -1,5 +1,7 @@
+# Common desktop configuration (shared by all desktop environments)
 { ... }:
 {
+  # NixOS: common desktop system config
   flake.nixosModules.desktop =
     {
       lib,
@@ -15,14 +17,14 @@
     {
       options.my.desktop = {
         enable = lib.mkEnableOption "enable desktop Environment";
-        zramEnable = lib.mkEnableOption "enable zram";
-        hyprlandEnable = lib.mkEnableOption "enable hyprland(system)";
-        kdeEnable = lib.mkEnableOption "enable KDE(system)";
+        zram.enable = lib.mkEnableOption "enable zram";
+        hyprland.enable = lib.mkEnableOption "enable hyprland(system)";
+        kde.enable = lib.mkEnableOption "enable KDE(system)";
       };
 
       config = lib.mkIf cfg.enable (
         let
-          common-desktop-config = {
+          common-config = {
             # enable networkmanager for desktop usage
             networking.networkmanager.enable = true;
             networking.firewall.enable = lib.mkDefault true;
@@ -30,7 +32,6 @@
               fwupd.enable = true;
 
               # Enable the X11 windowing system.
-              # You can disable this if you're only using the Wayland session.
               xserver.enable = true;
               displayManager.sddm = {
                 enable = true;
@@ -82,17 +83,12 @@
                 enable = true;
                 enableSSHSupport = true;
               };
-
-              # make yubikey touch popup notification shown
               yubikey-touch-detector.enable = true;
-
-              # enable wireshark on every desktop
               wireshark.enable = true;
             };
 
             # enables support for Bluetooth
             hardware.bluetooth.enable = true;
-            # powers up the default Bluetooth controller on boot
             hardware.bluetooth.powerOnBoot = true;
 
             # use stylix to themeing whole DE
@@ -111,89 +107,11 @@
             services.solaar.enable = true;
           };
 
-          kde-config = {
-            # Enable the KDE Plasma Desktop Environment.
-            services.desktopManager.plasma6.enable = true;
-            # enable kwallet when sddm start the session
-            security.pam.services.sddm.enableKwallet = true;
-          };
-
-          hyprland-config = {
-            # Enable hyprland config
-            programs.hyprland = {
-              enable = true;
-              withUWSM = true;
-            };
-
-            hardware.graphics.enable = true;
-            environment.systemPackages = with pkgs; [
-              # hyprland default terminal
-              alacritty
-
-              # maybe other is good also
-              wezterm
-              networkmanagerapplet
-
-              waybar
-
-              # customize widges
-              eww
-
-              # for notification
-              dunst
-              libnotify
-
-              # wallpaper
-              hyprpaper
-              hyprshot
-              swaybg
-              wpaperd
-              mpvpaper
-              swww
-              brightnessctl
-
-              # wayland launcher
-              rofi
-
-              # lock
-              hyprlock
-
-              # idle
-              hypridle
-
-              # kde application
-              pkgs.kdePackages.dolphin
-              pkgs.kdePackages.ark
-
-              catppuccin-sddm
-              wireshark
-
-              # todo-lists
-              pkgs.super-productivity
-
-              # crypto
-              tradingview
-            ];
-
-            security.pam.services.sddm.enableGnomeKeyring = true;
-            services.gnome.gnome-keyring.enable = true;
-
-            systemd.sleep.extraConfig = ''
-              # suspend to RAM
-              AllowSuspend=yes
-              # hibernate to disk
-              AllowHibernation=no
-              AllowHybridSleep=no
-              AllowSuspendThenHibernate=no
-            '';
-          };
-
           zram-config = {
             zramSwap = {
               enable = true;
               memoryPercent = 50;
             };
-
             boot.kernel.sysctl = {
               "vm.swappiness" = 180;
               "vm.watermark_boost_factor" = 0;
@@ -203,11 +121,60 @@
           };
         in
         lib.mkMerge [
-          common-desktop-config
-          (lib.mkIf cfg.kdeEnable kde-config)
-          (lib.mkIf cfg.hyprlandEnable hyprland-config)
-          (lib.mkIf cfg.zramEnable zram-config)
+          common-config
+          (lib.mkIf cfg.zram.enable zram-config)
         ]
       );
+    };
+
+  # Home-manager: common desktop packages
+  flake.homeModules.desktop =
+    {
+      pkgs-unstable,
+      lib,
+      config,
+      ...
+    }:
+    let
+      cfg = config.my.desktop;
+    in
+    {
+      options.my.desktop = {
+        enable = lib.mkEnableOption "desktop home-manager configuration";
+        hyprland.enable = lib.mkEnableOption "Hyprland home-manager configuration";
+        kde.enable = lib.mkEnableOption "KDE home-manager packages";
+        zen.enable = lib.mkEnableOption "Zen browser configuration";
+      };
+
+      config = lib.mkIf cfg.enable {
+        fonts.fontconfig.enable = true;
+
+        home.packages = with pkgs-unstable; [
+          # fonts
+          nerd-fonts.hack
+          nerd-fonts.fira-mono
+          nerd-fonts.fira-code
+          noto-fonts-cjk-sans
+          noto-fonts-cjk-serif
+
+          # desktop apps
+          thunderbird
+          obs-studio
+          chromium
+
+          # utils
+          remmina
+          haruna
+
+          # games
+          prismlauncher
+          moonlight-qt
+          vscode
+
+          zotero
+          zotero-translation-server
+          keepassxc
+        ];
+      };
     };
 }

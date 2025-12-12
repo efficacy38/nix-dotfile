@@ -17,9 +17,11 @@
       config = lib.mkIf cfg.enable {
         my = {
           bundles.minimal.enable = true;
-          desktop-common.enable = true;
-          desktop-zen.enable = true;
-          desktop-kde.enable = true;
+          desktop = {
+            enable = true;
+            kde.enable = true;
+            zen.enable = true;
+          };
         };
       };
     };

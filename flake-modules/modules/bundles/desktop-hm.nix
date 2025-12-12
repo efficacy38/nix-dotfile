@@ -17,10 +17,12 @@
       config = lib.mkIf cfg.enable {
         my = {
           bundles.minimal.enable = true;
-          desktop-common.enable = true;
-          desktop-zen.enable = true;
-          desktop-hyprland.enable = true;
-          nvim.enable = true;
+          desktop = {
+            enable = true;
+            hyprland.enable = true;
+            zen.enable = true;
+          };
+          devpack.nvim.enable = true;
         };
       };
     };

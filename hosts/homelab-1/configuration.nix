@@ -1,7 +1,6 @@
 {
   inputs,
   config,
-  pkgs,
   ...
 }:
 let
@@ -18,15 +17,15 @@ in
     ./hardware-configuration.nix
   ];
 
-  # boot.supportedFilesystems = [ "bcachefs" "zfs" ];
-  # boot.kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
-  boot.supportedFilesystems = [ "zfs" ];
-  boot.kernelModules = [ "kvm-intel" ];
-  boot.tmp.useTmpfs = true;
-  boot.extraModprobeConfig = ''
-    # only allow 50% arc cache is enabled
-    options zfs zfs_arc_max_percent=50
-  '';
+  boot = {
+    supportedFilesystems = [ "zfs" ];
+    kernelModules = [ "kvm-intel" ];
+    tmp.useTmpfs = true;
+    extraModprobeConfig = ''
+      # only allow 50% arc cache is enabled
+      options zfs zfs_arc_max_percent=50
+    '';
+  };
 
   sops.secrets."nut_sever_password" = common-secret;
 
@@ -58,20 +57,22 @@ in
     };
   };
 
-  # module related options
-  my.bundles.homelab.enable = true;
-  my.tailscale.enable = true;
-  my.tailscale.asRouter = true;
-
-  services.openiscsi = {
-    enable = true;
-    name = "iqn.2025-02.net.csjhuang:homelab-1";
+  my = {
+    bundles.homelab.enable = true;
+    devpack = {
+      tailscale.enable = true;
+      tailscaleAsRouter = true;
+    };
   };
-  services.target.enable = true;
 
-  # services
-  services.openssh.enable = true;
-  services.nfs.server.enable = true;
+  services = {
+    openiscsi = {
+      enable = true;
+      name = "iqn.2025-02.net.csjhuang:homelab-1";
+    };
+    target.enable = true;
+    nfs.server.enable = true;
+  };
   # Enable networking related
   networking.hostName = "homelab-1"; # Define your hostname.
 

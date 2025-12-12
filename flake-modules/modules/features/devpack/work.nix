@@ -1,6 +1,8 @@
+# Work-related configurations: cscc-work, tailscale
 { ... }:
 {
-  flake.nixosModules.cscc-work =
+  # NixOS: CSCC work VPN configuration
+  flake.nixosModules.devpack-cscc-work =
     {
       lib,
       config,
@@ -9,7 +11,7 @@
       ...
     }:
     let
-      cfg = config.my.cscc-work;
+      cfg = config.my.devpack;
       secretpath = builtins.toString inputs.nix-secrets;
       nycuSecret = {
         sopsFile = "${secretpath}/secrets/desktop.yaml";
@@ -17,16 +19,9 @@
       };
     in
     {
-      options.my.cscc-work = {
-        enable = lib.mkEnableOption "enable cscc change vpn script module";
-      };
+      config = lib.mkIf (cfg.enable && cfg.csccUtil.enable) {
+        environment.systemPackages = with pkgs; [ openfortivpn ];
 
-      config = lib.mkIf cfg.enable {
-        environment.systemPackages = with pkgs; [
-          openfortivpn
-        ];
-
-        # vpn connection secrets
         sops = {
           secrets = {
             "cscc/username" = nycuSecret;
@@ -94,6 +89,24 @@
           serviceConfig = {
             ExecStart = "${pkgs.openfortivpn}/bin/openfortivpn -c /etc/openfortivpn/%I.conf";
           };
+        };
+      };
+    };
+
+  # NixOS: Tailscale VPN configuration
+  flake.nixosModules.devpack-tailscale =
+    { lib, config, ... }:
+    let
+      cfg = config.my.devpack;
+    in
+    {
+      options.my.devpack.tailscaleAsRouter = lib.mkEnableOption "Tailscale as router (enable IP forwarding)";
+
+      config = lib.mkIf (cfg.enable && cfg.tailscale.enable) {
+        services.tailscale = {
+          enable = true;
+          useRoutingFeatures = if cfg.tailscaleAsRouter then "both" else "client";
+          openFirewall = true;
         };
       };
     };

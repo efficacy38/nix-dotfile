@@ -18,9 +18,9 @@
         my.bundles.common.enable = true;
 
         my.desktop.enable = true;
-        my.desktop.zramEnable = false;
-        my.desktop.hyprlandEnable = true;
-        my.desktop.kdeEnable = false;
+        my.desktop.zram.enable = false;
+        my.desktop.hyprland.enable = true;
+        my.desktop.kde.enable = false;
       };
     };
 }
