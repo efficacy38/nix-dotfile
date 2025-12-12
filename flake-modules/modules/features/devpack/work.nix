@@ -19,7 +19,7 @@
       };
     in
     {
-      config = lib.mkIf (cfg.enable && cfg.csccUtilEnable) {
+      config = lib.mkIf (cfg.enable && cfg.csccUtil.enable) {
         environment.systemPackages = with pkgs; [ openfortivpn ];
 
         sops = {
@@ -102,7 +102,7 @@
     {
       options.my.devpack.tailscaleAsRouter = lib.mkEnableOption "Tailscale as router (enable IP forwarding)";
 
-      config = lib.mkIf (cfg.enable && cfg.tailscaleEnable) {
+      config = lib.mkIf (cfg.enable && cfg.tailscale.enable) {
         services.tailscale = {
           enable = true;
           useRoutingFeatures = if cfg.tailscaleAsRouter then "both" else "client";

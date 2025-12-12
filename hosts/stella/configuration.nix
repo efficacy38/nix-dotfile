@@ -18,18 +18,18 @@
   my.bundles.desktop-hyprland.enable = true;
   my.bundles.steam.enable = true;
 
-  my.desktop.fprintdEnable = true;
-  my.desktop.batteryHealthEnable = true;
+  my.desktop.fprintd.enable = true;
+  my.desktop.batteryHealth.enable = true;
   my.main-user.userConfig = ./home.nix;
   my.devpack = {
     enable = true;
-    csccUtilEnable = true;
-    tailscaleEnable = true;
+    csccUtil.enable = true;
+    tailscale.enable = true;
   };
-  my.system.impermanenceEnable = true;
-  my.system.systemdInitrdEnable = true;
-  # my.system.systemdInitrdDebug = true;
-  my.system.backupEnable = true;
+  my.system.impermanence.enable = true;
+  my.system.systemdInitrd.enable = true;
+  # my.system.systemdInitrd.debug = true;
+  my.system.backup.enable = true;
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
 

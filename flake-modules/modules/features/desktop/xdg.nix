@@ -12,9 +12,9 @@
       cfg = config.my.desktop;
     in
     {
-      options.my.desktop.xdgEnable = lib.mkEnableOption "XDG portal configuration";
+      options.my.desktop.xdg.enable = lib.mkEnableOption "XDG portal configuration";
 
-      config = lib.mkIf (cfg.enable && cfg.xdgEnable) {
+      config = lib.mkIf (cfg.enable && cfg.xdg.enable) {
         xdg.portal.enable = true;
         # for better compatibility, check https://wiki.archlinux.org/title/XDG_Desktop_Portal
         xdg.portal.extraPortals = with pkgs; [

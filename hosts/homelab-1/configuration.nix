@@ -60,7 +60,7 @@ in
 
   # module related options
   my.bundles.homelab.enable = true;
-  my.devpack.tailscaleEnable = true;
+  my.devpack.tailscale.enable = true;
   my.devpack.tailscaleAsRouter = true;
 
   services.openiscsi = {

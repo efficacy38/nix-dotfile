@@ -16,7 +16,7 @@ in
       cfg = config.my.desktop;
     in
     {
-      config = lib.mkIf (cfg.enable && cfg.hyprlandEnable) {
+      config = lib.mkIf (cfg.enable && cfg.hyprland.enable) {
         programs.hyprland = {
           enable = true;
           withUWSM = true;
@@ -97,7 +97,7 @@ in
       HIGH_ICON_PATH = dotfilesBasePath + /dunst/volume-high.png;
     in
     {
-      config = lib.mkIf (cfg.enable && cfg.hyprlandEnable) (
+      config = lib.mkIf (cfg.enable && cfg.hyprland.enable) (
         {
           # FIXME: work-around for hm
           # https://github.com/nix-community/home-manager/issues/2064

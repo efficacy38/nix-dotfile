@@ -13,7 +13,7 @@
       cfg = config.my.devpack;
     in
     {
-      config = lib.mkIf (cfg.enable && cfg.nvimEnable) {
+      config = lib.mkIf (cfg.enable && cfg.nvim.enable) {
         home = {
           packages = with pkgs-unstable; [
             neovim
@@ -106,7 +106,7 @@
       cfg = config.my.devpack;
     in
     {
-      config = lib.mkIf (cfg.enable && cfg.gitEnable) {
+      config = lib.mkIf (cfg.enable && cfg.git.enable) {
         home.packages = with pkgs; [
           git
           glab

@@ -24,13 +24,13 @@
         my = {
           devpack = {
             enable = true;
-            gitEnable = true;
-            gpgEnable = true;
-            justEnable = true;
-            tmuxEnable = true;
-            zshEnable = true;
+            git.enable = true;
+            gpg.enable = true;
+            just.enable = true;
+            tmux.enable = true;
+            zsh.enable = true;
           };
-          system.incusEnable = true;
+          system.incus.enable = true;
         };
       };
     };

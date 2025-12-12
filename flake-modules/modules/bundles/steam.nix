@@ -17,7 +17,7 @@
       config = lib.mkIf cfg.enable {
         my.bundles.common.enable = true;
 
-        my.desktop.steamEnable = true;
+        my.desktop.steam.enable = true;
         my.desktop.steamHidpi = false;
       };
     };

@@ -14,7 +14,7 @@
       cfg = config.my.desktop;
     in
     {
-      config = lib.mkIf (cfg.enable && cfg.zenEnable) {
+      config = lib.mkIf (cfg.enable && cfg.zen.enable) {
         xdg.mimeApps = lib.mkForce {
           enable = true;
           defaultApplications = {

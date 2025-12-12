@@ -34,10 +34,10 @@
   my.main-user.userConfig = ./home.nix;
   my.devpack = {
     enable = true;
-    csccUtilEnable = true;
-    tailscaleEnable = true;
+    csccUtil.enable = true;
+    tailscale.enable = true;
   };
-  my.system.systemdInitrdEnable = true;
+  my.system.systemdInitrd.enable = true;
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   # environment.systemPackages = with pkgs; [

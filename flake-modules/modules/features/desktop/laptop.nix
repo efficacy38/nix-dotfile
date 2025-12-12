@@ -13,9 +13,9 @@
       cfg = config.my.desktop;
     in
     {
-      options.my.desktop.fprintdEnable = lib.mkEnableOption "fingerprint authentication";
+      options.my.desktop.fprintd.enable = lib.mkEnableOption "fingerprint authentication";
 
-      config = lib.mkIf (cfg.enable && cfg.fprintdEnable) {
+      config = lib.mkIf (cfg.enable && cfg.fprintd.enable) {
         services.dbus.packages = with pkgs; [ fprintd ];
         environment.systemPackages = with pkgs; [ fprintd ];
         systemd.packages = with pkgs; [ fprintd ];
@@ -51,9 +51,9 @@
       cfg = config.my.desktop;
     in
     {
-      options.my.desktop.batteryHealthEnable = lib.mkEnableOption "battery health management (TLP)";
+      options.my.desktop.batteryHealth.enable = lib.mkEnableOption "battery health management (TLP)";
 
-      config = lib.mkIf (cfg.enable && cfg.batteryHealthEnable) {
+      config = lib.mkIf (cfg.enable && cfg.batteryHealth.enable) {
         services.tlp = {
           enable = true;
           settings = {

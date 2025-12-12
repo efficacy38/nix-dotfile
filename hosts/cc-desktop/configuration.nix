@@ -32,10 +32,10 @@ in
   my.bundles.common.enable = true;
   my.bundles.server.enable = true;
   my.bundles.desktop-hyprland.enable = true;
-  my.system.incusEnable = true;
+  my.system.incus.enable = true;
   my.common.resolvedDnssec = true;
-  my.system.nftablesEnable = true;
-  my.devpack.tailscaleEnable = true;
+  my.system.nftables.enable = true;
+  my.devpack.tailscale.enable = true;
   my.devpack.tailscaleAsRouter = true;
 
   # services

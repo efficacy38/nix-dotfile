@@ -12,13 +12,13 @@
       cfg = config.my.system;
     in
     {
-      options.my.system.systemdInitrdEnable = lib.mkEnableOption "systemd-initrd";
-      options.my.system.systemdInitrdDebug = lib.mkEnableOption "debug mode for systemd-initrd";
+      options.my.system.systemdInitrd.enable = lib.mkEnableOption "systemd-initrd";
+      options.my.system.systemdInitrd.debug = lib.mkEnableOption "debug mode for systemd-initrd";
 
-      config = lib.mkIf cfg.systemdInitrdEnable {
+      config = lib.mkIf cfg.systemdInitrd.enable {
         boot.initrd.systemd = {
           enable = true;
-          emergencyAccess = cfg.systemdInitrdDebug;
+          emergencyAccess = cfg.systemdInitrd.debug;
         };
       };
     };
@@ -34,7 +34,7 @@
       cfg = config.my.system;
     in
     {
-      options.my.system.impermanenceEnable = lib.mkEnableOption "impermanence (btrfs snapshot rollback)";
+      options.my.system.impermanence.enable = lib.mkEnableOption "impermanence (btrfs snapshot rollback)";
 
       config =
         let
@@ -170,11 +170,11 @@
             };
           };
         in
-        lib.mkIf cfg.impermanenceEnable (
+        lib.mkIf cfg.impermanence.enable (
           lib.mkMerge [
             common-impermanence
-            (lib.mkIf (!cfg.systemdInitrdEnable) udev-initrd)
-            (lib.mkIf cfg.systemdInitrdEnable systemd-initrd)
+            (lib.mkIf (!cfg.systemdInitrd.enable) udev-initrd)
+            (lib.mkIf cfg.systemdInitrd.enable systemd-initrd)
           ]
         );
     };

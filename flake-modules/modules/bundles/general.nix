@@ -18,11 +18,11 @@
         my = {
           bundles.minimal.enable = true;
 
-          system.backupEnable = true;
+          system.backup.enable = true;
           devpack = {
-            podmanEnable = true;
-            utilsEnable = true;
-            k8sEnable = true;
+            podman.enable = true;
+            utils.enable = true;
+            k8s.enable = true;
           };
         };
       };

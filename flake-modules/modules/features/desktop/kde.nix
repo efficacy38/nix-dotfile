@@ -12,7 +12,7 @@
       cfg = config.my.desktop;
     in
     {
-      config = lib.mkIf (cfg.enable && cfg.kdeEnable) {
+      config = lib.mkIf (cfg.enable && cfg.kde.enable) {
         services.desktopManager.plasma6.enable = true;
         security.pam.services.sddm.enableKwallet = true;
       };
@@ -30,7 +30,7 @@
       cfg = config.my.desktop;
     in
     {
-      config = lib.mkIf (cfg.enable && cfg.kdeEnable) {
+      config = lib.mkIf (cfg.enable && cfg.kde.enable) {
         home.packages = with pkgs.kdePackages; [
           okular
           kdeconnect-kde

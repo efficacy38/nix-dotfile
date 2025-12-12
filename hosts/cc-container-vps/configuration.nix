@@ -15,9 +15,9 @@
   my.bundles.common.enable = true;
 
   my.main-user.userConfig = ./home.nix;
-  # my.system.impermanenceEnable = true;
-  my.system.systemdInitrdEnable = true;
-  my.system.systemdInitrdDebug = true;
+  # my.system.impermanence.enable = true;
+  my.system.systemdInitrd.enable = true;
+  my.system.systemdInitrd.debug = true;
 
   services.lvm.enable = true;
   boot.initrd.kernelModules = [

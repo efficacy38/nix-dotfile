@@ -17,9 +17,9 @@
     {
       options.my.desktop = {
         enable = lib.mkEnableOption "enable desktop Environment";
-        zramEnable = lib.mkEnableOption "enable zram";
-        hyprlandEnable = lib.mkEnableOption "enable hyprland(system)";
-        kdeEnable = lib.mkEnableOption "enable KDE(system)";
+        zram.enable = lib.mkEnableOption "enable zram";
+        hyprland.enable = lib.mkEnableOption "enable hyprland(system)";
+        kde.enable = lib.mkEnableOption "enable KDE(system)";
       };
 
       config = lib.mkIf cfg.enable (
@@ -122,7 +122,7 @@
         in
         lib.mkMerge [
           common-config
-          (lib.mkIf cfg.zramEnable zram-config)
+          (lib.mkIf cfg.zram.enable zram-config)
         ]
       );
     };
@@ -141,9 +141,9 @@
     {
       options.my.desktop = {
         enable = lib.mkEnableOption "desktop home-manager configuration";
-        hyprlandEnable = lib.mkEnableOption "Hyprland home-manager configuration";
-        kdeEnable = lib.mkEnableOption "KDE home-manager packages";
-        zenEnable = lib.mkEnableOption "Zen browser configuration";
+        hyprland.enable = lib.mkEnableOption "Hyprland home-manager configuration";
+        kde.enable = lib.mkEnableOption "KDE home-manager packages";
+        zen.enable = lib.mkEnableOption "Zen browser configuration";
       };
 
       config = lib.mkIf cfg.enable {

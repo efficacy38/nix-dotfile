@@ -12,10 +12,10 @@
       cfg = config.my.desktop;
     in
     {
-      options.my.desktop.steamEnable = lib.mkEnableOption "Steam gaming";
+      options.my.desktop.steam.enable = lib.mkEnableOption "Steam gaming";
       options.my.desktop.steamHidpi = lib.mkEnableOption "scale steam for HiDPI";
 
-      config = lib.mkIf (cfg.enable && cfg.steamEnable) {
+      config = lib.mkIf (cfg.enable && cfg.steam.enable) {
         programs.steam = {
           enable = true;
           remotePlay.openFirewall = true;

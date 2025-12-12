@@ -19,10 +19,10 @@
           bundles.minimal.enable = true;
           desktop = {
             enable = true;
-            hyprlandEnable = true;
-            zenEnable = true;
+            hyprland.enable = true;
+            zen.enable = true;
           };
-          devpack.nvimEnable = true;
+          devpack.nvim.enable = true;
         };
       };
     };

@@ -8,13 +8,13 @@
       cfg = config.my.system;
     in
     {
-      options.my.system.incusEnable = lib.mkEnableOption "Incus virtualization";
-      options.my.system.incusUiEnable = lib.mkEnableOption "Incus web UI" // { default = true; };
+      options.my.system.incus.enable = lib.mkEnableOption "Incus virtualization";
+      options.my.system.incus.ui.enable = lib.mkEnableOption "Incus web UI" // { default = true; };
 
-      config = lib.mkIf cfg.incusEnable {
+      config = lib.mkIf cfg.incus.enable {
         virtualisation.incus = {
           enable = true;
-          ui.enable = cfg.incusUiEnable;
+          ui.enable = cfg.incus.ui.enable;
         };
       };
     };
@@ -31,9 +31,9 @@
       cfg = config.my.system;
     in
     {
-      options.my.system.incusEnable = lib.mkEnableOption "incus CLI tools";
+      options.my.system.incus.enable = lib.mkEnableOption "incus CLI tools";
 
-      config = lib.mkIf cfg.incusEnable {
+      config = lib.mkIf cfg.incus.enable {
         home.packages = with pkgs; [
           incus
           virt-viewer

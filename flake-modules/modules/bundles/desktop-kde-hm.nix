@@ -19,8 +19,8 @@
           bundles.minimal.enable = true;
           desktop = {
             enable = true;
-            kdeEnable = true;
-            zenEnable = true;
+            kde.enable = true;
+            zen.enable = true;
           };
         };
       };

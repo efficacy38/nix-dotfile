@@ -13,7 +13,7 @@
       cfg = config.my.devpack;
     in
     {
-      config = lib.mkIf (cfg.enable && cfg.zshEnable) {
+      config = lib.mkIf (cfg.enable && cfg.zsh.enable) {
         home.packages = with pkgs; [
           fzf
           fzf-zsh
@@ -214,7 +214,7 @@
       cfg = config.my.devpack;
     in
     {
-      config = lib.mkIf (cfg.enable && cfg.tmuxEnable) {
+      config = lib.mkIf (cfg.enable && cfg.tmux.enable) {
         programs.tmux = {
           enable = true;
           keyMode = "vi";

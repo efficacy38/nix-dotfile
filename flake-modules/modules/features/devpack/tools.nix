@@ -39,7 +39,7 @@
       );
     in
     {
-      config = lib.mkIf (cfg.enable && cfg.gpgEnable) {
+      config = lib.mkIf (cfg.enable && cfg.gpg.enable) {
         home.packages = [ pkgs.yubikey-manager ] ++ aliasScript;
         programs.zsh.initContent = lib.mkAfter (
           lib.concatStrings (lib.lists.forEach aliasScript (script: "compdef ${script.name}=gpg\n"))
@@ -59,7 +59,7 @@
       cfg = config.my.devpack;
     in
     {
-      config = lib.mkIf (cfg.enable && cfg.justEnable) {
+      config = lib.mkIf (cfg.enable && cfg.just.enable) {
         home.file.".config/just/justfile".text = ''
           list:
             just -gl
@@ -100,7 +100,7 @@
       );
     in
     {
-      config = lib.mkIf (cfg.enable && cfg.k8sEnable) {
+      config = lib.mkIf (cfg.enable && cfg.k8s.enable) {
         programs.kubecolor = {
           enable = true;
           enableZshIntegration = true;
@@ -148,7 +148,7 @@
       cfg = config.my.devpack;
     in
     {
-      config = lib.mkIf (cfg.enable && cfg.podmanEnable) {
+      config = lib.mkIf (cfg.enable && cfg.podman.enable) {
         home.packages = with pkgs; [ podman-compose ];
         services.podman =
           {
@@ -184,7 +184,7 @@
       cfg = config.my.devpack;
     in
     {
-      config = lib.mkIf (cfg.enable && cfg.utilsEnable) {
+      config = lib.mkIf (cfg.enable && cfg.utils.enable) {
         home.packages = with pkgs-unstable; [
           curl
           wget

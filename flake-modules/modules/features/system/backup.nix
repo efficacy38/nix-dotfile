@@ -18,9 +18,9 @@
       };
     in
     {
-      options.my.system.backupEnable = lib.mkEnableOption "backup configuration (kopia)";
+      options.my.system.backup.enable = lib.mkEnableOption "backup configuration (kopia)";
 
-      config = lib.mkIf cfg.backupEnable {
+      config = lib.mkIf cfg.backup.enable {
         sops.secrets."homelab-1/password" = personal-s3-secret;
         sops.secrets."homelab-1/accessKey" = personal-s3-secret;
         sops.secrets."homelab-1/secretKey" = personal-s3-secret;
@@ -81,9 +81,9 @@
       cfg = config.my.system;
     in
     {
-      options.my.system.backupEnable = lib.mkEnableOption "backup tools (rclone, kopia, syncthing)";
+      options.my.system.backup.enable = lib.mkEnableOption "backup tools (rclone, kopia, syncthing)";
 
-      config = lib.mkIf cfg.backupEnable {
+      config = lib.mkIf cfg.backup.enable {
         home.packages = with pkgs; [
           rclone
           kopia
