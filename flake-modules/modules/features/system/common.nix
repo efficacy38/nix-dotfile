@@ -33,9 +33,11 @@
             # use 0 as personal cache
             extra-substituters = [
               # "https://nix-cache.csjhuang.net?priority=0"
+              "https://cache.numtide.com"
             ];
             extra-trusted-public-keys = [
               "nix-cache.csjhuang.net-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+              "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g="
             ];
             trusted-public-keys = [
               "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
