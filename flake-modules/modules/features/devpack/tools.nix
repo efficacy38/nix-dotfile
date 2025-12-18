@@ -173,6 +173,7 @@
   # Home-manager: utility packages
   flake.homeModules.devpack-utils =
     {
+      inputs,
       pkgs,
       pkgs-unstable,
       lib,
@@ -184,31 +185,36 @@
     in
     {
       config = lib.mkIf (cfg.enable && cfg.utils.enable) {
-        home.packages = with pkgs-unstable; [
-          curl
-          wget
-          ripgrep
-          boxes
-          ctags
-          flatpak
-          openssl
-          cfssl
-          dnsutils
-          ansible
-          mosh
-          gemini-cli
-          claude-code
-          claude-monitor
+        home.packages =
+          with pkgs-unstable;
+          [
+            curl
+            wget
+            ripgrep
+            boxes
+            ctags
+            flatpak
+            openssl
+            cfssl
+            dnsutils
+            ansible
+            mosh
+            claude-monitor
 
-          wl-clipboard
-          cachix
-          statix
-          entr
+            wl-clipboard
+            cachix
+            statix
+            entr
 
-          pkgs.personal-script
-          nixos-shell
-        ];
-
+            pkgs.personal-script
+            nixos-shell
+          ]
+          ++ (with inputs.llm-agents.packages."${pkgs.system}"; [
+            claude-code
+            gemini-cli
+            openspec
+            copilot-cli
+          ]);
         programs.direnv = {
           enable = true;
           nix-direnv.enable = true;
