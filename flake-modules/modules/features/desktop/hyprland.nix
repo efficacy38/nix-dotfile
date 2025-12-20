@@ -119,6 +119,7 @@ in
               "rofi"
               "waybar"
               "kanshi/config"
+              "ghostty/config"
             ]
           );
 
@@ -156,12 +157,7 @@ in
               systemd.enable = true;
               systemd.target = "graphical-session.target";
             };
-            kitty = {
-              enable = true;
-              extraConfig = ''
-                include /home/efficacy38/test-kitty.conf
-              '';
-            };
+            ghostty.enable = true;
           };
 
           wayland.windowManager.hyprland.systemd.enable = false;
@@ -202,7 +198,6 @@ in
               fcitx5.enable = lib.mkDefault true;
               fzf.enable = lib.mkDefault true;
               gedit.enable = lib.mkDefault true;
-              kitty.enable = lib.mkDefault true;
               emacs.enable = lib.mkDefault true;
             };
           };
