@@ -18,7 +18,7 @@
           fzf
           fzf-zsh
           zsh-defer
-          kitty.terminfo
+          ghostty
         ];
 
         programs = {
