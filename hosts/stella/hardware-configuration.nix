@@ -10,55 +10,59 @@
 {
   imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
-  boot.initrd.availableKernelModules = [
-    "xhci_pci"
-    "thunderbolt"
-    "nvme"
-    "uas"
-    "sd_mod"
-  ];
-  boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-intel" ];
-  boot.extraModulePackages = [ ];
-
-  fileSystems."/" = {
-    device = "/dev/disk/by-uuid/d09c7fde-1b73-4810-b66f-eb52c7d83e87";
-    fsType = "btrfs";
-    options = [ "subvol=@" ];
-  };
-
-  fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/A6C3-69D4";
-    fsType = "vfat";
-    options = [
-      "fmask=0022"
-      "dmask=0022"
+  boot = {
+    initrd.availableKernelModules = [
+      "xhci_pci"
+      "thunderbolt"
+      "nvme"
+      "uas"
+      "sd_mod"
     ];
+    initrd.kernelModules = [ ];
+    kernelModules = [ "kvm-intel" ];
+    extraModulePackages = [ ];
   };
 
-  fileSystems."/nix" = {
-    device = "/dev/disk/by-uuid/d09c7fde-1b73-4810-b66f-eb52c7d83e87";
-    fsType = "btrfs";
-    options = [ "subvol=@nix" ];
-    neededForBoot = true;
-  };
+  fileSystems = {
+    "/" = {
+      device = "/dev/disk/by-uuid/d09c7fde-1b73-4810-b66f-eb52c7d83e87";
+      fsType = "btrfs";
+      options = [ "subvol=@" ];
+    };
 
-  fileSystems."/persistent" = {
-    device = "/dev/disk/by-uuid/d09c7fde-1b73-4810-b66f-eb52c7d83e87";
-    fsType = "btrfs";
-    options = [ "subvol=persistent" ];
-    neededForBoot = true;
-  };
+    "/boot" = {
+      device = "/dev/disk/by-uuid/A6C3-69D4";
+      fsType = "vfat";
+      options = [
+        "fmask=0022"
+        "dmask=0022"
+      ];
+    };
 
-  fileSystems."/home/efficacy38/.cache" = {
-    device = "none";
-    fsType = "tmpfs";
-    options = [
-      "defaults"
-      "size=2G"
-      "mode=744"
-      "uid=1000"
-    ];
+    "/nix" = {
+      device = "/dev/disk/by-uuid/d09c7fde-1b73-4810-b66f-eb52c7d83e87";
+      fsType = "btrfs";
+      options = [ "subvol=@nix" ];
+      neededForBoot = true;
+    };
+
+    "/persistent" = {
+      device = "/dev/disk/by-uuid/d09c7fde-1b73-4810-b66f-eb52c7d83e87";
+      fsType = "btrfs";
+      options = [ "subvol=persistent" ];
+      neededForBoot = true;
+    };
+
+    "/home/efficacy38/.cache" = {
+      device = "none";
+      fsType = "tmpfs";
+      options = [
+        "defaults"
+        "size=2G"
+        "mode=744"
+        "uid=1000"
+      ];
+    };
   };
 
   swapDevices = [ ];
