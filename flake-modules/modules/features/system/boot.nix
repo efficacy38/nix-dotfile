@@ -65,59 +65,29 @@ _:
 
               users."efficacy38" = {
                 directories = [
-                  "Music"
-                  "Downloads"
-                  "Pictures"
+                  # User projects (explicitly kept per user request)
                   "Projects"
-                  "Documents"
-                  "Videos"
-                  "Sync"
-                  "Zotero"
-                  "Postman"
+
+                  # System security
                   ".gnupg"
                   ".ssh"
-                  ".zen"
                   ".nixops"
-                  ".krew"
-                  ".kube"
 
-                  ".config/Moonlight\\ Game\\ Streaming\\ Project"
-                  ".config/superProductivity"
-                  ".config/incus"
-                  ".config/keepassxc"
-                  ".config/lazygit"
+                  # Input methods (system-level configuration)
                   ".config/fcitx5"
-                  ".config/solaar"
-                  ".config/github-copilot"
-
-                  ".local/state"
                   ".local/share/fcitx5"
-                  ".local/share/keyring"
-                  ".local/share/zoxide"
-                  ".local/share/zsh"
-                  ".local/share/PrismLauncher"
-                  ".local/share/Steam"
-                  ".local/share/Trash"
-                  ".local/share/containers"
-                  ".local/share/direnv"
-                  ".local/share/dolphin"
-                  ".local/share/fish"
-                  ".local/share/kate"
-                  ".local/share/k9s"
-                  ".local/share/lazygit"
-                  ".local/share/mc"
-                  ".local/share/nvim"
-                  ".local/share/pnpm"
-                  ".local/share/podman"
-                  ".local/share/sddm"
-                  ".local/share/tldr"
                   ".local/share/rime"
-                  ".local/share/remmina"
-                  ".local/share/yarn"
-                  ".mc"
-                  ".thunderbird"
 
-                  ".cache/keepassxc"
+                  # Virtualization (no dedicated home-manager module)
+                  ".config/incus"
+
+                  # System state and keyrings
+                  ".local/state"
+                  ".local/share/keyring"
+
+                  # Shell history and data
+                  ".local/share/zsh"
+                  ".local/share/fish"
                 ];
               };
             };
