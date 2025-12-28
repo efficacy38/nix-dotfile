@@ -1,5 +1,5 @@
 # XDG portal configuration for desktop
-{ ... }:
+_:
 {
   flake.nixosModules.desktop-xdg =
     {
@@ -15,20 +15,21 @@
       options.my.desktop.xdg.enable = lib.mkEnableOption "XDG portal configuration";
 
       config = lib.mkIf (cfg.enable && cfg.xdg.enable) {
-        xdg.portal.enable = true;
         # for better compatibility, check https://wiki.archlinux.org/title/XDG_Desktop_Portal
-        xdg.portal.extraPortals = with pkgs; [
-          xdg-desktop-portal-hyprland
-          xdg-desktop-portal-gnome
-          xdg-desktop-portal-gtk
-        ];
-
-        xdg.portal.config = {
-          hyprland = {
-            default = [
-              "hyprland"
-              "gtk"
-            ];
+        xdg.portal = {
+          enable = true;
+          extraPortals = with pkgs; [
+            xdg-desktop-portal-hyprland
+            xdg-desktop-portal-gnome
+            xdg-desktop-portal-gtk
+          ];
+          config = {
+            hyprland = {
+              default = [
+                "hyprland"
+                "gtk"
+              ];
+            };
           };
         };
       };

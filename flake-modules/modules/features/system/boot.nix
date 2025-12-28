@@ -1,5 +1,5 @@
 # Boot system configurations: systemd-initrd, impermanence
-{ ... }:
+_:
 {
   # NixOS: systemd-initrd configuration
   flake.nixosModules.system-initrd =

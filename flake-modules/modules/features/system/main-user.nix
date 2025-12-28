@@ -1,4 +1,4 @@
-{ ... }:
+_:
 {
   flake.nixosModules.main-user =
     {
@@ -73,8 +73,11 @@
 
         home-manager = {
           extraSpecialArgs = {
-            pkgs-stable = inputs.self.outputs.pkgs-stable;
-            pkgs-unstable = inputs.self.outputs.pkgs-unstable;
+            inherit
+              (inputs.self.outputs)
+              pkgs-stable
+              pkgs-unstable
+              ;
 
             inherit
               inputs

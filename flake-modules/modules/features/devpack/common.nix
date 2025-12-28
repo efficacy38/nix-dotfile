@@ -1,5 +1,5 @@
 # Common devpack configuration (NixOS + home-manager options definition)
-{ ... }:
+_:
 {
   # NixOS: devpack system config
   flake.nixosModules.devpack =

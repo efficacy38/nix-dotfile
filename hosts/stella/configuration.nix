@@ -14,22 +14,29 @@
     inputs.nixos-hardware.nixosModules.common-gpu-intel
   ];
 
-  my.bundles.common.enable = true;
-  my.bundles.desktop-hyprland.enable = true;
-  my.bundles.steam.enable = true;
-
-  my.desktop.fprintd.enable = true;
-  my.desktop.batteryHealth.enable = true;
-  my.main-user.userConfig = ./home.nix;
-  my.devpack = {
-    enable = true;
-    csccUtil.enable = true;
-    tailscale.enable = true;
+  my = {
+    bundles = {
+      common.enable = true;
+      desktop-hyprland.enable = true;
+      steam.enable = true;
+    };
+    desktop = {
+      fprintd.enable = true;
+      batteryHealth.enable = true;
+    };
+    main-user.userConfig = ./home.nix;
+    devpack = {
+      enable = true;
+      csccUtil.enable = true;
+      tailscale.enable = true;
+    };
+    system = {
+      impermanence.enable = true;
+      systemdInitrd.enable = true;
+      # systemdInitrd.debug = true;
+      backup.enable = true;
+    };
   };
-  my.system.impermanence.enable = true;
-  my.system.systemdInitrd.enable = true;
-  # my.system.systemdInitrd.debug = true;
-  my.system.backup.enable = true;
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
@@ -38,7 +45,13 @@
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-  networking.hostName = "stella"; # Define your hostname.
+  networking = {
+    hostName = "stella"; # Define your hostname.
+    extraHosts = ''
+      10.2.2.99   minio-backup.test.cc.cs.nctu.edu.tw
+    '';
+    firewall.enable = lib.mkForce false;
+  };
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -54,12 +67,6 @@
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
-
-  networking.extraHosts = ''
-    10.2.2.99   minio-backup.test.cc.cs.nctu.edu.tw
-  '';
-
-  networking.firewall.enable = lib.mkForce false;
 
   system.stateVersion = "24.11";
 }

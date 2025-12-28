@@ -6,9 +6,11 @@
   ];
 
   # Bootloader.
-  boot.supportedFilesystems = [ "zfs" ];
-  boot.kernelModules = [ "kvm-intel" ];
-  boot.tmp.useTmpfs = true;
+  boot = {
+    supportedFilesystems = [ "zfs" ];
+    kernelModules = [ "kvm-intel" ];
+    tmp.useTmpfs = true;
+  };
 
   # module related options
   my.bundles.common.enable = true;

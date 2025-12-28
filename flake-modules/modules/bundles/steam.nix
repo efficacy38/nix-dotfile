@@ -1,4 +1,4 @@
-{ ... }:
+_:
 {
   flake.nixosModules.bundles-steam =
     {
@@ -15,10 +15,13 @@
       };
 
       config = lib.mkIf cfg.enable {
-        my.bundles.common.enable = true;
-
-        my.desktop.steam.enable = true;
-        my.desktop.steamHidpi = false;
+        my = {
+          bundles.common.enable = true;
+          desktop = {
+            steam.enable = true;
+            steamHidpi = false;
+          };
+        };
       };
     };
 }

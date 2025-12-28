@@ -12,63 +12,69 @@
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
-  boot.initrd.availableKernelModules = [
-    "ahci"
-    "ehci_pci"
-    "megaraid_sas"
-    "nvme"
-    "usbhid"
-    "uas"
-    "usb_storage"
-    "sd_mod"
-  ];
-  boot.initrd.kernelModules = [ "vfio vfio_iommu_type1 vfio_pci" ];
-  boot.extraModulePackages = [ ];
-  boot.kernelModules = [
-    "intel-kvm"
-    "vfio vfio_iommu_type1 vfio_pci"
-  ];
-  boot.blacklistedKernelModules = [
-    "nvidiafb"
-    "nouveau"
-  ];
-  boot.modprobeConfig.enable = true;
-  boot.kernelParams = [
-    "quiet"
-    "splash"
-    "intel_iommu=on"
-    "vfio-pci.ids=\"10de:128b,10de:0e0f\""
-    "vfio-pci.disable_idle_p3=\"1\""
-  ];
-  boot.extraModprobeConfig = ''
-    softdep nvidia pre: vfio-pci
-  '';
+  boot = {
+    initrd = {
+      availableKernelModules = [
+        "ahci"
+        "ehci_pci"
+        "megaraid_sas"
+        "nvme"
+        "usbhid"
+        "uas"
+        "usb_storage"
+        "sd_mod"
+      ];
+      kernelModules = [ "vfio vfio_iommu_type1 vfio_pci" ];
+    };
+    extraModulePackages = [ ];
+    kernelModules = [
+      "intel-kvm"
+      "vfio vfio_iommu_type1 vfio_pci"
+    ];
+    blacklistedKernelModules = [
+      "nvidiafb"
+      "nouveau"
+    ];
+    modprobeConfig.enable = true;
+    kernelParams = [
+      "quiet"
+      "splash"
+      "intel_iommu=on"
+      "vfio-pci.ids=\"10de:128b,10de:0e0f\""
+      "vfio-pci.disable_idle_p3=\"1\""
+    ];
+    extraModprobeConfig = ''
+      softdep nvidia pre: vfio-pci
+    '';
+  };
 
   # required for zfs
   networking.hostId = "e8d233ca";
 
-  fileSystems."/" = {
-    device = "rpool/root";
-    fsType = "zfs";
-  };
+  fileSystems = {
+    "/" = {
+      device = "rpool/root";
+      fsType = "zfs";
+    };
 
-  fileSystems."/home" = {
-    device = "rpool/home";
-    fsType = "zfs";
-  };
+    "/home" = {
+      device = "rpool/home";
+      fsType = "zfs";
+    };
 
-  fileSystems."/nix" = {
-    device = "rpool/nix";
-    fsType = "zfs";
-  };
+    "/nix" = {
+      device = "rpool/nix";
+      fsType = "zfs";
+    };
 
-  fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/05C0-19B2";
-    fsType = "vfat";
-    options = [
-      "fmask=0077"
-      "dmask=0077"
-    ];
+    "/boot" = {
+      device = "/dev/disk/by-uuid/05C0-19B2";
+      fsType = "vfat";
+      options = [
+        "fmask=0077"
+        "dmask=0077"
+      ];
+    };
   };
 
   swapDevices = [

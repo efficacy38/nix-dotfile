@@ -1,5 +1,5 @@
 # Editor tools: nvim, git
-{ ... }:
+_:
 {
   # Home-manager: neovim configuration
   flake.homeModules.devpack-nvim =
@@ -115,9 +115,13 @@
           git-credential-keepassxc
         ];
 
-        programs.diff-so-fancy.enable = true;
-        programs.diff-so-fancy.enableGitIntegration = true;
-        programs.git = {
+        programs = {
+          diff-so-fancy = {
+            enable = true;
+            enableGitIntegration = true;
+          };
+
+          git = {
           enable = true;
           lfs.enable = true;
 
@@ -177,6 +181,7 @@
                 path = ".config/git/99-local.conf";
               }
             ];
+          };
         };
       };
     };

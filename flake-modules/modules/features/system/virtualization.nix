@@ -1,5 +1,5 @@
 # Virtualization system configurations: incus
-{ ... }:
+_:
 {
   # NixOS: Incus virtualization
   flake.nixosModules.system-incus =

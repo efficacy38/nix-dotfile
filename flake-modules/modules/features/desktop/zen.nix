@@ -1,5 +1,5 @@
 # Zen browser configuration
-{ ... }:
+_:
 {
   # Home-manager only: Zen browser config
   flake.homeModules.desktop-zen =
@@ -84,6 +84,15 @@
               "signon.rememberSignons" = false;
             };
           };
+        };
+
+        # Persist Zen browser profile
+        # Note: This only takes effect when system impermanence is enabled
+        home.persistence."/persistent/system/home/${config.home.username}" = {
+          directories = [
+            ".zen"  # Browser profile directory
+          ];
+          allowOther = true;
         };
       };
     };

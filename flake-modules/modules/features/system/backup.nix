@@ -1,5 +1,5 @@
 # Backup system configurations
-{ ... }:
+_:
 {
   # NixOS: backup configuration (kopia)
   flake.nixosModules.system-backup =
@@ -21,9 +21,11 @@
       options.my.system.backup.enable = lib.mkEnableOption "backup configuration (kopia)";
 
       config = lib.mkIf cfg.backup.enable {
-        sops.secrets."homelab-1/password" = personal-s3-secret;
-        sops.secrets."homelab-1/accessKey" = personal-s3-secret;
-        sops.secrets."homelab-1/secretKey" = personal-s3-secret;
+        sops.secrets = {
+          "homelab-1/password" = personal-s3-secret;
+          "homelab-1/accessKey" = personal-s3-secret;
+          "homelab-1/secretKey" = personal-s3-secret;
+        };
 
         services.kopia = {
           enable = true;
@@ -33,10 +35,12 @@
               passwordFile = config.sops.secrets."homelab-1/password".path;
               path = "/persistent";
               repository = {
-                s3.bucket = "personal-backups";
-                s3.endpoint = "s3.csjhuang.net";
-                s3.accessKeyFile = config.sops.secrets."homelab-1/accessKey".path;
-                s3.secretKeyFile = config.sops.secrets."homelab-1/secretKey".path;
+                s3 = {
+                  bucket = "personal-backups";
+                  endpoint = "s3.csjhuang.net";
+                  accessKeyFile = config.sops.secrets."homelab-1/accessKey".path;
+                  secretKeyFile = config.sops.secrets."homelab-1/secretKey".path;
+                };
               };
 
               policy = {

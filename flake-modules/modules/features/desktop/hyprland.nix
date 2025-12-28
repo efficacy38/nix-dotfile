@@ -1,5 +1,5 @@
 # Hyprland desktop environment configuration
-{ ... }:
+_:
 let
   dotfilesBasePath = ../../../../dotfiles;
 in

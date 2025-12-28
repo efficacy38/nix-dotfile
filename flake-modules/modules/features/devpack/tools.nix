@@ -1,8 +1,9 @@
 # Dev tools: gpg, just, k8s, podman, utils
-{ ... }:
+_:
 {
-  # Home-manager: GPG configuration
-  flake.homeModules.devpack-gpg =
+  flake.homeModules = {
+    # Home-manager: GPG configuration
+    devpack-gpg =
     {
       pkgs,
       lib,
@@ -47,8 +48,8 @@
       };
     };
 
-  # Home-manager: just command runner
-  flake.homeModules.devpack-just =
+    # Home-manager: just command runner
+    devpack-just =
     {
       pkgs,
       lib,
@@ -85,8 +86,8 @@
       };
     };
 
-  # Home-manager: Kubernetes tools
-  flake.homeModules.devpack-k8s =
+    # Home-manager: Kubernetes tools
+    devpack-k8s =
     {
       pkgs,
       lib,
@@ -135,8 +136,8 @@
       };
     };
 
-  # Home-manager: podman container tools
-  flake.homeModules.devpack-podman =
+    # Home-manager: podman container tools
+    devpack-podman =
     {
       options,
       pkgs,
@@ -170,8 +171,8 @@
       };
     };
 
-  # Home-manager: utility packages
-  flake.homeModules.devpack-utils =
+    # Home-manager: utility packages
+    devpack-utils =
     {
       inputs,
       pkgs,
@@ -224,4 +225,5 @@
         programs.emacs.enable = true;
       };
     };
+  };
 }

@@ -1,4 +1,4 @@
-{ ... }:
+_:
 {
   flake.nixosModules.bundles-homelab =
     {
@@ -15,10 +15,14 @@
       };
 
       config = lib.mkIf cfg.enable {
-        my.bundles.server.enable = true;
-        my.system.incus.enable = true;
-        my.common.resolvedDnssec = true;
-        my.system.nftables.enable = true;
+        my = {
+          bundles.server.enable = true;
+          system = {
+            incus.enable = true;
+            nftables.enable = true;
+          };
+          common.resolvedDnssec = true;
+        };
       };
     };
 }

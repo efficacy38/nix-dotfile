@@ -58,9 +58,13 @@
         stylix.enable = lib.mkDefault false;
 
         # Bootloader.
-        boot.loader.systemd-boot.enable = lib.mkDefault true;
-        boot.loader.efi.canTouchEfiVariables = lib.mkDefault true;
-        boot.tmp.useTmpfs = lib.mkDefault true;
+        boot = {
+          loader = {
+            systemd-boot.enable = lib.mkDefault true;
+            efi.canTouchEfiVariables = lib.mkDefault true;
+          };
+          tmp.useTmpfs = lib.mkDefault true;
+        };
 
         # enable sshd
         services = {

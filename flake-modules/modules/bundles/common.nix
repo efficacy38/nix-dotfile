@@ -1,4 +1,4 @@
-{ ... }:
+_:
 {
   flake.nixosModules.bundles-common =
     {
@@ -15,10 +15,13 @@
       };
 
       config = lib.mkIf cfg.enable {
-        my.common.enable = true;
-
-        my.main-user.enable = true;
-        my.main-user.userName = "efficacy38";
+        my = {
+          common.enable = true;
+          main-user = {
+            enable = true;
+            userName = "efficacy38";
+          };
+        };
       };
     };
 }

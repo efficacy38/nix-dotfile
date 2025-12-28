@@ -11,12 +11,15 @@
     # ./hardware-configuration.nix
   ];
 
-  my.bundles.common.enable = true;
-
-  my.main-user.userConfig = ./home.nix;
-  # my.system.impermanence.enable = true;
-  my.system.systemdInitrd.enable = true;
-  my.system.systemdInitrd.debug = true;
+  my = {
+    bundles.common.enable = true;
+    main-user.userConfig = ./home.nix;
+    # system.impermanence.enable = true;
+    system.systemdInitrd = {
+      enable = true;
+      debug = true;
+    };
+  };
 
   services.lvm.enable = true;
   boot = {

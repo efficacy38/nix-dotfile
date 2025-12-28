@@ -1,4 +1,4 @@
-{ ... }:
+_:
 {
   flake.nixosModules.bundles-desktop-hyprland =
     {
@@ -15,12 +15,15 @@
       };
 
       config = lib.mkIf cfg.enable {
-        my.bundles.common.enable = true;
-
-        my.desktop.enable = true;
-        my.desktop.zram.enable = false;
-        my.desktop.hyprland.enable = true;
-        my.desktop.kde.enable = false;
+        my = {
+          bundles.common.enable = true;
+          desktop = {
+            enable = true;
+            zram.enable = false;
+            hyprland.enable = true;
+            kde.enable = false;
+          };
+        };
       };
     };
 }

@@ -1,5 +1,5 @@
 # Common desktop configuration (shared by all desktop environments)
-{ ... }:
+_:
 {
   # NixOS: common desktop system config
   flake.nixosModules.desktop =

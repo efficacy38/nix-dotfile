@@ -1,5 +1,5 @@
 # Steam gaming configuration
-{ ... }:
+_:
 {
   flake.nixosModules.desktop-steam =
     {
