@@ -17,3 +17,10 @@ test:
 # Reformat all Nix files
 reformat:
     nix fmt -- .
+
+update flake:
+    nix flake update {{ flake }}
+
+update-agent: (update "llm-agents")
+
+update-all: (update "")
