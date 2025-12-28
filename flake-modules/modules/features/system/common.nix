@@ -126,27 +126,27 @@
           variables.EDITOR = "vim";
           systemPackages = with pkgs; [
             # management utils
-            vim
-            neovim
-            git
-            wget
             curl
+            git
             htop
+            neovim
+            vim
+            wget
 
             # compression
-            unzip
             gnutar
+            unzip
 
             # system utils
             man-db
-            wireguard-tools
-            tcpdump
             nftables
+            tcpdump
+            wireguard-tools
 
             # sops
-            sops
-            gnupg
             age
+            gnupg
+            sops
 
             # vpn
             openfortivpn

@@ -16,70 +16,63 @@ _:
       config = lib.mkIf (cfg.enable && cfg.nvim.enable) {
         home = {
           packages = with pkgs-unstable; [
-            neovim
-            yamllint
-            nodejs
-            terraform-ls
-            pyright
-            gcc
-            texpresso
-            edukai
-            ttf-tw-moe
-
-            lua-language-server
-            terraform-ls
-            yaml-language-server
-            gopls
-            nodePackages.bash-language-server
-            golangci-lint
-            docker-compose-language-service
-            docker-ls
-            taplo
-            sqls
-            marksman
-            selene
-            rust-analyzer
-            nil
-            nixd
-            shellcheck
-            shfmt
-            ruff
-            nixfmt-rfc-style
-            nodePackages.prettier
-            stylua
-            tflint
-            tfsec
-            typescript-language-server
-            prettierd
-            ansible-lint
-            hadolint
-            deadnix
             alejandra
-            typos
-            typos-lsp
-            jsonnet-language-server
-            dockerfile-language-server
-            docker-compose-language-service
+            ansible-lint
             astro-language-server
-            vtsls
+            deadnix
             delve
             deno
-
+            docker-compose-language-service
+            docker-ls
+            dockerfile-language-server
+            edukai
+            gcc
+            ginkgo
             go
             gofumpt
+            golangci-lint
             gomodifytags
-            gotools
-            delve
-            gomodifytags
+            gopls
             gotests
+            gotools
+            govulncheck
+            hadolint
             iferr
             impl
-            reftools
-            ginkgo
-            richgo
-            govulncheck
-
+            jsonnet-language-server
+            lua-language-server
             lynx
+            marksman
+            neovim
+            nixd
+            nixfmt-rfc-style
+            nil
+            nodePackages.bash-language-server
+            nodePackages.prettier
+            nodejs
+            prettierd
+            pyright
+            reftools
+            richgo
+            ruff
+            rust-analyzer
+            selene
+            shellcheck
+            shfmt
+            sqls
+            stylua
+            taplo
+            terraform-ls
+            texpresso
+            tflint
+            tfsec
+            ttf-tw-moe
+            typescript-language-server
+            typos
+            typos-lsp
+            vtsls
+            yaml-language-server
+            yamllint
           ];
           sessionVariables = {
             EDITOR = "nvim";
@@ -90,6 +83,17 @@ _:
               source = config.lib.file.mkOutOfStoreSymlink "/etc/nixos/nix-dotfile/dotfiles/nvim";
             };
           };
+        };
+
+        # Persist Neovim and Node.js package manager data
+        # Note: This only takes effect when system impermanence is enabled
+        home.persistence."/persistent/system/home/${config.home.username}" = {
+          directories = [
+            ".local/share/nvim"  # Neovim plugins and state
+            ".local/share/pnpm"  # pnpm package manager
+            ".local/share/yarn"  # yarn package manager
+          ];
+          allowOther = true;
         };
       };
     };

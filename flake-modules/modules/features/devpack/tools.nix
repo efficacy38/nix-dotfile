@@ -108,31 +108,45 @@ _:
         };
 
         home.packages = with pkgs; [
-          kubectl
+          calicoctl
           fluxcd
-          kubernetes-helm
-          kustomize
+          gdk
           jq
-          yq
           k9s
           krew
+          kube-capacity
+          kube-linter
+          kube-prompt
+          kubelogin
+          kubectl
+          kubectl-doctor
+          kubectl-images
+          kubectl-neat
+          kubectl-tree
+          kubectl-validate
           kubectx
           kubepug
-          kubelogin
+          kubernetes-helm
           kubeshark
-          kube-linter
-          kubectl-tree
-          kubectl-neat
-          kube-capacity
-          kubectl-images
-          kubectl-doctor
-          kubectl-validate
-          kube-prompt
+          kustomize
           kyverno
-          calicoctl
-          gdk
+          minio-client
           opentofu
+          yq
         ];
+
+        # Persist Kubernetes tools data
+        # Note: This only takes effect when system impermanence is enabled
+        home.persistence."/persistent/system/home/${config.home.username}" = {
+          directories = [
+            ".krew"
+            ".kube"
+            ".local/share/k9s"
+            ".mc"
+            ".local/share/mc"
+          ];
+          allowOther = true;
+        };
       };
     };
 
@@ -168,6 +182,16 @@ _:
             };
           };
         };
+
+        # Persist container data
+        # Note: This only takes effect when system impermanence is enabled
+        home.persistence."/persistent/system/home/${config.home.username}" = {
+          directories = [
+            ".local/share/containers" # Container storage
+            ".local/share/podman" # Podman data
+          ];
+          allowOther = true;
+        };
       };
     };
 
@@ -189,33 +213,89 @@ _:
         home.packages =
           with pkgs-unstable;
           [
-            curl
-            wget
-            ripgrep
-            boxes
-            ctags
-            flatpak
-            openssl
-            cfssl
-            dnsutils
             ansible
-            mosh
-            claude-monitor
-
-            wl-clipboard
+            boxes
             cachix
-            statix
+            cfssl
+            claude-monitor
+            ctags
+            curl
+            dnsutils
             entr
-
-            pkgs.personal-script
+            flatpak
+            mosh
             nixos-shell
+            openssl
+            pkgs.personal-script
+            ripgrep
+            statix
+            wl-clipboard
+            wget
           ]
           ++ (with inputs.llm-agents.packages."${pkgs.system}"; [
+            antigravity
             claude-code
+            codex
+            copilot-cli
             gemini-cli
             openspec
-            copilot-cli
           ]);
+
+        # Persist AI/LLM tools and development utilities settings and data
+        # Note: This only takes effect when system impermanence is enabled
+        home.persistence."/persistent/system/home/${config.home.username}" = {
+          directories = [
+            # AI/LLM Tools
+            # Claude Code
+            ".config/claude"
+            ".local/share/claude"
+            ".cache/claude"
+
+            # Gemini CLI
+            ".config/gemini"
+            ".local/share/gemini"
+            ".cache/gemini"
+
+            # OpenSpec
+            ".config/openspec"
+            ".local/share/openspec"
+            ".cache/openspec"
+
+            # GitHub Copilot CLI
+            ".config/copilot-cli"
+            ".local/share/copilot-cli"
+            ".cache/copilot-cli"
+
+            # GitHub Copilot (VSCode/Editor)
+            ".config/github-copilot"
+
+            # Codex
+            ".config/codex"
+            ".local/share/codex"
+            ".cache/codex"
+
+            # Antigravity
+            ".config/antigravity"
+            ".local/share/antigravity"
+            ".cache/antigravity"
+
+            # Development Tools
+            # direnv
+            ".local/share/direnv"
+
+            # zoxide
+            ".local/share/zoxide"
+
+            # lazygit
+            ".config/lazygit"
+            ".local/share/lazygit"
+
+            # tldr command documentation
+            ".local/share/tldr"
+          ];
+          allowOther = true;
+        };
+
         programs.direnv = {
           enable = true;
           nix-direnv.enable = true;

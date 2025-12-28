@@ -17,8 +17,8 @@ _:
         home.packages = with pkgs; [
           fzf
           fzf-zsh
-          zsh-defer
           ghostty
+          zsh-defer
         ];
 
         programs = {

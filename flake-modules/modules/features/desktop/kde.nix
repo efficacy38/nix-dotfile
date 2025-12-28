@@ -1,5 +1,5 @@
 # KDE Plasma desktop environment configuration
-{ ... }:
+_:
 {
   # NixOS: KDE system config
   flake.nixosModules.desktop-kde =
@@ -32,15 +32,26 @@
     {
       config = lib.mkIf (cfg.enable && cfg.kde.enable) {
         home.packages = with pkgs.kdePackages; [
-          okular
-          kdeconnect-kde
           elisa
-          markdownpart
-          kate
-          yakuake
-          kcalc
           ghostwriter
+          kate
+          kcalc
+          kdeconnect-kde
+          markdownpart
+          okular
+          yakuake
         ];
+
+        # Persist KDE application data
+        # Note: This only takes effect when system impermanence is enabled
+        home.persistence."/persistent/system/home/${config.home.username}" = {
+          directories = [
+            ".local/share/dolphin"  # Dolphin file manager
+            ".local/share/kate"     # Kate text editor
+            ".local/share/sddm"     # SDDM display manager state
+          ];
+          allowOther = true;
+        };
       };
     };
 }
