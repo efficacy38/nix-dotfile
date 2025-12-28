@@ -19,6 +19,7 @@ return {
   { import = "astrocommunity.pack.cpp" },
   { import = "astrocommunity.pack.terraform" },
   { import = "astrocommunity.pack.typescript" },
+  -- { import = "astrocommunity.pack.rust" },
   { import = "astrocommunity.git.git-blame-nvim" },
   { import = "astrocommunity.editing-support.copilotchat-nvim" },
   { import = "astrocommunity.markdown-and-latex.texpresso-vim" },
