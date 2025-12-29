@@ -1,5 +1,4 @@
-_:
-{
+_: {
   flake.homeModules.bundles-general =
     {
       lib,
@@ -20,6 +19,7 @@ _:
 
           system.backup.enable = true;
           devpack = {
+            enable = true;
             podman.enable = true;
             utils.enable = true;
             k8s.enable = true;

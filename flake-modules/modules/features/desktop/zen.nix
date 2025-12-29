@@ -1,6 +1,27 @@
 # Zen browser configuration
 _:
 {
+  # NixOS: Zen browser persistence
+  flake.nixosModules.desktop-zen =
+    {
+      lib,
+      config,
+      ...
+    }:
+    let
+      cfg = config.my.desktop;
+    in
+    {
+      config = lib.mkIf cfg.enable {
+        # Persist Zen browser profile
+        environment.persistence."/persistent/system".users."efficacy38" = {
+          directories = [
+            ".zen" # Browser profile directory
+          ];
+        };
+      };
+    };
+
   # Home-manager only: Zen browser config
   flake.homeModules.desktop-zen =
     {
@@ -84,15 +105,6 @@ _:
               "signon.rememberSignons" = false;
             };
           };
-        };
-
-        # Persist Zen browser profile
-        # Note: This only takes effect when system impermanence is enabled
-        home.persistence."/persistent/system/home/${config.home.username}" = {
-          directories = [
-            ".zen"  # Browser profile directory
-          ];
-          allowOther = true;
         };
       };
     };

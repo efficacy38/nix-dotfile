@@ -15,6 +15,15 @@ _:
       config = lib.mkIf (cfg.enable && cfg.kde.enable) {
         services.desktopManager.plasma6.enable = true;
         security.pam.services.sddm.enableKwallet = true;
+
+        # Persist KDE application data
+        environment.persistence."/persistent/system".users."efficacy38" = {
+          directories = [
+            ".local/share/dolphin" # Dolphin file manager
+            ".local/share/kate" # Kate text editor
+            ".local/share/sddm" # SDDM display manager state
+          ];
+        };
       };
     };
 
@@ -41,17 +50,6 @@ _:
           okular
           yakuake
         ];
-
-        # Persist KDE application data
-        # Note: This only takes effect when system impermanence is enabled
-        home.persistence."/persistent/system/home/${config.home.username}" = {
-          directories = [
-            ".local/share/dolphin"  # Dolphin file manager
-            ".local/share/kate"     # Kate text editor
-            ".local/share/sddm"     # SDDM display manager state
-          ];
-          allowOther = true;
-        };
       };
     };
 }

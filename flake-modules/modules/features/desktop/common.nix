@@ -110,6 +110,31 @@ _:
             };
 
             services.solaar.enable = true;
+
+            # Persist user data directories and desktop applications
+            environment.persistence."/persistent/system".users."efficacy38" = {
+              directories = [
+                # XDG user data directories
+                "Music"
+                "Downloads"
+                "Pictures"
+                "Documents"
+                "Videos"
+                "Sync"
+                "Zotero" # Academic reference manager
+                "Postman" # API development tool
+
+                # Desktop applications
+                ".thunderbird" # Email client
+                ".config/keepassxc" # Password manager
+                ".cache/keepassxc"
+                ".local/share/remmina" # Remote desktop
+                ".local/share/Trash" # System utilities
+                ".config/Moonlight\\ Game\\ Streaming\\ Project" # Game streaming
+                ".config/superProductivity" # Productivity app
+                ".config/solaar" # Logitech device manager
+              ];
+            };
           };
 
           zram-config = {
@@ -180,33 +205,6 @@ _:
           zotero-translation-server
           keepassxc
         ];
-
-        # Persist user data directories and desktop applications
-        # Note: This only takes effect when system impermanence is enabled
-        home.persistence."/persistent/system/home/${config.home.username}" = {
-          directories = [
-            # XDG user data directories
-            "Music"
-            "Downloads"
-            "Pictures"
-            "Documents"
-            "Videos"
-            "Sync"
-            "Zotero" # Academic reference manager
-            "Postman" # API development tool
-
-            # Desktop applications
-            ".thunderbird" # Email client
-            ".config/keepassxc" # Password manager
-            ".cache/keepassxc"
-            ".local/share/remmina" # Remote desktop
-            ".local/share/Trash" # System utilities
-            ".config/Moonlight\\ Game\\ Streaming\\ Project" # Game streaming
-            ".config/superProductivity" # Productivity app
-            ".config/solaar" # Logitech device manager
-          ];
-          allowOther = true;
-        };
       };
     };
 }

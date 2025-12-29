@@ -1,6 +1,28 @@
 # Editor tools: nvim, git
-_:
-{
+_: {
+  # NixOS: neovim persistence configuration
+  flake.nixosModules.devpack-nvim =
+    {
+      lib,
+      config,
+      ...
+    }:
+    let
+      cfg = config.my.devpack;
+    in
+    {
+      config = lib.mkIf cfg.enable {
+        # Persist Neovim and Node.js package manager data
+        environment.persistence."/persistent/system".users."efficacy38" = {
+          directories = [
+            ".local/share/nvim" # Neovim plugins and state
+            ".local/share/pnpm" # pnpm package manager
+            ".local/share/yarn" # yarn package manager
+          ];
+        };
+      };
+    };
+
   # Home-manager: neovim configuration
   flake.homeModules.devpack-nvim =
     {
@@ -84,17 +106,6 @@ _:
             };
           };
         };
-
-        # Persist Neovim and Node.js package manager data
-        # Note: This only takes effect when system impermanence is enabled
-        home.persistence."/persistent/system/home/${config.home.username}" = {
-          directories = [
-            ".local/share/nvim"  # Neovim plugins and state
-            ".local/share/pnpm"  # pnpm package manager
-            ".local/share/yarn"  # yarn package manager
-          ];
-          allowOther = true;
-        };
       };
     };
 
@@ -126,65 +137,65 @@ _:
           };
 
           git = {
-          enable = true;
-          lfs.enable = true;
+            enable = true;
+            lfs.enable = true;
 
-          settings = {
-            user = {
-              name = "efficacy38";
-              email = "efficacy38@gmail.com";
+            settings = {
+              user = {
+                name = "efficacy38";
+                email = "efficacy38@gmail.com";
+              };
+              aliases = {
+                ci = "commit";
+                co = "checkout";
+                s = "status";
+              };
+              core = {
+                whitespace = "trailing-space,space-before-tab";
+              };
+              credential = {
+                helper = "cache --timeout 3600";
+              };
             };
-            aliases = {
-              ci = "commit";
-              co = "checkout";
-              s = "status";
-            };
-            core = {
-              whitespace = "trailing-space,space-before-tab";
-            };
-            credential = {
-              helper = "cache --timeout 3600";
-            };
-          };
 
-          includes =
-            let
-              cscc-git-config = {
-                user = {
-                  name = "Cai-Sian Jhuang";
-                  email = "csjhuang@cs.nctu.edu.tw";
-                  signingkey = "~/.ssh/keys/cscc.id_ed25519.pub";
+            includes =
+              let
+                cscc-git-config = {
+                  user = {
+                    name = "Cai-Sian Jhuang";
+                    email = "csjhuang@cs.nctu.edu.tw";
+                    signingkey = "~/.ssh/keys/cscc.id_ed25519.pub";
+                  };
+                  commit.gpgsign = "true";
+                  gpg.format = "ssh";
                 };
-                commit.gpgsign = "true";
-                gpg.format = "ssh";
-              };
-              gh-git-config = {
-                user = {
-                  name = "efficacy38";
-                  email = "efficacy38@gmail.com";
-                  signingkey = "~/.ssh/keys/gh.id_ed25519.pub";
+                gh-git-config = {
+                  user = {
+                    name = "efficacy38";
+                    email = "efficacy38@gmail.com";
+                    signingkey = "~/.ssh/keys/gh.id_ed25519.pub";
+                  };
+                  commit.gpgsign = "true";
+                  gpg.format = "ssh";
                 };
-                commit.gpgsign = "true";
-                gpg.format = "ssh";
-              };
-            in
-            [
-              {
-                condition = "hasconfig:remote.*.url:ssh://git@gitlab.cc.cs.nctu.edu.tw:10022/**";
-                contents = cscc-git-config;
-              }
-              {
-                condition = "hasconfig:remote.*.url:https://gitlab.it.cs.nycu.edu.tw/**";
-                contents = cscc-git-config;
-              }
-              {
-                condition = "hasconfig:remote.*.url:https://github.com/**";
-                contents = gh-git-config;
-              }
-              {
-                path = ".config/git/99-local.conf";
-              }
-            ];
+              in
+              [
+                {
+                  condition = "hasconfig:remote.*.url:ssh://git@gitlab.cc.cs.nctu.edu.tw:10022/**";
+                  contents = cscc-git-config;
+                }
+                {
+                  condition = "hasconfig:remote.*.url:https://gitlab.it.cs.nycu.edu.tw/**";
+                  contents = cscc-git-config;
+                }
+                {
+                  condition = "hasconfig:remote.*.url:https://github.com/**";
+                  contents = gh-git-config;
+                }
+                {
+                  path = ".config/git/99-local.conf";
+                }
+              ];
           };
         };
       };
