@@ -1,6 +1,5 @@
 # Shell tools: zsh, tmux
-_:
-{
+_: {
   # Home-manager: zsh configuration
   flake.homeModules.devpack-zsh =
     {

@@ -1,6 +1,5 @@
 # Backup system configurations
-_:
-{
+_: {
   # NixOS: backup configuration (kopia)
   flake.nixosModules.system-backup =
     {

@@ -1,6 +1,5 @@
 # Steam gaming configuration
-_:
-{
+_: {
   flake.nixosModules.desktop-steam =
     {
       lib,
@@ -36,8 +35,8 @@ _:
         environment.persistence."/persistent/system" = {
           users."efficacy38" = {
             directories = [
-              ".local/share/Steam"          # Steam gaming platform
-              ".local/share/PrismLauncher"  # PrismLauncher (Minecraft)
+              ".local/share/Steam" # Steam gaming platform
+              ".local/share/PrismLauncher" # PrismLauncher (Minecraft)
             ];
           };
         };

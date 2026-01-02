@@ -1,5 +1,4 @@
-_:
-{
+_: {
   flake.nixosModules.bundles-server =
     {
       lib,

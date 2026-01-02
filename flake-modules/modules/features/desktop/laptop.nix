@@ -1,6 +1,5 @@
 # Laptop-specific desktop features (fprintd, battery-health)
-_:
-{
+_: {
   # NixOS: Fingerprint authentication
   flake.nixosModules.desktop-fprintd =
     {

@@ -1,5 +1,4 @@
-_:
-{
+_: {
   flake.homeModules.bundles-desktop =
     {
       lib,

@@ -1,6 +1,5 @@
 # XDG portal configuration for desktop
-_:
-{
+_: {
   flake.nixosModules.desktop-xdg =
     {
       pkgs,

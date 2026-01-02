@@ -1,6 +1,5 @@
 # Network system configurations: nftables, tailscale (system-level)
-_:
-{
+_: {
   # NixOS: nftables firewall configuration
   flake.nixosModules.system-nftables =
     { lib, config, ... }:

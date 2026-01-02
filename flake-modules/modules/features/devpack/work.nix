@@ -1,6 +1,5 @@
 # Work-related configurations: cscc-work, tailscale
-_:
-{
+_: {
   # NixOS: CSCC work VPN configuration
   flake.nixosModules.devpack-cscc-work =
     {

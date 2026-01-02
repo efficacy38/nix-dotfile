@@ -1,6 +1,5 @@
 # Zen browser configuration
-_:
-{
+_: {
   # NixOS: Zen browser persistence
   flake.nixosModules.desktop-zen =
     {
