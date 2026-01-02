@@ -92,7 +92,7 @@ _: {
             ".cache/codex"
 
             # Antigravity
-            ".config/antigravity"
+            ".antigravity"
             ".local/share/antigravity"
             ".cache/antigravity"
 
