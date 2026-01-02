@@ -52,10 +52,6 @@ in
           hyprlock
           hypridle
 
-          # kde apps
-          kdePackages.dolphin
-          kdePackages.ark
-
           catppuccin-sddm
           wireshark
           super-productivity
@@ -199,6 +195,7 @@ in
               fzf.enable = lib.mkDefault true;
               gedit.enable = lib.mkDefault true;
               emacs.enable = lib.mkDefault true;
+              kde.enable = lib.mkDefault true;
             };
           };
         }

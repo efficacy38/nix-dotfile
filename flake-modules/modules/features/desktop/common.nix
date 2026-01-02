@@ -1,6 +1,5 @@
 # Common desktop configuration (shared by all desktop environments)
-_:
-{
+_: {
   # NixOS: common desktop system config
   flake.nixosModules.desktop =
     {
@@ -160,6 +159,7 @@ _:
   # Home-manager: common desktop packages
   flake.homeModules.desktop =
     {
+      pkgs,
       pkgs-unstable,
       lib,
       config,
@@ -179,32 +179,87 @@ _:
       config = lib.mkIf cfg.enable {
         fonts.fontconfig.enable = true;
 
-        home.packages = with pkgs-unstable; [
-          # fonts
-          nerd-fonts.hack
-          nerd-fonts.fira-mono
-          nerd-fonts.fira-code
-          noto-fonts-cjk-sans
-          noto-fonts-cjk-serif
+        # Common XDG MIME type associations
+        xdg.mimeApps = {
+          enable = true;
+          defaultApplications = {
+            # Text files
+            "text/plain" = [ "nvim.desktop" ];
+            "text/markdown" = [ "nvim.desktop" ];
 
-          # desktop apps
-          thunderbird
-          obs-studio
-          chromium
+            # Images
+            "image/png" = [ "org.kde.gwenview.desktop" ];
+            "image/jpeg" = [ "org.kde.gwenview.desktop" ];
+            "image/jpg" = [ "org.kde.gwenview.desktop" ];
+            "image/gif" = [ "org.kde.gwenview.desktop" ];
+            "image/webp" = [ "org.kde.gwenview.desktop" ];
+            "image/svg+xml" = [ "org.kde.gwenview.desktop" ];
+            "image/bmp" = [ "org.kde.gwenview.desktop" ];
 
-          # utils
-          remmina
-          haruna
+            # Videos
+            "video/mp4" = [ "haruna.desktop" ];
+            "video/x-matroska" = [ "haruna.desktop" ];
+            "video/webm" = [ "haruna.desktop" ];
+            "video/avi" = [ "haruna.desktop" ];
+            "video/x-msvideo" = [ "haruna.desktop" ];
+            "video/quicktime" = [ "haruna.desktop" ];
 
-          # games
-          prismlauncher
-          moonlight-qt
-          vscode
+            # Audio
+            "audio/mpeg" = [ "haruna.desktop" ];
+            "audio/mp3" = [ "haruna.desktop" ];
+            "audio/flac" = [ "haruna.desktop" ];
+            "audio/x-flac" = [ "haruna.desktop" ];
+            "audio/ogg" = [ "haruna.desktop" ];
+            "audio/x-wav" = [ "haruna.desktop" ];
 
-          zotero
-          zotero-translation-server
-          keepassxc
-        ];
+            # Archives
+            "application/zip" = [ "org.kde.ark.desktop" ];
+            "application/x-tar" = [ "org.kde.ark.desktop" ];
+            "application/x-gzip" = [ "org.kde.ark.desktop" ];
+            "application/x-bzip2" = [ "org.kde.ark.desktop" ];
+            "application/x-7z-compressed" = [ "org.kde.ark.desktop" ];
+            "application/x-rar" = [ "org.kde.ark.desktop" ];
+            "application/x-xz" = [ "org.kde.ark.desktop" ];
+
+            # Directories (file manager)
+            "inode/directory" = [ "org.kde.dolphin.desktop" ];
+          };
+        };
+
+        home.packages =
+          (with pkgs-unstable; [
+            # fonts
+            nerd-fonts.hack
+            nerd-fonts.fira-mono
+            nerd-fonts.fira-code
+            noto-fonts-cjk-sans
+            noto-fonts-cjk-serif
+
+            # desktop apps
+            thunderbird
+            obs-studio
+            chromium
+
+            # utils
+            remmina
+            haruna
+
+            # games
+            prismlauncher
+            moonlight-qt
+            vscode
+
+            zotero
+            zotero-translation-server
+            keepassxc
+          ])
+          ++ (with pkgs.kdePackages; [
+            # Common desktop utilities (for MIME apps) - using stable
+            dolphin
+            ark
+            okular
+            gwenview
+          ]);
       };
     };
 }

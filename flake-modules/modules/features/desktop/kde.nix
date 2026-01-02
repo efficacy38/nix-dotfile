@@ -1,6 +1,5 @@
 # KDE Plasma desktop environment configuration
-_:
-{
+_: {
   # NixOS: KDE system config
   flake.nixosModules.desktop-kde =
     {
@@ -47,7 +46,6 @@ _:
           kcalc
           kdeconnect-kde
           markdownpart
-          okular
           yakuake
         ];
       };
