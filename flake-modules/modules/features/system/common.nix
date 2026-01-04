@@ -16,6 +16,9 @@ _: {
       };
 
       config = lib.mkIf cfg.enable {
+        # Enable observability tools by default
+        my.system.observability.enable = lib.mkDefault true;
+
         # enable nix flake
         nix = {
           settings = {
@@ -127,7 +130,6 @@ _: {
             # management utils
             curl
             git
-            htop
             neovim
             vim
             wget
@@ -139,7 +141,6 @@ _: {
             # system utils
             man-db
             nftables
-            tcpdump
             wireguard-tools
 
             # sops
