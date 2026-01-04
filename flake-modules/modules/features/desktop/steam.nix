@@ -24,6 +24,7 @@ _: {
 
         hardware.graphics.extraPackages = [ pkgs.libva-vdpau-driver ];
         hardware.steam-hardware.enable = true;
+        hardware.xpadneo.enable = true;
 
         environment.sessionVariables = lib.mkIf cfg.steamHidpi {
           STEAM_FORCE_DESKTOPUI_SCALING = "2";
