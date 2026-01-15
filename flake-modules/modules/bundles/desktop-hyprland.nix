@@ -21,6 +21,7 @@ _: {
             zram.enable = false;
             hyprland.enable = true;
             kde.enable = false;
+            xdg.enable = true;
           };
         };
       };

@@ -13,10 +13,11 @@ ERR_USER_INT=2
 
 ErrorHandling() {
     if [ $? -ne 0 ]; then
-        error "exit with error, stop the VPN"
+        error "Script exiting with error"
         vpn_string="$(get_vpn_string)"
-        # ask whether disconnect VPN
         if [ "$vpn_string" != "" ]; then
+            warn "The following VPNs are active: $vpn_string"
+            warn "Stopping all VPNs for safety..."
             stop_all_vpn -s || true
             exit "$ERR_GENERIC"
         fi
@@ -44,9 +45,8 @@ TIMEOUT=30       # 3s
 fortivpn_invoke() {
     local operation="$1"
     local vpn_type="$2"
-    local vpn_string vpn_interface
-    vpn_string=$(get_vpn_string)
-    vpn_interface=$(get_vpn_interface "$vpn_string")
+    local vpn_interface
+    vpn_interface=$(get_vpn_interface "$vpn_type")
 
     if [ "$operation" != "start" ] && [ "$operation" != "stop" ]; then
         error "Invalid operation: $operation, exiting..." && exit "$ERR_GENERIC"
@@ -55,7 +55,7 @@ fortivpn_invoke() {
     if [ "$operation" == "stop" ]; then
         # clear dns setting for systemd-resolved bug(don't clear resolv.conf
         # setting)
-        sudo resolvectl revert "$vpn_interface"
+        sudo resolvectl revert "$vpn_interface" 2>/dev/null || true
     fi
 
     if sudo systemctl "$operation" "openfortivpn@cscc_$vpn_type.service"; then
@@ -72,11 +72,13 @@ fortivpn_invoke() {
     fi
 }
 
-# return current running VPN
-# $TEST_MODE or $PRODUCTION_MODE
+# return current running VPN(s)
+# Returns space-separated list: "$TEST_MODE", "$PRODUCTION_MODE", or "test prod"
 get_vpn_string() {
-    get_vpn_status -s "$TEST_MODE" && echo "$TEST_MODE"
-    get_vpn_status -s "$PRODUCTION_MODE" && echo "$PRODUCTION_MODE"
+    local vpn_list=""
+    get_vpn_status -s "$TEST_MODE" && vpn_list="$TEST_MODE"
+    get_vpn_status -s "$PRODUCTION_MODE" && vpn_list="${vpn_list:+$vpn_list }$PRODUCTION_MODE"
+    echo "$vpn_list"
     return 0
 }
 
@@ -86,11 +88,15 @@ prompt_help() {
     echo "Usage: cscc_work [OPTION]..."
     echo "Connect to cscc VPN"
     echo ""
-    echo "  -h, --help          display this help and exit"
-    echo "  -s, --status        display current VPN status"
-    echo "  -t, --test          connect to test VPN"
-    echo "  -p, --production    connect to production VPN"
-    echo "  -d, --toggle        toggle between acvite and inactive VPN"
+    echo "  -h, --help               display this help and exit"
+    echo "  -s, --status             display current VPN status"
+    echo "  -t, --test               connect to test VPN"
+    echo "  -p, --production         connect to production VPN"
+    echo "  -b, --both               connect to both test and production VPNs"
+    echo "  -d, --toggle [test|prod] toggle VPN connection (defaults to test)"
+    echo "      --stop <test|prod>   disconnect specified VPN"
+    echo "  -x, --terminate          disconnect all VPNs"
+    echo "  -r, --restart            restart VPN(s)"
     echo ""
 }
 
@@ -174,6 +180,14 @@ status() {
     printf "%s VPN status: %s\n" "$TEST_MODE" "$(get_vpn_status "$TEST_MODE")"
     printf "%s VPN status: %s\n" "$PRODUCTION_MODE" \
         "$(get_vpn_status "$PRODUCTION_MODE")"
+
+    # Summary
+    local vpn_string="$(get_vpn_string)"
+    if [[ -z "$vpn_string" ]]; then
+        echo "No VPNs currently active"
+    else
+        echo "Active VPNs: $vpn_string"
+    fi
 }
 
 stop_all_vpn() {
@@ -183,11 +197,11 @@ stop_all_vpn() {
         case $short_opt in
         s)
             # make other command silent
-            silent_enabled="true"
+            silent_enabled="-s"
             ;;
         *)
             echo "Usage: stop_all_vpn [-s]"
-            echo "Stop CSCC VPN"
+            echo "Stop all CSCC VPNs"
             echo ""
             echo "  -s, --silent          silent mode"
             exit "$ERR_GENERIC"
@@ -198,24 +212,38 @@ stop_all_vpn() {
     vpn_string="$(get_vpn_string)"
     if [[ -z "$vpn_string" ]]; then
         debug "No VPN enabled, just return!!"
-        return
+        return 0
     fi
 
-    # ask whether disconnect VPN
-    if [[ -z "$silent_enabled" ]]; then
-        warn "$vpn_string VPN is running, check whether user want to stop it..."
-        printf "%s VPN(%s) service is running, do you want to disconnect? (Y/n) - " \
-            "$vpn_string" "$(get_vpn_ip "$vpn_string")"
+    # Stop each active VPN
+    for vpn_type in $vpn_string; do
+        stop_vpn "$vpn_type" "$silent_enabled" || true
+    done
+}
+
+stop_vpn() {
+    local vpn_type="$1"
+    local silent_mode="${2:-}"
+
+    if ! get_vpn_status -s "$vpn_type"; then
+        debug "$vpn_type VPN is not running, nothing to stop"
+        return 0
+    fi
+
+    # Ask user confirmation unless in silent mode
+    if [[ -z "$silent_mode" ]]; then
+        warn "$vpn_type VPN is running, preparing to stop it..."
+        printf "%s VPN(%s) is running, do you want to disconnect? (Y/n) - " \
+            "$vpn_type" "$(get_vpn_ip "$vpn_type")"
         read -r answer
         if [ "$answer" != "${answer#[Nn]}" ]; then
-            info "answer is \`$answer\` $vpn_string VPN service would not stopped, exiting..."
-            return
+            info "User chose not to stop $vpn_type VPN, exiting..."
+            return 1
         fi
     fi
 
-    # stop vpn service
-    info "stopping $vpn_string VPN..."
-    fortivpn_invoke stop "$vpn_string" || true
+    info "Stopping $vpn_type VPN..."
+    fortivpn_invoke stop "$vpn_type" || true
 }
 
 start_vpn() {
@@ -242,23 +270,24 @@ start_vpn() {
     info "check current used VPN type(if VPN is still running)..."
     vpn_string="$(get_vpn_string)"
 
-    if [ "$vpn_string" = "$target_vpn_type" ]; then
-        # if not healthy
-        if ! connectivity_check "$vpn_string"; then
-            warn "$vpn_string VPN is not healthy, remove unhealthy link"
-            stop_all_vpn -s
+    # Check if target VPN is already running
+    if echo "$vpn_string" | grep -q "$target_vpn_type"; then
+        # Target VPN is running, check if healthy
+        if ! connectivity_check "$target_vpn_type"; then
+            warn "$target_vpn_type VPN is not healthy, removing unhealthy link"
+            stop_vpn "$target_vpn_type" -s
         else
-            info "$vpn_string VPN service is running, exiting..." && exit 0
+            info "$target_vpn_type VPN service is already running and healthy, skipping..."
+            return 0
         fi
-    elif ! stop_all_vpn -s; then
-        error "$vpn_string VPN stop failed, exiting..." && exit "$ERR_GENERIC"
     fi
+    # At this point, target VPN is not running - other VPNs may still be running
 
     if [[ -z $ignore_enabled ]]; then
         read -r -p "$target_vpn_type VPN service is not running, do you want to start it? (Y/n) - " answer
         if [ "$answer" != "${answer#[Nn]}" ]; then
-            info "answer is \`$answer\` VPN service would not not started, exiting..."
-            exit 0
+            info "answer is \`$answer\` VPN service would not not started, skipping..."
+            return 0
         else
             info "answer is \`$answer\` VPN service would start"
         fi
@@ -295,11 +324,15 @@ start_vpn() {
         done
     fi
 
-    info "set search domain([cc].cs.nctu.edu.tw) for $1 vpn"
+    info "set search domain for $target_vpn_type vpn"
     # INFO: for security reason, only set the dns as routing-domain is good
     # check https://systemd.io/RESOLVED-VPNS/ for more information
-    sudo resolvectl domain "$target_interface" '~test.cc.cs.nctu.edu.tw' \
-        '~cc.cs.nctu.edu.tw' '~cs.nctu.edu.tw' '~test.cs.nctu.edu.tw'
+    if [ "$target_vpn_type" == "$PRODUCTION_MODE" ]; then
+        sudo resolvectl domain "$target_interface" '~cc.cs.nctu.edu.tw' '~cs.nctu.edu.tw'
+    else
+        sudo resolvectl domain "$target_interface" '~test.cc.cs.nctu.edu.tw' \
+            '~cc.cs.nctu.edu.tw' '~cs.nctu.edu.tw' '~test.cs.nctu.edu.tw'
+    fi
     sudo resolvectl default-route "$target_interface" false
 
     # use original route to 140.113.0.0/16(for latency)
@@ -308,18 +341,32 @@ start_vpn() {
 }
 
 toggle_vpn() {
-    # check VPN service is running, if not ask to start it
-    if get_vpn_status -s "$TEST_MODE" || get_vpn_status -s "$PRODUCTION_MODE"; then
-        stop_all_vpn
+    local target_vpn="${1:-$TEST_MODE}"
+
+    # Toggle specific VPN
+    if get_vpn_status -s "$target_vpn"; then
+        stop_vpn "$target_vpn"
     else
-        start_vpn "$1"
+        start_vpn -i "$target_vpn"
     fi
 }
 
 restart_vpn() {
-    target_vpn_type=$(get_vpn_string)
-    stop_all_vpn -s
-    start_vpn -i "$target_vpn_type"
+    local target_vpn="${1:-}"
+
+    if [[ -z "$target_vpn" ]]; then
+        target_vpn="$(get_vpn_string)"
+        if [[ -z "$target_vpn" ]]; then
+            error "No VPN is running to restart" && exit "$ERR_GENERIC"
+        fi
+    fi
+
+    # Restart each specified VPN
+    for vpn_type in $target_vpn; do
+        info "Restarting $vpn_type VPN..."
+        stop_vpn "$vpn_type" -s
+        start_vpn -i "$vpn_type"
+    done
 }
 
 connectivity_check() {
@@ -350,6 +397,24 @@ case "$operation" in
     info "start production vpn..."
     start_vpn -i "$PRODUCTION_MODE"
     ;;
+-b | --both)
+    info "start both test and production VPNs..."
+    start_vpn -i "$TEST_MODE"
+    start_vpn -i "$PRODUCTION_MODE"
+    ;;
+--stop)
+    target="${2:-}"
+    if [[ "$target" == "test" ]]; then
+        info "stop test VPN only..."
+        stop_vpn "$TEST_MODE"
+    elif [[ "$target" == "prod" ]] || [[ "$target" == "production" ]]; then
+        info "stop production VPN only..."
+        stop_vpn "$PRODUCTION_MODE"
+    else
+        error "Usage: cscc_work --stop [test|prod]"
+        exit "$ERR_GENERIC"
+    fi
+    ;;
 -s | --status)
     info "print VPN status..."
     status | boxes -p "h2v1"
@@ -361,7 +426,15 @@ case "$operation" in
 
 -d | --toggle)
     info "toggle VPN..."
-    toggle_vpn "$TEST_MODE"
+    # Support optional parameter: test or prod (defaults to test)
+    target="${2:-$TEST_MODE}"
+    if [[ "$target" == "test" ]]; then
+        toggle_vpn "$TEST_MODE"
+    elif [[ "$target" == "prod" ]] || [[ "$target" == "production" ]]; then
+        toggle_vpn "$PRODUCTION_MODE"
+    else
+        toggle_vpn "$TEST_MODE"
+    fi
     ;;
 -x | --terminate)
     info "terminate VPN..."

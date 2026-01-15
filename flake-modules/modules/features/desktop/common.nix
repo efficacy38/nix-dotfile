@@ -188,13 +188,13 @@ _: {
             "text/markdown" = [ "nvim.desktop" ];
 
             # Images
-            "image/png" = [ "org.kde.gwenview.desktop" ];
-            "image/jpeg" = [ "org.kde.gwenview.desktop" ];
-            "image/jpg" = [ "org.kde.gwenview.desktop" ];
-            "image/gif" = [ "org.kde.gwenview.desktop" ];
-            "image/webp" = [ "org.kde.gwenview.desktop" ];
-            "image/svg+xml" = [ "org.kde.gwenview.desktop" ];
-            "image/bmp" = [ "org.kde.gwenview.desktop" ];
+            "image/png" = [ "org.gnome.eog.desktop" ];
+            "image/jpeg" = [ "org.gnome.eog.desktop" ];
+            "image/jpg" = [ "org.gnome.eog.desktop" ];
+            "image/gif" = [ "org.gnome.eog.desktop" ];
+            "image/webp" = [ "org.gnome.eog.desktop" ];
+            "image/svg+xml" = [ "org.gnome.eog.desktop" ];
+            "image/bmp" = [ "org.gnome.eog.desktop" ];
 
             # Videos
             "video/mp4" = [ "haruna.desktop" ];
@@ -252,13 +252,15 @@ _: {
             zotero
             zotero-translation-server
             keepassxc
+            eog
           ])
           ++ (with pkgs.kdePackages; [
             # Common desktop utilities (for MIME apps) - using stable
             dolphin
+            # needed for dolphin to open some applications is terminal based
+            konsole
             ark
             okular
-            gwenview
           ]);
       };
     };

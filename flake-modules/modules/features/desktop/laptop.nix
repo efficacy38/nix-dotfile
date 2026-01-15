@@ -34,7 +34,7 @@ _: {
           order = config.security.pam.services.sudo.rules.auth.unix.order - 10;
           control = "sufficient";
           modulePath = "${pkgs.fprintd}/lib/security/pam_fprintd.so";
-          args = [ "timeout=2" ];
+          args = [ "timeout=5" ];
         };
       };
     };

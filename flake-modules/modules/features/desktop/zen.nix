@@ -35,13 +35,13 @@ _: {
     in
     {
       config = lib.mkIf (cfg.enable && cfg.zen.enable) {
-        xdg.mimeApps = lib.mkForce {
-          enable = true;
+        xdg.mimeApps = {
+          enable = lib.mkForce true;
           defaultApplications = {
-            "x-scheme-handler/http" = [ "zen.desktop" ];
-            "x-scheme-handler/https" = [ "zen.desktop" ];
-            "text/html" = [ "zen.desktop" ];
-            "application/pdf" = [ "zen.desktop" ];
+            "x-scheme-handler/http" = lib.mkForce [ "zen.desktop" ];
+            "x-scheme-handler/https" = lib.mkForce [ "zen.desktop" ];
+            "text/html" = lib.mkForce [ "zen.desktop" ];
+            "application/pdf" = lib.mkForce [ "zen.desktop" ];
           };
         };
 
