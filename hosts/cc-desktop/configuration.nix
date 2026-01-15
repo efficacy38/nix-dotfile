@@ -17,12 +17,25 @@
 
   my = {
     bundles = {
-      homelab.enable = true;
+      common.enable = true;
       desktop-hyprland.enable = true;
+      steam.enable = true;
     };
+    desktop = {
+      fprintd.enable = true;
+      batteryHealth.enable = true;
+    };
+    main-user.userConfig = ./home.nix;
     devpack = {
+      enable = true;
+      csccUtil.enable = true;
       tailscale.enable = true;
-      tailscaleAsRouter = true;
+    };
+    system = {
+      impermanence.enable = true;
+      systemdInitrd.enable = true;
+      # systemdInitrd.debug = true;
+      backup.enable = true;
     };
   };
 
