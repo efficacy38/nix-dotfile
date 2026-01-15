@@ -54,7 +54,7 @@
   # still possible to use this option, but it's recommended to use it in conjunction
   # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
   # networking.useDHCP = lib.mkDefault true;
-  # Note: enp5s0 DHCP explicitly configured in configuration.nix with NetworkManager
+  # Note: enp5s0 has static IP 10.4.1.136/24 configured in configuration.nix
 
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 

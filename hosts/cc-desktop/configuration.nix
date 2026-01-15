@@ -43,9 +43,19 @@
   # Enable networking related
   networking.hostName = "cc-desktop";
 
-  # NetworkManager is enabled by desktop bundle and will manage all interfaces with DHCP by default
-  # Explicitly configure enp5s0 to use DHCP
-  networking.interfaces.enp5s0.useDHCP = true;
+  # NetworkManager is enabled by desktop bundle
+  # Configure static IP for enp5s0
+  networking.interfaces.enp5s0 = {
+    useDHCP = false;
+    ipv4.addresses = [
+      {
+        address = "10.4.1.136";
+        prefixLength = 24;
+      }
+    ];
+  };
+  networking.defaultGateway = "10.4.1.254";
+  networking.nameservers = [ "1.1.1.1" "8.8.8.8" ];
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
