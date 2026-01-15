@@ -11,7 +11,7 @@ _: {
       cfg = config.my.desktop;
     in
     {
-      config = lib.mkIf cfg.enable {
+      config = lib.mkIf (cfg.enable && config.my.system.impermanence.enable) {
         # Persist Zen browser profile
         environment.persistence."/persistent/system".users."efficacy38" = {
           directories = [

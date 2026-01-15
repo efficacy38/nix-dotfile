@@ -109,7 +109,9 @@ _: {
             };
 
             services.solaar.enable = true;
+          };
 
+          persistence-config = {
             # Persist user data directories and desktop applications
             environment.persistence."/persistent/system".users."efficacy38" = {
               directories = [
@@ -151,6 +153,7 @@ _: {
         in
         lib.mkMerge [
           common-config
+          (lib.mkIf config.my.system.impermanence.enable persistence-config)
           (lib.mkIf cfg.zram.enable zram-config)
         ]
       );

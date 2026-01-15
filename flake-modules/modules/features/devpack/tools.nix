@@ -11,7 +11,7 @@ _: {
       cfg = config.my.devpack;
     in
     {
-      config = lib.mkIf cfg.enable {
+      config = lib.mkIf (cfg.enable && config.my.system.impermanence.enable) {
         # Persist Kubernetes tools data
         environment.persistence."/persistent/system".users."efficacy38" = {
           directories = [
@@ -36,7 +36,7 @@ _: {
       cfg = config.my.devpack;
     in
     {
-      config = lib.mkIf cfg.enable {
+      config = lib.mkIf (cfg.enable && config.my.system.impermanence.enable) {
         # Persist container data
         environment.persistence."/persistent/system".users."efficacy38" = {
           directories = [
@@ -58,7 +58,7 @@ _: {
       cfg = config.my.devpack;
     in
     {
-      config = lib.mkIf cfg.enable {
+      config = lib.mkIf (cfg.enable && config.my.system.impermanence.enable) {
         # Persist AI/LLM tools and development utilities settings and data
         environment.persistence."/persistent/system".users."efficacy38" = {
           directories = [

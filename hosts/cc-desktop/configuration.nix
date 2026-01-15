@@ -7,7 +7,6 @@
 
   boot = {
     supportedFilesystems = [ "zfs" ];
-    kernelModules = [ "kvm-intel" ];
     tmp.useTmpfs = true;
     extraModprobeConfig = ''
       # only allow 50% arc cache is enabled
@@ -32,16 +31,21 @@
       tailscale.enable = true;
     };
     system = {
-      impermanence.enable = true;
+      impermanence.enable = false;
+      # backup.enable = true;
       systemdInitrd.enable = true;
       # systemdInitrd.debug = true;
-      backup.enable = true;
     };
   };
 
   services.nfs.server.enable = true;
+
   # Enable networking related
   networking.hostName = "cc-desktop";
+
+  # NetworkManager is enabled by desktop bundle and will manage all interfaces with DHCP by default
+  # Explicitly configure enp5s0 to use DHCP
+  networking.interfaces.enp5s0.useDHCP = true;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget

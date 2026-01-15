@@ -11,7 +11,7 @@ _: {
       cfg = config.my.devpack;
     in
     {
-      config = lib.mkIf cfg.enable {
+      config = lib.mkIf (cfg.enable && config.my.system.impermanence.enable) {
         # Persist Neovim and Node.js package manager data
         environment.persistence."/persistent/system".users."efficacy38" = {
           directories = [
