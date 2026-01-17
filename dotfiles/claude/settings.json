@@ -1,6 +1,11 @@
 {
-    "attribution": {
-        "commit": "",
-        "pr": ""
-    }
+  "attribution": {
+    "commit": "",
+    "pr": ""
+  },
+  "enabledPlugins": {
+    "code-simplifier@claude-plugins-official": true,
+    "commit-commands@claude-plugins-official": true,
+    "superpowers@claude-plugins-official": true
+  }
 }

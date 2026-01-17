@@ -16,7 +16,6 @@ _: {
         home.packages = with pkgs; [
           fzf
           fzf-zsh
-          ghostty
           zsh-defer
         ];
 

@@ -7,4 +7,3 @@ shell-integration-features = ssh-env,ssh-terminfo,sudo
 auto-update = off
 clipboard-read = ask
 clipboard-write = allow
-keybind = shift+enter=text:\x1b\r

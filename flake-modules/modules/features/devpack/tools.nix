@@ -294,6 +294,9 @@ _: {
               ".claude/settings.json" = {
                 source = config.lib.file.mkOutOfStoreSymlink "/etc/nixos/nix-dotfile/dotfiles/claude/settings.json";
               };
+              ".claude/CLAUDE.md" = {
+                source = config.lib.file.mkOutOfStoreSymlink "/etc/nixos/nix-dotfile/dotfiles/claude/CLAUDE.md";
+              };
             };
           };
       };
@@ -342,6 +345,7 @@ _: {
               copilot-cli
               gemini-cli
               openspec
+              opencode
             ]);
 
           programs.direnv = {

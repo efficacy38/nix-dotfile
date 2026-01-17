@@ -49,6 +49,7 @@
     hostName = "stella"; # Define your hostname.
     extraHosts = ''
       10.2.2.99   minio-backup.test.cc.cs.nctu.edu.tw
+      127.0.0.1   ipa.cs.nctu.edu.tw keycloak.cs.nctu.edu.tw
     '';
     firewall.enable = lib.mkForce false;
   };

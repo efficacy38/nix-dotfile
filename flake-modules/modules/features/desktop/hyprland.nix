@@ -183,6 +183,13 @@ in
             pkgs.kdePackages.breeze-icons
             pkgs.kdePackages.qtsvg
             pkgs.gawk
+
+            # GStreamer plugins for Ghostty media playback
+            pkgs.gst_all_1.gstreamer
+            pkgs.gst_all_1.gst-plugins-base
+            pkgs.gst_all_1.gst-plugins-good
+            pkgs.gst_all_1.gst-plugins-bad
+            pkgs.gst_all_1.gst-libav
           ];
         }
         // lib.optionalAttrs (builtins.hasAttr "stylix" options) {
