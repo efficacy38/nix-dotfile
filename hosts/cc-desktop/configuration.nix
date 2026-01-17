@@ -24,7 +24,15 @@
       fprintd.enable = true;
       batteryHealth.enable = true;
     };
-    main-user.userConfig = ./home.nix;
+    users = {
+      efficacy38 = {
+        type = "desktop-user";
+        extraHomeConfig = import ./home.nix;
+      };
+      gaming = {
+        type = "minimal";
+      };
+    };
     devpack = {
       enable = true;
       csccUtil.enable = true;
