@@ -16,9 +16,9 @@ _: {
       config = lib.mkIf cfg.enable {
         my = {
           common.enable = true;
-          main-user = {
-            enable = true;
-            userName = "efficacy38";
+          users.efficacy38 = {
+            type = lib.mkDefault "minimal";
+            isAdmin = lib.mkDefault true;
           };
         };
       };

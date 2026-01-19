@@ -30,10 +30,10 @@
 
   my = {
     common-server.enable = true;
-    main-user = {
-      enable = true;
-      userName = "efficacy38";
-      userConfig = ./home.nix;
+    users.efficacy38 = {
+      type = "developing";
+      isAdmin = true;
+      extraHomeConfig = import ./home.nix;
     };
     devpack = {
       enable = true;

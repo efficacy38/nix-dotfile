@@ -13,7 +13,10 @@
 
   my = {
     bundles.common.enable = true;
-    main-user.userConfig = ./home.nix;
+    users.efficacy38 = {
+      type = "minimal";
+      extraHomeConfig = import ./home.nix;
+    };
     # system.impermanence.enable = true;
     system.systemdInitrd = {
       enable = true;
