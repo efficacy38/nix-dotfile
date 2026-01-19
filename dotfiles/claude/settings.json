@@ -7,5 +7,18 @@
     "code-simplifier@claude-plugins-official": true,
     "commit-commands@claude-plugins-official": true,
     "superpowers@claude-plugins-official": true
+  },
+  "hooks": {
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash -c 'INPUT=$(cat); REASON=$(echo \"$INPUT\" | jq -r \".reason // \\\"unknown\\\"\"); CWD=$(echo \"$INPUT\" | jq -r \".cwd // \\\"unknown\\\"\"); curl -s -X POST \"https://ntfy.csjhuang.net/claude-session\" -H \"Title: Claude Code Session Ended\" -H \"Tags: robot,stop\" -d \"Reason: $REASON\nDirectory: $CWD\" || true'",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
   }
 }
