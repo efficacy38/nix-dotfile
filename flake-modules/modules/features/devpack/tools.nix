@@ -313,6 +313,20 @@ _: {
       }:
       let
         cfg = config.my.devpack;
+        claude-notify = pkgs.writeShellScriptBin "claude-notify" ''
+          # Send notifications to both desktop and ntfy
+          TITLE="''${1:-Notification}"
+          MESSAGE="''${2:-}"
+
+          # Desktop notification
+          ${pkgs.libnotify}/bin/notify-send "$TITLE" "$MESSAGE" || true
+
+          # Remote notification via ntfy
+          ${pkgs.curl}/bin/curl -s -X POST "https://ntfy.csjhuang.net/claude-session" \
+              -H "Title: $TITLE" \
+              -H "Tags: robot" \
+              -d "$MESSAGE" || true
+        '';
       in
       {
         config = lib.mkIf (cfg.enable && cfg.utils.enable) {
@@ -337,6 +351,9 @@ _: {
               statix
               wl-clipboard
               wget
+              bubblewrap
+              socat
+              claude-notify
             ]
             ++ (with inputs.llm-agents.packages."${pkgs.system}"; [
               antigravity

@@ -1,7 +1,7 @@
 ---
 name: nix-dev-shell
 description: Automatically detects Nix flakes and runs commands in a dev shell environment. Use when running build, test, or development commands in projects with flake.nix. Ensures commands run with proper Nix dependencies loaded.
-allowed-tools: Read, Grep, Glob, Bash
+allowed-tools: Read, Grep, Glob
 ---
 
 # Nix Dev Shell Auto-Activation

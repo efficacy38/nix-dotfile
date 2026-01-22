@@ -9,16 +9,31 @@
     "superpowers@claude-plugins-official": true
   },
   "hooks": {
-    "SessionEnd": [
+    "Notification": [
       {
+        "matcher": "",
         "hooks": [
           {
             "type": "command",
-            "command": "bash -c 'INPUT=$(cat); REASON=$(echo \"$INPUT\" | jq -r \".reason // \\\"unknown\\\"\"); CWD=$(echo \"$INPUT\" | jq -r \".cwd // \\\"unknown\\\"\"); curl -s -X POST \"https://ntfy.csjhuang.net/claude-session\" -H \"Title: Claude Code Session Ended\" -H \"Tags: robot,stop\" -d \"Reason: $REASON\nDirectory: $CWD\" || true'",
-            "timeout": 10
+            "command": "claude-notify 'Claude Code' 'Awaiting your input'"
           }
         ]
       }
+    ]
+  },
+  "permissions": {
+    "allow": [
+      "Bash(git:*)",
+      "Bash(docker compose:*)",
+      "Bash(mkdir:*)",
+      "Bash(uv:*)",
+      "Bash(nix develop:*)",
+      "Bash(ls:*)",
+      "Bash(cat:*)"
+    ],
+    "deny": [
+      "Bash(git push:*)",
+      "Bash(rm -rf:*)"
     ]
   }
 }
