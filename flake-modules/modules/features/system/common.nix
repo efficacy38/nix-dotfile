@@ -90,6 +90,7 @@ _: {
               "140.113.0.0/16"
             ];
           };
+          envfs.enable = true;
         };
 
         # Set your time zone.
@@ -126,6 +127,7 @@ _: {
           # add completion for zsh, links completion to $HOME/.nix-profile/share/zsh
           pathsToLink = [ "/share/zsh" ];
           variables.EDITOR = "vim";
+          variables.ENVFS_RESOLVE_ALWAYS = 1;
           systemPackages = with pkgs; [
             # management utils
             curl

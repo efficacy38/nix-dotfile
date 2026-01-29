@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+# Wrapper script for traffic-generator that handles .env loading
+# Usage: send-mail [traffic-generator options...]
+
+set -e
+
+PROJECT_DIR="/home/efficacy38/Projects/Personal/mail-analyzer/mail-tools/data-generator"
+
+cd "$PROJECT_DIR"
+
+# Load .env if it exists
+if [[ -f .env ]]; then
+    set -a
+    source .env
+    set +a
+fi
+
+exec uvx --from . python -m traffic_generator.cli "$@"

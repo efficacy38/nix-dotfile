@@ -25,6 +25,8 @@ let
         { programs.nix-index-database.comma.enable = true; }
         # Overlays
         ../overlays/personal-scripts/personal-scripts.nix
+        ../overlays/flowsurface/flowsurface.nix
+        ../overlays/notebooklm-py/notebooklm-py.nix
       ];
     };
 
