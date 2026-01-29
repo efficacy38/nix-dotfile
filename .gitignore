@@ -1,2 +1,18 @@
 result
 result-*
+
+# IDE / editor
+.idea/
+.vscode/
+
+# Shell dotfiles (shouldn't be in repo)
+.bash_profile
+.bashrc
+.profile
+.zprofile
+.zshrc
+
+# Tool configs
+.gitconfig
+.mcp.json
+.ripgreprc

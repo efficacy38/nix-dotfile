@@ -26,6 +26,7 @@ let
         # Overlays
         ../overlays/personal-scripts/personal-scripts.nix
         ../overlays/flowsurface/flowsurface.nix
+        ../overlays/notebooklm-py/notebooklm-py.nix
       ];
     };
 
