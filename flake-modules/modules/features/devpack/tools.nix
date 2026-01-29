@@ -313,6 +313,8 @@ _: {
       }:
       let
         cfg = config.my.devpack;
+        # Playwright with bundled chromium browser
+        playwright-browsers = pkgs.playwright-driver.browsers;
         claude-notify = pkgs.writeShellScriptBin "claude-notify" ''
           # Send notifications to both desktop and ntfy
           TITLE="''${1:-Notification}"
@@ -353,6 +355,7 @@ _: {
               wget
               bubblewrap
               socat
+              uv
               claude-notify
             ]
             ++ (with inputs.llm-agents.packages."${pkgs.system}"; [
@@ -363,7 +366,18 @@ _: {
               gemini-cli
               openspec
               opencode
-            ]);
+              pkgs.notebooklm-py
+            ])
+            ++ [
+              # Playwright with chromium browser
+              pkgs.playwright-driver
+              playwright-browsers
+            ];
+
+          # Set playwright browsers path for notebooklm-py and other tools
+          home.sessionVariables = {
+            PLAYWRIGHT_BROWSERS_PATH = "${playwright-browsers}";
+          };
 
           programs.direnv = {
             enable = true;

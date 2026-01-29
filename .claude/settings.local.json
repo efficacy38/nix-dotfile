@@ -1,0 +1,41 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(nix fmt:*)",
+      "Bash(nh os build:*)",
+      "Bash(nix flake check:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(cat:*)",
+      "Bash(bash -n:*)",
+      "Bash(bash:*)",
+      "Bash(resolvectl status:*)",
+      "Bash(xargs:*)",
+      "Skill(commit)",
+      "Skill(superpowers:brainstorming)",
+      "Bash(mkdir:*)",
+      "Skill(superpowers:writing-plans)",
+      "Skill(superpowers:subagent-driven-development)",
+      "Bash(git stash:*)",
+      "Bash(git show:*)",
+      "Bash(find:*)",
+      "Skill(superpowers:finishing-a-development-branch)",
+      "Bash(git worktree:*)",
+      "Bash(git reset:*)",
+      "WebFetch(domain:github.com)",
+      "Bash(curl:*)",
+      "Bash(tar:*)",
+      "Bash(nix build:*)",
+      "Bash(nix eval:*)",
+      "Bash(tree:*)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "Bash(nix-prefetch-git:*)",
+      "Bash(nix search:*)",
+      "WebSearch"
+    ]
+  },
+  "sandbox": {
+    "enabled": true,
+    "autoAllowBashIfSandboxed": false
+  }
+}

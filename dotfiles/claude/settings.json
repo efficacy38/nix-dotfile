@@ -3,24 +3,6 @@
     "commit": "",
     "pr": ""
   },
-  "enabledPlugins": {
-    "code-simplifier@claude-plugins-official": true,
-    "commit-commands@claude-plugins-official": true,
-    "superpowers@claude-plugins-official": true
-  },
-  "hooks": {
-    "Notification": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "claude-notify 'Claude Code' 'Awaiting your input'"
-          }
-        ]
-      }
-    ]
-  },
   "permissions": {
     "allow": [
       "Bash(git:*)",
@@ -35,5 +17,26 @@
       "Bash(git push:*)",
       "Bash(rm -rf:*)"
     ]
+  },
+  "hooks": {
+    "Notification": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "claude-notify 'Claude Code' 'Awaiting your input'"
+          }
+        ]
+      }
+    ]
+  },
+  "enabledPlugins": {
+    "code-simplifier@claude-plugins-official": true,
+    "commit-commands@claude-plugins-official": true,
+    "superpowers@claude-plugins-official": true,
+    "frontend-design@claude-plugins-official": true,
+    "typescript-lsp@claude-plugins-official": true,
+    "ralph-loop@claude-plugins-official": true
   }
 }
