@@ -353,6 +353,7 @@ _: {
               wget
               bubblewrap
               socat
+              uv
               claude-notify
             ]
             ++ (with inputs.llm-agents.packages."${pkgs.system}"; [
