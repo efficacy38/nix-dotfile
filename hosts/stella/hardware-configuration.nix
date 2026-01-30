@@ -62,6 +62,7 @@
         "mode=744"
         "uid=1000"
       ];
+      neededForBoot = true;
     };
   };
 

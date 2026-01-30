@@ -126,7 +126,6 @@ _: {
             {
               imports = [
                 inputs.self.outputs.homeModules.default
-                inputs.impermanence.homeManagerModules.impermanence
               ];
               home.stateVersion = "24.11";
               home.username = name;

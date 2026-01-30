@@ -38,12 +38,20 @@ _: {
       config =
         let
           common-impermanence = {
+            # Mount /etc/ssh early in initrd for sops-nix decryption
+            fileSystems."/etc/ssh" = {
+              device = "/persistent/system/etc/ssh";
+              fsType = "none";
+              options = [ "bind" ];
+              neededForBoot = true;
+            };
+
             environment.persistence."/persistent/system" = {
               enable = true;
               hideMounts = true;
               directories = [
                 "/etc/NetworkManager/system-connections"
-                "/etc/ssh/"
+                # /etc/ssh is mounted via fileSystems with neededForBoot for sops-nix
                 "/etc/nixos"
                 "/etc/wireguard/"
                 "/var/db/sudo"
@@ -57,6 +65,9 @@ _: {
                 "/var/lib/systemd/coredump"
                 "/var/lib/tailscale/"
                 "/var/lib/sops-nix"
+
+                # workaround of systemd can't boot without /usr folder
+                "/usr/systemd-placeholder"
               ];
               files = [
                 "/etc/machine-id"
@@ -91,7 +102,6 @@ _: {
               };
             };
 
-            fileSystems."/etc/ssh".neededForBoot = true;
             programs.fuse.userAllowOther = true;
 
             systemd.tmpfiles.rules = [
