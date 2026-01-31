@@ -291,6 +291,9 @@ _: {
               ".claude/skills" = {
                 source = config.lib.file.mkOutOfStoreSymlink "/etc/nixos/nix-dotfile/dotfiles/claude/skills/";
               };
+              ".gemini/skills" = {
+                source = config.lib.file.mkOutOfStoreSymlink "/etc/nixos/nix-dotfile/dotfiles/claude/skills/";
+              };
               ".claude/settings.json" = {
                 source = config.lib.file.mkOutOfStoreSymlink "/etc/nixos/nix-dotfile/dotfiles/claude/settings.json";
               };
@@ -366,6 +369,7 @@ _: {
               gemini-cli
               openspec
               opencode
+              vibe-kanban
               pkgs.notebooklm-py
             ])
             ++ [
