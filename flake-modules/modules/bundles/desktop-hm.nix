@@ -10,7 +10,7 @@ _: {
     in
     {
       options.my.bundles.desktop = {
-        enable = lib.mkEnableOption "desktop bundle (minimal + hyprland, zen, nvim)";
+        enable = lib.mkEnableOption "desktop bundle (minimal + hyprland, zen, nvim, ssh-tunnels)";
       };
 
       config = lib.mkIf cfg.enable {
@@ -20,6 +20,7 @@ _: {
             enable = true;
             hyprland.enable = true;
             zen.enable = true;
+            ssh-tunnels.enable = true;
           };
           devpack.nvim.enable = true;
         };

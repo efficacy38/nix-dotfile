@@ -16,3 +16,6 @@ result-*
 .gitconfig
 .mcp.json
 .ripgreprc
+
+# Worktrees
+.worktrees/
