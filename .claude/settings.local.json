@@ -31,7 +31,11 @@
       "WebFetch(domain:raw.githubusercontent.com)",
       "Bash(nix-prefetch-git:*)",
       "Bash(nix search:*)",
-      "WebSearch"
+      "WebSearch",
+      "Bash(nix-instantiate:*)",
+      "Bash(grep:*)",
+      "Bash(open:*)",
+      "Bash(xdg-open:*)"
     ]
   },
   "sandbox": {
