@@ -11,28 +11,41 @@ output "Dell Inc. DELL U2422HE B7FMNM3" {
   alias $DELL_24
 }
 
-output "HDMI-A-1" {
-  mode 2560x1440@100.00Hz
-  alias $HDMI
+output "Acer Technologies SA272U 1334037D92X00" {
+  alias $ACER_HDMI
 }
 
-profile ec320 {
-  output "eDP-1" disable
-  output $DELL_24 enable
-  output $DELL_27 enable
+output "eDP-1" {
+  mode 2560x1600@60.00Hz
+  position 0,1440 
+  scale 1.3333333 
 }
 
 profile ec319 {
   output "eDP-1" disable
-  output $HDMI
+  output $ACER_HDMI enable
 }
 
 profile ec319-open {
   # at the bottom of the external monitor
-  output "eDP-1" enable mode 2560x1600@60.00Hz position 0,1440 scale 1.3333333 
-  output $HDMI
+  output "eDP-1" enable mode 2560x1600@60.00Hz position 0,1440 scale 1.3333333
+  output $ACER_HDMI enable
+}
+
+profile ec319-mirror {
+  # Mirror HDMI to eDP-1 (lid open, mirrored display)
+  output "eDP-1" enable mode 2560x1600@60.00Hz position 0,0 scale 1.3333333
+  output $ACER_HDMI disable
+  exec hyprctl keyword monitor "HDMI-A-1, preferred, auto, 1, mirror, eDP-1"
 }
 
 profile undocked {
   output "eDP-1" enable mode 2560x1600@144.00Hz position 0,0 scale 1.3333333
+  exec hyprctl dispatch moveworkspacetomonitor 1 eDP-1
+}
+
+profile mirror_docked {
+  output "eDP-1" enable
+  output $ACER_HDMI disable
+  exec hyprctl keyword monitor "HDMI-A-1, preferred, auto, 1, mirror, eDP-1"
 }
