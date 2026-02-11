@@ -38,5 +38,6 @@
     "typescript-lsp@claude-plugins-official": true,
     "ralph-loop@claude-plugins-official": true,
     "playground@claude-plugins-official": true
-  }
+  },
+  "fastMode": true
 }

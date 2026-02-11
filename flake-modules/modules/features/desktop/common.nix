@@ -254,6 +254,7 @@ _: {
 
             zotero
             zotero-translation-server
+            obsidian
             keepassxc
             eog
           ])

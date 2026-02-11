@@ -35,7 +35,8 @@
       "Bash(nix-instantiate:*)",
       "Bash(grep:*)",
       "Bash(open:*)",
-      "Bash(xdg-open:*)"
+      "Bash(xdg-open:*)",
+      "Bash(TMPDIR=/tmp/claude git:*)"
     ]
   },
   "sandbox": {
