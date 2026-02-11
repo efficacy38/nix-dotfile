@@ -78,9 +78,6 @@ _: {
             Restart = "on-failure";
             RestartSec = "10";
           };
-          Install = {
-            WantedBy = [ "default.target" ];
-          };
         };
       };
     };

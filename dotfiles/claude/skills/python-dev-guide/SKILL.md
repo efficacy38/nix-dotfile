@@ -1,3 +1,8 @@
+---
+name: python-dev-guide
+description: python development guide, you MUST use this skill when developing a python project
+---
+
 # Python Development Guide
 
 ## Overview
