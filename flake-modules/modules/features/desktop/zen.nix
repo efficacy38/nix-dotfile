@@ -56,7 +56,6 @@ _: {
               ublock-origin
               sponsorblock
               darkreader
-              vimium
               multi-account-containers
               youtube-shorts-block
               simple-tab-groups

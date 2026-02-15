@@ -362,8 +362,10 @@ _: {
               claude-notify
             ]
             ++ (with inputs.llm-agents.packages."${pkgs.system}"; [
+              agent-browser
               antigravity
               claude-code
+              claude-code-router
               codex
               copilot-cli
               gemini-cli

@@ -25,7 +25,31 @@ _: {
 
           hardware.graphics.extraPackages = [ pkgs.libva-vdpau-driver ];
           hardware.steam-hardware.enable = true;
-          hardware.xpadneo.enable = true;
+
+          # bluetooth setting for xbox controller
+
+          hardware.bluetooth = {
+            enable = true;
+            powerOnBoot = true;
+            settings.General = {
+              experimental = true; # show battery
+
+              # https://www.reddit.com/r/NixOS/comments/1ch5d2p/comment/lkbabax/
+              # for pairing bluetooth controller
+              Privacy = "device";
+              JustWorksRepairing = "always";
+              Class = "0x000100";
+              FastConnectable = true;
+            };
+          };
+          hardware.xpadneo.enable = true; # Enable the xpadneo driver for Xbox One wireless controllers
+          boot = {
+            extraModulePackages = with config.boot.kernelPackages; [ xpadneo ];
+            extraModprobeConfig = ''
+              options bluetooth disable_ertm=Y
+            '';
+            # connect xbox controller
+          };
 
           environment.sessionVariables = lib.mkIf cfg.steamHidpi {
             STEAM_FORCE_DESKTOPUI_SCALING = "2";

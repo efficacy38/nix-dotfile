@@ -1,5 +1,6 @@
 {
   inputs,
+  lib,
   config,
   ...
 }:
@@ -60,12 +61,15 @@ in
   my = {
     bundles.homelab.enable = true;
     devpack = {
+      enable = true;
       tailscale.enable = true;
       tailscaleAsRouter = true;
     };
   };
 
   services = {
+    virtualisation.podman.enable = lib.Force true;
+    virtualisation.docker.enable = lib.Force true;
     openiscsi = {
       enable = true;
       name = "iqn.2025-02.net.csjhuang:homelab-1";
