@@ -165,26 +165,6 @@
         "type": "github"
       }
     },
-    "efficacy38-nur": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1769709762,
-        "narHash": "sha256-dbajtJ7C4PPJ09yy1G0oT8NTqGkUTt3HnAKxA646YYE=",
-        "owner": "efficacy38",
-        "repo": "nur-packages",
-        "rev": "b2d06d8282bc75c9849e2c69d485c2b77451f928",
-        "type": "github"
-      },
-      "original": {
-        "owner": "efficacy38",
-        "repo": "nur-packages",
-        "type": "github"
-      }
-    },
     "firefox-addons": {
       "inputs": {
         "nixpkgs": [
@@ -598,6 +578,22 @@
         "type": "github"
       }
     },
+    "nixpkgs-kopia": {
+      "locked": {
+        "lastModified": 1771116217,
+        "narHash": "sha256-GvbDI7HzkC6VAAdzkAnSZvdkKpxTL57dnV4IisNx6h8=",
+        "owner": "efficacy38",
+        "repo": "nixpkgs",
+        "rev": "5064469d3af3ef75c75a42571617f70440aa958b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "efficacy38",
+        "ref": "master",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs-lib": {
       "locked": {
         "lastModified": 1765674936,
@@ -800,7 +796,6 @@
       "inputs": {
         "determinate": "determinate",
         "disko": "disko",
-        "efficacy38-nur": "efficacy38-nur",
         "firefox-addons": "firefox-addons",
         "flake-parts": "flake-parts_2",
         "home-manager": "home-manager",
@@ -812,6 +807,7 @@
         "nix-secrets": "nix-secrets",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_6",
+        "nixpkgs-kopia": "nixpkgs-kopia",
         "nixpkgs-stable": "nixpkgs-stable",
         "solaar": "solaar",
         "sops-nix": "sops-nix",

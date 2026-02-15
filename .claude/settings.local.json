@@ -36,7 +36,8 @@
       "Bash(grep:*)",
       "Bash(open:*)",
       "Bash(xdg-open:*)",
-      "Bash(TMPDIR=/tmp/claude git:*)"
+      "Bash(TMPDIR=/tmp/claude git:*)",
+      "Skill(agent-browser)"
     ]
   },
   "sandbox": {

@@ -16,7 +16,7 @@ let
         inputs.stylix.nixosModules.stylix
         inputs.solaar.nixosModules.default
         inputs.impermanence.nixosModules.impermanence
-        inputs.efficacy38-nur.nixosModules.kopia
+        "${inputs.nixpkgs-kopia}/nixos/modules/services/backup/kopia"
         inputs.determinate.nixosModules.default
         inputs.disko.nixosModules.disko
         inputs.home-manager-stable.nixosModules.default

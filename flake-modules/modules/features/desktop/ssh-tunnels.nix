@@ -1,5 +1,26 @@
 # SSH tunnel service for persistent port forwarding
 _: {
+  # NixOS: SSH tunnel config persistence
+  flake.nixosModules.desktop-ssh-tunnels =
+    {
+      lib,
+      config,
+      ...
+    }:
+    let
+      cfg = config.my.desktop;
+    in
+    {
+      config = lib.mkIf (cfg.enable && config.my.system.impermanence.enable) {
+        environment.persistence."/persistent/system".users."efficacy38" = {
+          directories = [
+            ".config/ssh-tunnels"
+          ];
+        };
+      };
+    };
+
+  # Home-manager: SSH tunnel service
   flake.homeModules.desktop-ssh-tunnels =
     {
       config,

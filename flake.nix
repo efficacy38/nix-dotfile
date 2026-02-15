@@ -27,8 +27,7 @@
     solaar.url = "github:Svenum/Solaar-Flake";
     solaar.inputs.nixpkgs.follows = "nixpkgs";
 
-    efficacy38-nur.url = "github:efficacy38/nur-packages";
-    efficacy38-nur.inputs.nixpkgs.follows = "nixpkgs";
+    nixpkgs-kopia.url = "github:efficacy38/nixpkgs/master";
 
     firefox-addons.url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
     firefox-addons.inputs.nixpkgs.follows = "nixpkgs";
