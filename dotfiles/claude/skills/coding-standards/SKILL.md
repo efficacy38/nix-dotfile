@@ -1,11 +1,34 @@
 ---
 name: coding-standards
-description: Universal coding standards, best practices, and patterns for TypeScript, JavaScript, React, and Node.js development.
+description: Universal coding standards, best practices, and patterns. Use when developing in any language — triggers on TypeScript, JavaScript, React, Node.js, Python, Nix, ruff, pyright, pytest, uv, flake.nix, justfile, just, recipes, and general code quality topics.
 ---
 
 # Coding Standards & Best Practices
 
-Universal coding standards applicable across all projects.
+Universal coding standards applicable across all projects and languages.
+
+## Nix Dev Shell
+
+When `flake.nix` exists in the project (or a parent directory), **all dev/build/test commands must run inside the Nix dev shell**. If a required tool is not installed, use `nix shell nixpkgs#<pkg>` for one-off access or add it to `flake.nix` devShells.
+
+```bash
+# Single command
+nix develop -c <command> <args>
+
+# Multiple commands
+nix develop --command bash -c "command1 && command2"
+
+# One-off tool access (no flake needed)
+nix shell nixpkgs#jq -c jq '.key' file.json
+
+# Legacy shell.nix
+nix-shell --run "cargo build"
+```
+
+**Do NOT wrap Nix management commands** in dev shell — run these directly:
+`nix build`, `nix flake check`, `nix fmt`, `nix develop`, `nh os switch`
+
+**Decision:** Detect flake first (Glob for `**/flake.nix`). If present, wrap dev commands. If a tool is missing and no flake exists, use `nix shell nixpkgs#<pkg>` or suggest creating a `flake.nix`.
 
 ## Code Quality Principles
 
@@ -33,488 +56,92 @@ Universal coding standards applicable across all projects.
 - Add complexity only when required
 - Start simple, refactor when needed
 
-## TypeScript/JavaScript Standards
-
-### Variable Naming
-
-```typescript
-// ✅ GOOD: Descriptive names
-const marketSearchQuery = 'election'
-const isUserAuthenticated = true
-const totalRevenue = 1000
-
-// ❌ BAD: Unclear names
-const q = 'election'
-const flag = true
-const x = 1000
-```
-
-### Function Naming
-
-```typescript
-// ✅ GOOD: Verb-noun pattern
-async function fetchMarketData(marketId: string) { }
-function calculateSimilarity(a: number[], b: number[]) { }
-function isValidEmail(email: string): boolean { }
-
-// ❌ BAD: Unclear or noun-only
-async function market(id: string) { }
-function similarity(a, b) { }
-function email(e) { }
-```
-
-### Immutability Pattern (CRITICAL)
-
-```typescript
-// ✅ ALWAYS use spread operator
-const updatedUser = {
-  ...user,
-  name: 'New Name'
-}
-
-const updatedArray = [...items, newItem]
-
-// ❌ NEVER mutate directly
-user.name = 'New Name'  // BAD
-items.push(newItem)     // BAD
-```
-
-### Error Handling
-
-```typescript
-// ✅ GOOD: Comprehensive error handling
-async function fetchData(url: string) {
-  try {
-    const response = await fetch(url)
-
-    if (!response.ok) {
-      throw new Error(`HTTP ${response.status}: ${response.statusText}`)
-    }
-
-    return await response.json()
-  } catch (error) {
-    console.error('Fetch failed:', error)
-    throw new Error('Failed to fetch data')
-  }
-}
-
-// ❌ BAD: No error handling
-async function fetchData(url) {
-  const response = await fetch(url)
-  return response.json()
-}
-```
-
-### Async/Await Best Practices
-
-```typescript
-// ✅ GOOD: Parallel execution when possible
-const [users, markets, stats] = await Promise.all([
-  fetchUsers(),
-  fetchMarkets(),
-  fetchStats()
-])
-
-// ❌ BAD: Sequential when unnecessary
-const users = await fetchUsers()
-const markets = await fetchMarkets()
-const stats = await fetchStats()
-```
-
-### Type Safety
-
-```typescript
-// ✅ GOOD: Proper types
-interface Market {
-  id: string
-  name: string
-  status: 'active' | 'resolved' | 'closed'
-  created_at: Date
-}
-
-function getMarket(id: string): Promise<Market> {
-  // Implementation
-}
-
-// ❌ BAD: Using 'any'
-function getMarket(id: any): Promise<any> {
-  // Implementation
-}
-```
-
-## React Best Practices
-
-### Component Structure
-
-```typescript
-// ✅ GOOD: Functional component with types
-interface ButtonProps {
-  children: React.ReactNode
-  onClick: () => void
-  disabled?: boolean
-  variant?: 'primary' | 'secondary'
-}
-
-export function Button({
-  children,
-  onClick,
-  disabled = false,
-  variant = 'primary'
-}: ButtonProps) {
-  return (
-    <button
-      onClick={onClick}
-      disabled={disabled}
-      className={`btn btn-${variant}`}
-    >
-      {children}
-    </button>
-  )
-}
-
-// ❌ BAD: No types, unclear structure
-export function Button(props) {
-  return <button onClick={props.onClick}>{props.children}</button>
-}
-```
-
-### Custom Hooks
-
-```typescript
-// ✅ GOOD: Reusable custom hook
-export function useDebounce<T>(value: T, delay: number): T {
-  const [debouncedValue, setDebouncedValue] = useState<T>(value)
-
-  useEffect(() => {
-    const handler = setTimeout(() => {
-      setDebouncedValue(value)
-    }, delay)
-
-    return () => clearTimeout(handler)
-  }, [value, delay])
-
-  return debouncedValue
-}
-
-// Usage
-const debouncedQuery = useDebounce(searchQuery, 500)
-```
-
-### State Management
-
-```typescript
-// ✅ GOOD: Proper state updates
-const [count, setCount] = useState(0)
-
-// Functional update for state based on previous state
-setCount(prev => prev + 1)
-
-// ❌ BAD: Direct state reference
-setCount(count + 1)  // Can be stale in async scenarios
-```
-
-### Conditional Rendering
-
-```typescript
-// ✅ GOOD: Clear conditional rendering
-{isLoading && <Spinner />}
-{error && <ErrorMessage error={error} />}
-{data && <DataDisplay data={data} />}
-
-// ❌ BAD: Ternary hell
-{isLoading ? <Spinner /> : error ? <ErrorMessage error={error} /> : data ? <DataDisplay data={data} /> : null}
-```
-
 ## API Design Standards
 
 ### REST API Conventions
 
 ```
-GET    /api/markets              # List all markets
-GET    /api/markets/:id          # Get specific market
-POST   /api/markets              # Create new market
-PUT    /api/markets/:id          # Update market (full)
-PATCH  /api/markets/:id          # Update market (partial)
-DELETE /api/markets/:id          # Delete market
+GET    /api/resources              # List all
+GET    /api/resources/:id          # Get specific
+POST   /api/resources              # Create new
+PUT    /api/resources/:id          # Update (full)
+PATCH  /api/resources/:id          # Update (partial)
+DELETE /api/resources/:id          # Delete
 
 # Query parameters for filtering
-GET /api/markets?status=active&limit=10&offset=0
+GET /api/resources?status=active&limit=10&offset=0
 ```
 
 ### Response Format
 
-```typescript
-// ✅ GOOD: Consistent response structure
-interface ApiResponse<T> {
-  success: boolean
-  data?: T
-  error?: string
-  meta?: {
-    total: number
-    page: number
-    limit: number
-  }
-}
+Maintain consistent response structures across APIs:
 
-// Success response
-return NextResponse.json({
-  success: true,
-  data: markets,
-  meta: { total: 100, page: 1, limit: 10 }
-})
-
-// Error response
-return NextResponse.json({
-  success: false,
-  error: 'Invalid request'
-}, { status: 400 })
-```
-
-### Input Validation
-
-```typescript
-import { z } from 'zod'
-
-// ✅ GOOD: Schema validation
-const CreateMarketSchema = z.object({
-  name: z.string().min(1).max(200),
-  description: z.string().min(1).max(2000),
-  endDate: z.string().datetime(),
-  categories: z.array(z.string()).min(1)
-})
-
-export async function POST(request: Request) {
-  const body = await request.json()
-
-  try {
-    const validated = CreateMarketSchema.parse(body)
-    // Proceed with validated data
-  } catch (error) {
-    if (error instanceof z.ZodError) {
-      return NextResponse.json({
-        success: false,
-        error: 'Validation failed',
-        details: error.errors
-      }, { status: 400 })
-    }
-  }
-}
-```
-
-## File Organization
-
-### Project Structure
-
-```
-src/
-├── app/                    # Next.js App Router
-│   ├── api/               # API routes
-│   ├── markets/           # Market pages
-│   └── (auth)/           # Auth pages (route groups)
-├── components/            # React components
-│   ├── ui/               # Generic UI components
-│   ├── forms/            # Form components
-│   └── layouts/          # Layout components
-├── hooks/                # Custom React hooks
-├── lib/                  # Utilities and configs
-│   ├── api/             # API clients
-│   ├── utils/           # Helper functions
-│   └── constants/       # Constants
-├── types/                # TypeScript types
-└── styles/              # Global styles
-```
-
-### File Naming
-
-```
-components/Button.tsx          # PascalCase for components
-hooks/useAuth.ts              # camelCase with 'use' prefix
-lib/formatDate.ts             # camelCase for utilities
-types/market.types.ts         # camelCase with .types suffix
-```
+- Success responses include `data` and optional `meta` (pagination)
+- Error responses include `error` message and appropriate HTTP status
+- Use schema validation at API boundaries (Zod, Pydantic, etc.)
 
 ## Comments & Documentation
 
 ### When to Comment
 
-```typescript
-// ✅ GOOD: Explain WHY, not WHAT
-// Use exponential backoff to avoid overwhelming the API during outages
-const delay = Math.min(1000 * Math.pow(2, retryCount), 30000)
+```
+# Explain WHY, not WHAT
+# Use exponential backoff to avoid overwhelming the API during outages
+delay = min(1000 * (2 ** retry_count), 30000)
 
-// Deliberately using mutation here for performance with large arrays
-items.push(newItem)
-
-// ❌ BAD: Stating the obvious
-// Increment counter by 1
-count++
-
-// Set name to user's name
-name = user.name
+# Deliberately using mutation here for performance with large arrays
+items.append(new_item)
 ```
 
-### JSDoc for Public APIs
+Do NOT comment obvious code (`# increment counter`, `# set name`).
 
-```typescript
-/**
- * Searches markets using semantic similarity.
- *
- * @param query - Natural language search query
- * @param limit - Maximum number of results (default: 10)
- * @returns Array of markets sorted by similarity score
- * @throws {Error} If OpenAI API fails or Redis unavailable
- *
- * @example
- * ```typescript
- * const results = await searchMarkets('election', 5)
- * console.log(results[0].name) // "Trump vs Biden"
- * ```
- */
-export async function searchMarkets(
-  query: string,
-  limit: number = 10
-): Promise<Market[]> {
-  // Implementation
-}
-```
+### Public API Documentation
 
-## Performance Best Practices
-
-### Memoization
-
-```typescript
-import { useMemo, useCallback } from 'react'
-
-// ✅ GOOD: Memoize expensive computations
-const sortedMarkets = useMemo(() => {
-  return markets.sort((a, b) => b.volume - a.volume)
-}, [markets])
-
-// ✅ GOOD: Memoize callbacks
-const handleSearch = useCallback((query: string) => {
-  setSearchQuery(query)
-}, [])
-```
-
-### Lazy Loading
-
-```typescript
-import { lazy, Suspense } from 'react'
-
-// ✅ GOOD: Lazy load heavy components
-const HeavyChart = lazy(() => import('./HeavyChart'))
-
-export function Dashboard() {
-  return (
-    <Suspense fallback={<Spinner />}>
-      <HeavyChart />
-    </Suspense>
-  )
-}
-```
-
-### Database Queries
-
-```typescript
-// ✅ GOOD: Select only needed columns
-const { data } = await supabase
-  .from('markets')
-  .select('id, name, status')
-  .limit(10)
-
-// ❌ BAD: Select everything
-const { data } = await supabase
-  .from('markets')
-  .select('*')
-```
-
-## Testing Standards
-
-### Test Structure (AAA Pattern)
-
-```typescript
-test('calculates similarity correctly', () => {
-  // Arrange
-  const vector1 = [1, 0, 0]
-  const vector2 = [0, 1, 0]
-
-  // Act
-  const similarity = calculateCosineSimilarity(vector1, vector2)
-
-  // Assert
-  expect(similarity).toBe(0)
-})
-```
-
-### Test Naming
-
-```typescript
-// ✅ GOOD: Descriptive test names
-test('returns empty array when no markets match query', () => { })
-test('throws error when OpenAI API key is missing', () => { })
-test('falls back to substring search when Redis unavailable', () => { })
-
-// ❌ BAD: Vague test names
-test('works', () => { })
-test('test search', () => { })
-```
+- TypeScript/JavaScript: JSDoc with `@param`, `@returns`, `@throws`, `@example`
+- Python: Docstrings (Google style or NumPy style), type hints
 
 ## Code Smell Detection
 
 Watch for these anti-patterns:
 
 ### 1. Long Functions
-```typescript
-// ❌ BAD: Function > 50 lines
-function processMarketData() {
-  // 100 lines of code
-}
-
-// ✅ GOOD: Split into smaller functions
-function processMarketData() {
-  const validated = validateData()
-  const transformed = transformData(validated)
-  return saveData(transformed)
-}
-```
+Functions > 50 lines should be split into smaller, focused functions.
 
 ### 2. Deep Nesting
-```typescript
-// ❌ BAD: 5+ levels of nesting
-if (user) {
-  if (user.isAdmin) {
-    if (market) {
-      if (market.isActive) {
-        if (hasPermission) {
-          // Do something
-        }
-      }
-    }
-  }
-}
-
-// ✅ GOOD: Early returns
-if (!user) return
-if (!user.isAdmin) return
-if (!market) return
-if (!market.isActive) return
-if (!hasPermission) return
-
-// Do something
-```
+Use early returns / guard clauses instead of 5+ levels of nesting.
 
 ### 3. Magic Numbers
-```typescript
-// ❌ BAD: Unexplained numbers
-if (retryCount > 3) { }
-setTimeout(callback, 500)
+Use named constants instead of unexplained literals.
 
-// ✅ GOOD: Named constants
-const MAX_RETRIES = 3
-const DEBOUNCE_DELAY_MS = 500
+## Testing Standards
 
-if (retryCount > MAX_RETRIES) { }
-setTimeout(callback, DEBOUNCE_DELAY_MS)
+### Test Structure (AAA Pattern)
+
+```
+# Arrange — set up test data and preconditions
+# Act — execute the code under test
+# Assert — verify the result
 ```
 
-**Remember**: Code quality is not negotiable. Clear, maintainable code enables rapid development and confident refactoring.
+### Test Naming
+
+Use descriptive names that explain the scenario and expected outcome:
+- `test_returns_empty_array_when_no_markets_match_query`
+- `test_throws_error_when_api_key_is_missing`
+- `test_falls_back_to_substring_search_when_cache_unavailable`
+
+Avoid vague names like `test_works` or `test_search`.
+
+## Language-Specific Standards
+
+**TypeScript/JavaScript/React:** See `references/typescript.md`
+
+**Python:** See `references/python.md`
+
+**Nix:** See `references/nix.md`
+
+**Justfile:** See `references/justfile.md`
+
+## Tooling References
+
+**Commit Messages:** When committing, invoke the `conventional-commits` skill for structured commit message format (type, scope, breaking changes, SemVer impact). For nixpkgs contributions, use nixpkgs-specific commit format instead (see `references/nix.md`).

@@ -1,4 +1,7 @@
 {
+  "env": {
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
+  },
   "attribution": {
     "commit": "",
     "pr": ""
@@ -14,7 +17,14 @@
       "Bash(cat:*)"
     ],
     "deny": [
-      "Bash(rm -rf:*)"
+      "Bash(rm -rf:*)",
+      "Read(.env*)",
+      "Read(*.pem*)",
+      "Read(*.key*)",
+      "Read(*.crt*)"
+    ],
+    "ask": [
+      "Read(config.*)"
     ]
   },
   "hooks": {
@@ -37,7 +47,11 @@
     "frontend-design@claude-plugins-official": true,
     "typescript-lsp@claude-plugins-official": true,
     "ralph-loop@claude-plugins-official": true,
-    "playground@claude-plugins-official": true
+    "playground@claude-plugins-official": true,
+    "ui-ux-pro-max@ui-ux-pro-max-skill": true,
+    "code-simplifier@claude-plugins-official": true
   },
-  "fastMode": true
+  "skipDangerousModePermissionPrompt": true,
+  "effortLevel": "medium",
+  "teammateMode": "tmux"
 }
