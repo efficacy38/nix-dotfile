@@ -1,5 +1,9 @@
 {
   "position": "top",
+  "layer": "top",
+  "margin-top": 4,
+  "margin-left": 8,
+  "margin-right": 8,
   "modules-left": ["hyprland/workspaces"],
   "modules-center": ["hyprland/window"],
   "modules-right": [
@@ -12,8 +16,9 @@
     "clock",
   ],
   "clock": {
+    "locale": "en_US.UTF-8",
     "format": "<span foreground='#f5c2e7'>   </span>{:%a %d %H:%M}",
-    "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+    "tooltip-format": "<big>{:%Y %B}</big>\n<tt>{calendar}</tt>",
   },
   "battery": {
     "states": {
