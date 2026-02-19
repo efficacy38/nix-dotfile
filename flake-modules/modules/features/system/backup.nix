@@ -11,7 +11,7 @@ _: {
     let
       cfg = config.my.system;
       secretpath = builtins.toString inputs.nix-secrets;
-      personal-s3-secret = {
+      backupSecret = {
         sopsFile = "${secretpath}/secrets/backup.yaml";
         format = "yaml";
       };
@@ -21,15 +21,25 @@ _: {
 
       config = lib.mkIf cfg.backup.enable {
         sops.secrets = {
-          "homelab-1/password" = personal-s3-secret;
-          "homelab-1/accessKey" = personal-s3-secret;
-          "homelab-1/secretKey" = personal-s3-secret;
+          "homelab-1/password" = backupSecret;
+          "homelab-1/accessKey" = backupSecret;
+          "homelab-1/secretKey" = backupSecret;
+          "b2/password" = backupSecret;
+          "b2/accessKey" = backupSecret;
+          "b2/secretKey" = backupSecret;
         };
 
         sops.templates."kopia-s3-env" = {
           content = ''
             AWS_ACCESS_KEY_ID=${config.sops.placeholder."homelab-1/accessKey"}
             AWS_SECRET_ACCESS_KEY=${config.sops.placeholder."homelab-1/secretKey"}
+          '';
+        };
+
+        sops.templates."kopia-b2-env" = {
+          content = ''
+            AWS_ACCESS_KEY_ID=${config.sops.placeholder."b2/accessKey"}
+            AWS_SECRET_ACCESS_KEY=${config.sops.placeholder."b2/secretKey"}
           '';
         };
 
@@ -56,6 +66,29 @@ _: {
         #     compression = "pgzip";
         #   };
         # };
+
+        services.kopia.backups.b2 = {
+          repositoryType = "s3";
+          s3 = {
+            bucket = "csjhuang-personal-backup";
+            endpoint = "s3.us-west-004.backblazeb2.com";
+          };
+          passwordFile = config.sops.secrets."b2/password".path;
+          environmentFile = config.sops.templates."kopia-b2-env".path;
+
+          paths = [ "/persistent" ];
+
+          policy = {
+            retention = {
+              keepLatest = 5;
+              keepDaily = 30;
+              keepWeekly = 4;
+              keepMonthly = 3;
+              keepAnnual = 0;
+            };
+            compression = "pgzip";
+          };
+        };
 
         # services.kopia.backups.sftp = {
         #   repositoryType = "sftp";
