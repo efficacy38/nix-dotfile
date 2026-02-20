@@ -18,11 +18,8 @@
       flake = false;
     };
 
-    home-manager.url = "github:nix-community/home-manager";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
-
     home-manager-stable.url = "github:nix-community/home-manager/release-25.11";
-    home-manager-stable.inputs.nixpkgs.follows = "nixpkgs";
+    home-manager-stable.inputs.nixpkgs.follows = "nixpkgs-stable";
 
     solaar.url = "github:Svenum/Solaar-Flake";
     solaar.inputs.nixpkgs.follows = "nixpkgs";

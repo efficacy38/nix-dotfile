@@ -166,6 +166,7 @@ _: {
               aliasIfExist reboot 'sudo reboot'
               aliasIfExist 'cdt' 'cd ~/Tmp'
               alias chproj='incus project switch'
+              alias tat-name='tmux display-message -p "#S"'
 
               if [ "$XDG_SESSION_TYPE" = "wayland" ]; then
                 aliasIfExist 'copy' 'wl-copy'

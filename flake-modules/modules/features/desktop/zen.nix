@@ -47,11 +47,11 @@ _: {
 
         programs.firefox = {
           enable = true;
-          package = inputs.zen-browser.packages."${pkgs.system}".default;
+          package = inputs.zen-browser.packages."${pkgs.stdenv.hostPlatform.system}".default;
           configPath = ".zen";
 
           profiles.personal = {
-            extensions.packages = with inputs.firefox-addons.packages."${pkgs.system}"; [
+            extensions.packages = with inputs.firefox-addons.packages."${pkgs.stdenv.hostPlatform.system}"; [
               keepassxc-browser
               ublock-origin
               sponsorblock
