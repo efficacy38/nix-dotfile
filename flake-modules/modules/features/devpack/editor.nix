@@ -67,7 +67,7 @@ _: {
             marksman
             neovim
             nixd
-            nixfmt-rfc-style
+            nixfmt
             nil
             nodePackages.bash-language-server
             nodePackages.prettier

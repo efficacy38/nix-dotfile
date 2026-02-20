@@ -361,7 +361,7 @@ _: {
               uv
               claude-notify
             ]
-            ++ (with inputs.llm-agents.packages."${pkgs.system}"; [
+            ++ (with inputs.llm-agents.packages."${pkgs.stdenv.hostPlatform.system}"; [
               agent-browser
               antigravity
               claude-code

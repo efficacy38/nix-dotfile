@@ -37,7 +37,18 @@
       "Bash(open:*)",
       "Bash(xdg-open:*)",
       "Bash(TMPDIR=/tmp/claude git:*)",
-      "Skill(agent-browser)"
+      "Skill(agent-browser)",
+      "Bash(wc:*)",
+      "Bash(while read url)",
+      "Bash(do echo \"Input: $url\")",
+      "Bash(done)",
+      "WebFetch(domain:nixos.wiki)",
+      "WebFetch(domain:wiki.nixos.org)",
+      "Bash(NIX_SHOW_STATS=1 nix-instantiate:*)",
+      "WebFetch(domain:discourse.nixos.org)",
+      "Bash(nix flake metadata:*)",
+      "Bash(nix flake info:*)",
+      "Bash(gh issue view:*)"
     ]
   },
   "sandbox": {
