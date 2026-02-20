@@ -14,7 +14,7 @@ configuration {
 @theme "/dev/null"
 
 * {
-  bg: #1e1e2e;
+  bg: #1e1e2edd;
   bg-alt: #585b7066;
   bg-selected: #31324466;
 
@@ -31,6 +31,9 @@ configuration {
 window {
   width: 30%;
   background-color: @bg;
+  border-radius: 12px;
+  border: 1px;
+  border-color: #cdd6f415;
 }
 
 element {
