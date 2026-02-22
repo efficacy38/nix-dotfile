@@ -110,6 +110,9 @@ _: {
             # tldr command documentation
             ".local/share/tldr"
           ];
+          files = [
+            ".claude.json"
+          ];
         };
       };
     };

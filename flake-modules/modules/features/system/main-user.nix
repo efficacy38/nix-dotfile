@@ -165,6 +165,10 @@ _: {
                   {
                     command = "/run/current-system/sw/bin/tlp";
                   }
+                  {
+                    command = "/run/current-system/sw/bin/impermanence-audit";
+                    options = [ "NOPASSWD" ];
+                  }
                 ];
             }
           ];

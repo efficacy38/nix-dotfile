@@ -46,7 +46,7 @@
     };
   };
 
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  # boot.kernelPackages = pkgs.linuxPackages_latest;
 
   # Enable networking related
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.

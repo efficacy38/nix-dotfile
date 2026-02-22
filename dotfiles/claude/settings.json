@@ -51,5 +51,6 @@
     "code-simplifier@claude-plugins-official": true
   },
   "skipDangerousModePermissionPrompt": true,
-  "teammateMode": "tmux"
+  "teammateMode": "tmux",
+  "effortLevel": "medium"
 }
