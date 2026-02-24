@@ -99,6 +99,42 @@ Multiple versions: `json-c_0_9`, `json-c_0_11`, with default alias `json-c = jso
 
 The `pkg-name:` prefix triggers automatic CI builds. Body should explain *why* and link to release notes for version updates.
 
+## NixOS VM Test Pitfalls
+
+When writing NixOS integration tests (`nixos/tests/`), keep these constraints in mind:
+
+| Pitfall | Explanation | Fix |
+|---------|-------------|-----|
+| Writing to `/etc` | `/etc` is read-only in NixOS VMs (managed by activation scripts) | Write to `/root/.ssh/`, `/tmp/`, or `/run/` instead |
+| Service filesystem access | Services with `ProtectSystem=strict` (e.g., nginx) can't write to arbitrary paths | Add `systemd.services.<name>.serviceConfig.ReadWritePaths` |
+| Unreachable network services | The default NixOS firewall blocks all ports not explicitly opened | Add ports to `networking.firewall.allowedTCPPorts` |
+| Shared backend storage | Multiple test configs pointing to the same storage URL share a repository | Use distinct sub-paths per test config |
+
+## Indented String Dollar Escaping
+
+In Nix indented strings (`'' ''`), `$` followed by `{` triggers interpolation just like in regular strings. To produce a literal `$` followed by a Nix-interpolated value (e.g. a shell variable reference like `$REPO_ARGS`), use the `''$` escape sequence followed by the interpolation:
+
+```nix
+# GOOD — ''$ escapes the dollar, then ${...} interpolates normally
+mkConnectOrCreate = kopiaExe: backendType: argsVar:
+  ''
+    ${kopiaExe} repository connect ${backendType} ''$${argsVar}
+  '';
+# With argsVar = "REPO_ARGS", produces: kopia repository connect s3 $REPO_ARGS
+
+# BAD — bare $$ does NOT escape $ in indented strings
+''
+  kopia connect $${argsVar}
+''
+# Produces: kopia connect ${argsVar}  (literal text, not interpolated)
+```
+
+Key rules for `$` in indented strings:
+- `''$` produces a literal `$` (the indented-string escape)
+- `''${` produces a literal `${` (escapes interpolation)
+- `''$${expr}` produces a literal `$` followed by the interpolated value of `expr`
+- `$$` is **not** an escape — it produces literal `$$` text
+
 ## Common Mistakes
 
 | Mistake | Fix |

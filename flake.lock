@@ -560,11 +560,11 @@
     },
     "nixpkgs-kopia": {
       "locked": {
-        "lastModified": 1771568725,
-        "narHash": "sha256-PBDr/Wh7v+oIxoyT4Y/1n29/geyYTLsEKxgOq/ZXNq4=",
+        "lastModified": 1771907079,
+        "narHash": "sha256-qIgvy/ztRzg31c7I70SlKtrRxGo+EwQksQHx87r0pwk=",
         "owner": "efficacy38",
         "repo": "nixpkgs",
-        "rev": "ecd3824c511423176f355203c6a529ee4f627572",
+        "rev": "c31b935453cab8374d2073295051b080a492fc46",
         "type": "github"
       },
       "original": {

@@ -39,6 +39,8 @@ _: {
                 enableHidpi = true;
                 package = pkgs.kdePackages.sddm;
               };
+              # TODO: change to plasma-login-manager when we update to nixos 25.11
+              # displayManager.plasma-login-manager.enable = true;
 
               # Configure power key to lock screen instead of shutdown
               logind.settings.Login = {
