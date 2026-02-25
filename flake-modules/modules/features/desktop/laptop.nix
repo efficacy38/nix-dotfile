@@ -36,6 +36,18 @@ _: {
           modulePath = "${pkgs.fprintd}/lib/security/pam_fprintd.so";
           args = [ "timeout=5" ];
         };
+
+        # Allow fingerprint authentication on SDDM login screen
+        # The SDDM NixOS module hardcodes pam.services.sddm.text, so .rules
+        # additions are ignored. We must override .text directly.
+        # ref: https://wiki.archlinuxcn.org/zh-tw/SDDM
+        security.pam.services.sddm.text = lib.mkForce ''
+          auth      sufficient ${pkgs.fprintd}/lib/security/pam_fprintd.so
+          auth      substack   login
+          account   include    login
+          password  substack   login
+          session   include    login
+        '';
       };
     };
 

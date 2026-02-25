@@ -28,6 +28,7 @@ _: {
           "b2/password" = backupSecret;
           "b2/accessKey" = backupSecret;
           "b2/secretKey" = backupSecret;
+          "b2/serverPassword" = backupSecret;
         };
 
         services.kopia.backups.b2 = {
@@ -38,6 +39,10 @@ _: {
             secretAccessKeyFile = config.sops.secrets."b2/secretKey".path;
           };
           passwordFile = config.sops.secrets."b2/password".path;
+          web = {
+            enable = true;
+            serverPasswordFile = config.sops.secrets."b2/serverPassword".path;
+          };
 
           paths = [ "/persistent" ];
 

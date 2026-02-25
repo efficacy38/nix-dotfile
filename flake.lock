@@ -441,11 +441,11 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1771558154,
-        "narHash": "sha256-jO73YC4EGKOahHANIBI5vqb5azUO0OpI59V6UXPIq6M=",
+        "lastModified": 1772022676,
+        "narHash": "sha256-Qte7r0m7v76p5rtFkEED6mxjeGIO2NOgD3dpD8dtUdA=",
         "owner": "numtide",
         "repo": "llm-agents.nix",
-        "rev": "4f6cbfe27672dd08be35c549c068d4b721c7eb9f",
+        "rev": "c164a73261b1eb7eb26a51e0e656b4da93d640b2",
         "type": "github"
       },
       "original": {
@@ -498,10 +498,10 @@
     "nix-secrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1771122632,
-        "narHash": "sha256-XyFqFBVxKvdoQyAAwTnGmUgI4k5NWx0pVOVMIThNXEg=",
+        "lastModified": 1772023275,
+        "narHash": "sha256-MZURAmBpYHBXkTE5qK3IPI9ruIqnfXmIzCLNiQ8eJRE=",
         "ref": "main",
-        "rev": "dd9c0b58ceb044985446b79d0c767fc53e4af105",
+        "rev": "8a6e460208f46b13d9cf4c7fa1b5ae801fb0351b",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/efficacy38/nix-secret.git"
@@ -669,11 +669,11 @@
     },
     "nixpkgs_5": {
       "locked": {
-        "lastModified": 1771207753,
-        "narHash": "sha256-b9uG8yN50DRQ6A7JdZBfzq718ryYrlmGgqkRm9OOwCE=",
+        "lastModified": 1771423170,
+        "narHash": "sha256-K7Dg9TQ0mOcAtWTO/FX/FaprtWQ8BmEXTpLIaNRhEwU=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "d1c15b7d5806069da59e819999d70e1cec0760bf",
+        "rev": "bcc4a9d9533c033d806a46b37dc444f9b0da49dd",
         "type": "github"
       },
       "original": {
