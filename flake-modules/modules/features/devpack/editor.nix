@@ -19,17 +19,19 @@ in
     in
     {
       config = lib.mkIf cfg.enable {
-        sops.secrets."github_ssh_key" = {
-          sopsFile = "${secretpath}/secrets/common.yaml";
-          owner = "efficacy38";
-          mode = "0600";
-          path = "/home/efficacy38/.ssh/keys/gh.id_ed25519";
-        };
-        sops.secrets."github_pub_ssh_key" = {
-          sopsFile = "${secretpath}/secrets/common.yaml";
-          owner = "efficacy38";
-          mode = "0644";
-          path = "/home/efficacy38/.ssh/keys/gh.id_ed25519.pub";
+        sops.secrets = {
+          "github_ssh_key" = {
+            sopsFile = "${secretpath}/secrets/common.yaml";
+            owner = "efficacy38";
+            mode = "0600";
+            path = "/home/efficacy38/.ssh/keys/gh.id_ed25519";
+          };
+          "github_pub_ssh_key" = {
+            sopsFile = "${secretpath}/secrets/common.yaml";
+            owner = "efficacy38";
+            mode = "0644";
+            path = "/home/efficacy38/.ssh/keys/gh.id_ed25519.pub";
+          };
         };
       };
     };
