@@ -1,5 +1,39 @@
 # Editor tools: nvim, git
-_: {
+{
+  inputs,
+  ...
+}:
+let
+  secretpath = builtins.toString inputs.nix-secrets;
+in
+{
+  # NixOS: deploy GitHub SSH keys via sops-nix
+  flake.nixosModules.devpack-git =
+    {
+      lib,
+      config,
+      ...
+    }:
+    let
+      cfg = config.my.devpack;
+    in
+    {
+      config = lib.mkIf cfg.enable {
+        sops.secrets."github_ssh_key" = {
+          sopsFile = "${secretpath}/secrets/common.yaml";
+          owner = "efficacy38";
+          mode = "0600";
+          path = "/home/efficacy38/.ssh/keys/gh.id_ed25519";
+        };
+        sops.secrets."github_pub_ssh_key" = {
+          sopsFile = "${secretpath}/secrets/common.yaml";
+          owner = "efficacy38";
+          mode = "0644";
+          path = "/home/efficacy38/.ssh/keys/gh.id_ed25519.pub";
+        };
+      };
+    };
+
   # NixOS: neovim persistence configuration
   flake.nixosModules.devpack-nvim =
     {
@@ -125,12 +159,12 @@ _: {
         home.packages = with pkgs; [
           git
           glab
-          gh
           lazygit
-          git-credential-keepassxc
         ];
 
         programs = {
+          gh.enable = true;
+
           diff-so-fancy = {
             enable = true;
             enableGitIntegration = true;
@@ -152,9 +186,6 @@ _: {
               };
               core = {
                 whitespace = "trailing-space,space-before-tab";
-              };
-              credential = {
-                helper = "cache --timeout 3600";
               };
             };
 
