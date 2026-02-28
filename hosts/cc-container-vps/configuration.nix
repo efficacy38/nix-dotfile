@@ -22,6 +22,11 @@
       enable = true;
       debug = true;
     };
+    devpack = {
+      enable = true;
+      # csccUtil.enable = true;
+      tailscale.enable = true;
+    };
   };
 
   services.lvm.enable = true;
