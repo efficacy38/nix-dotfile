@@ -57,6 +57,7 @@ in
       stella = mkSystem ../hosts/stella/configuration.nix;
       cc-desktop = mkSystem ../hosts/cc-desktop/configuration.nix;
       cc-container-vps = mkSystem ../hosts/cc-container-vps/configuration.nix;
+      stella-nspawn = mkSystem ../hosts/stella-nspawn/configuration.nix;
       iso = mkIsoSystem ../hosts/iso/configuration.nix;
     };
   };

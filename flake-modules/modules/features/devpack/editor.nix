@@ -165,6 +165,14 @@ in
         ];
 
         programs = {
+          ssh = {
+            enable = true;
+            matchBlocks."github.com" = {
+              identityFile = "~/.ssh/keys/gh.id_ed25519";
+              identitiesOnly = true;
+            };
+          };
+
           gh.enable = true;
 
           diff-so-fancy = {
@@ -223,6 +231,10 @@ in
                 }
                 {
                   condition = "hasconfig:remote.*.url:https://github.com/**";
+                  contents = gh-git-config;
+                }
+                {
+                  condition = "hasconfig:remote.*.url:ssh://git@github.com:*/**";
                   contents = gh-git-config;
                 }
                 {

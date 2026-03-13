@@ -48,9 +48,12 @@
     "ralph-loop@claude-plugins-official": true,
     "playground@claude-plugins-official": true,
     "ui-ux-pro-max@ui-ux-pro-max-skill": true,
-    "code-simplifier@claude-plugins-official": true
+    "code-simplifier@claude-plugins-official": true,
+    "rust-analyzer-lsp@claude-plugins-official": true,
+    "pyright-lsp@claude-plugins-official": true,
+    "clangd-lsp@claude-plugins-official": true
   },
   "skipDangerousModePermissionPrompt": true,
   "teammateMode": "tmux",
-  "effortLevel": "medium"
+  "effortLevel": "high"
 }
