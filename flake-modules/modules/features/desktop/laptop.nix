@@ -25,7 +25,7 @@ _: {
           enable = true;
           order = config.security.pam.services.sudo.rules.auth.fprintd-personalize.order - 10;
           control = "[success=1 default=ignore]";
-          modulePath = "${pkgs.linux-pam}/lib/security/pam_fprintd.so";
+          modulePath = "${pkgs.fprintd}/lib/security/pam_fprintd.so";
           args = [ "service in sudo:su:su-l tty in :tty" ];
         };
 
