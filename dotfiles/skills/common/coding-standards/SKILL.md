@@ -132,6 +132,53 @@ Use descriptive names that explain the scenario and expected outcome:
 
 Avoid vague names like `test_works` or `test_search`.
 
+## Delivery & Verification Standards
+
+### E2E Developer Environments
+
+When adding an e2e developer environment, make bootstrap reproducible from a
+clean local state:
+
+- Provide a single command that works without optional local env files.
+- Use isolated ports, compose project names, volumes, and config defaults so the
+  e2e stack can run beside the normal developer stack.
+- Recreate isolated e2e volumes during full bootstrap when stale local state
+  can hide fixture or cursor changes.
+- Seed both upstream source data and any downstream derived data required by the
+  UI/API path being tested.
+- Smoke test the real API endpoint the frontend uses, not only the seed command
+  or container health check.
+
+For OpenSearch or similar cursor-based ingest flows, explicitly verify that new
+fixture records reached the database. Do not assume a successful source seed
+means the DB-backed UI has data; stale cursors and persisted volumes can make
+the API appear empty or incomplete.
+
+### Spec-Driven Delivery
+
+When archiving spec-driven work:
+
+- Check artifact and task completion before archive.
+- Let the archive command sync delta specs into main specs when applicable.
+- Run `git diff --check` after archive; archive tooling can introduce trailing
+  whitespace or EOF formatting changes.
+- Validate the specs touched by the change directly. If broad spec validation
+  fails because of pre-existing unrelated specs, report that separately instead
+  of treating it as a failure of the current change.
+
+### Git Worktrees and Cleanup
+
+For feature work in a separate worktree:
+
+- Fast-forward the feature branch to the current local main before final
+  archive/commit/merge when requested.
+- Commit with Conventional Commits before merging.
+- Use the requested merge mode exactly, such as `--no-ff` when a merge commit is
+  required.
+- Preserve unrelated untracked or dirty files in the main worktree.
+- After a successful merge, stop any feature-specific local services, remove the
+  feature worktree, and delete the feature branch.
+
 ## Language-Specific Standards
 
 **TypeScript/JavaScript/React:** See `references/typescript.md`

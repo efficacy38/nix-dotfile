@@ -1,5 +1,9 @@
 # Dev tools: gpg, just, k8s, podman, utils
-_: {
+_:
+let
+  dotfilesBasePath = ../../../../dotfiles;
+in
+{
   # NixOS: Kubernetes tools persistence
   flake.nixosModules.devpack-k8s =
     {
@@ -271,6 +275,61 @@ _: {
       }:
       let
         cfg = config.my.devpack;
+        dotfilesDir = "/etc/nixos/nix-dotfile/dotfiles";
+        skillsDir = "${dotfilesDir}/skills";
+        commonSkillsPath = dotfilesBasePath + /skills/common;
+        claudeSkillsPath = dotfilesBasePath + /skills/claude;
+        codexSkillsPath = dotfilesBasePath + /skills/codex;
+        commonSkillsDir = "${skillsDir}/common";
+        claudeSkillsDir = "${skillsDir}/claude";
+        codexSkillsDir = "${skillsDir}/codex";
+
+        skillNamesFromDir =
+          path: lib.attrNames (lib.filterAttrs (_: type: type == "directory") (builtins.readDir path));
+
+        commonSkillNames = skillNamesFromDir commonSkillsPath;
+        claudeSkillNames = skillNamesFromDir claudeSkillsPath;
+        codexSkillNames = skillNamesFromDir codexSkillsPath;
+
+        mkSkillEntries =
+          dir: names:
+          map (name: {
+            inherit name;
+            path = config.lib.file.mkOutOfStoreSymlink "${dir}/${name}";
+          }) names;
+
+        mkSkillFarm =
+          agentName: skillSets:
+          let
+            entries = lib.flatten (map (skillSet: mkSkillEntries skillSet.dir skillSet.names) skillSets);
+            names = map (entry: entry.name) entries;
+          in
+          if builtins.length (lib.unique names) == builtins.length names then
+            pkgs.linkFarm "${agentName}-skills" entries
+          else
+            builtins.throw "Duplicate skill names configured for ${agentName}";
+
+        claudeSkills = mkSkillFarm "claude" [
+          {
+            dir = commonSkillsDir;
+            names = commonSkillNames;
+          }
+          {
+            dir = claudeSkillsDir;
+            names = claudeSkillNames;
+          }
+        ];
+
+        codexSkills = mkSkillFarm "codex" [
+          {
+            dir = commonSkillsDir;
+            names = commonSkillNames;
+          }
+          {
+            dir = codexSkillsDir;
+            names = codexSkillNames;
+          }
+        ];
       in
       {
         config =
@@ -299,16 +358,19 @@ _: {
           // lib.mkIf (cfg.enable) {
             home.file = {
               ".claude/skills" = {
-                source = config.lib.file.mkOutOfStoreSymlink "/etc/nixos/nix-dotfile/dotfiles/claude/skills/";
+                source = claudeSkills;
               };
-              ".gemini/skills" = {
-                source = config.lib.file.mkOutOfStoreSymlink "/etc/nixos/nix-dotfile/dotfiles/claude/skills/";
+              ".codex/skills" = {
+                source = codexSkills;
+              };
+              ".codex/AGENTS.md" = {
+                source = config.lib.file.mkOutOfStoreSymlink "${dotfilesDir}/codex/AGENTS.md";
               };
               ".claude/settings.json" = {
-                source = config.lib.file.mkOutOfStoreSymlink "/etc/nixos/nix-dotfile/dotfiles/claude/settings.json";
+                source = config.lib.file.mkOutOfStoreSymlink "${dotfilesDir}/claude/settings.json";
               };
               ".claude/CLAUDE.md" = {
-                source = config.lib.file.mkOutOfStoreSymlink "/etc/nixos/nix-dotfile/dotfiles/claude/CLAUDE.md";
+                source = config.lib.file.mkOutOfStoreSymlink "${dotfilesDir}/claude/CLAUDE.md";
               };
             };
           };

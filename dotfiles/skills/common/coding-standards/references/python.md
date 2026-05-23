@@ -51,6 +51,52 @@ uv run pytest tests/ -v        # Run tests
 | `F841 local variable assigned but never used` | Remove assignment or use `_` prefix |
 | Import order issues | Run `ruff check --fix .` (ruff "I" rules handle import sorting) |
 
+## Layer Boundaries And Validation
+
+When using Pydantic, keep validation at the correct architectural boundary:
+
+- API response schemas belong at the API/router boundary.
+- Domain, repository, and read-side modules should not import API schemas just to reuse `model_validate`.
+- For internal fixed-shape payloads, create local Pydantic models or dataclasses in the owning package instead of passing `dict[str, object]` through multiple layers.
+- Prefer `BaseModel.model_validate(obj, from_attributes=True)` or `ConfigDict(from_attributes=True)` when converting known ORM objects into read-side payloads.
+- Use dataclasses for internal aggregates that are mutated while building results, and Pydantic models for payloads that need validation/serialization at a boundary.
+
+Avoid this dependency inversion:
+
+```python
+# WRONG: repository/domain now depends on API schema shape
+from app.api.schemas import ItemResponse
+
+def repository_read(row):
+    return ItemResponse.model_validate(row).model_dump()
+```
+
+Prefer an owning-package payload model plus final API validation:
+
+```python
+class ItemPayload(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
+    id: int
+    name: str
+
+
+def presenter_payload(row) -> dict[str, object]:
+    return ItemPayload.model_validate(row).model_dump(mode="json")
+```
+
+## SQLModel And SQLAlchemy
+
+Simplify ORM declarations only when the database contract stays identical:
+
+- Keep `sa_column=Column(...)` when the field needs explicit SQL type, `ForeignKey(ondelete=...)`, `server_default`, `DateTime(timezone=True)`, custom JSON/JSONB types, indexes/constraints that SQLModel cannot express clearly, or fixed column lengths such as `String(64)`.
+- Do not mass-rewrite SQLModel model fields for style alone. Check Alembic autogenerate output or schema diff when simplifying table definitions.
+- `col()` can be useful in SQLModel projects to keep `.in_()`, `.desc()`, `.is_()`, and typed selects pyright-clean. Remove it only case by case after type-checking.
+- Prefer `.between(start, end)` for closed date ranges when both bounds are present.
+- Prefer `.icontains(value, autoescape=True)` for user-provided substring filters instead of hand-built `LIKE` patterns.
+
+After query cleanup, always run both `ruff` and `pyright`; SQLAlchemy expression changes can pass lint while breaking static typing.
+
 ## Testing
 
 ### Tooling

@@ -572,6 +572,98 @@ This transforms abstract metrics into actionable standards.
 
 ---
 
+## Part 8: Academic Paper Adaptation
+
+### The Problem
+
+Rules for tutorials and technical articles do not transfer directly to academic papers. A tutorial can teach through analogies, thought questions, prerequisite blocks, and recommended workflows. A paper must instead defend a research claim through precise terms, ordered concepts, evidence, limitations, and citations.
+
+When using this skill on a paper draft, the goal is not to make the paper more interactive. The goal is to make the argument readable and defensible.
+
+### What Does Not Belong In A Formal Paper
+
+Do not add tutorial-only devices to the body of an academic paper:
+
+- **Thought questions**: Do not add self-check questions or collapsible answers to a paper body. Use them only in study notes, teaching material, or reviewer preparation notes.
+- **Naive-reader feedback text**: Use naive-reader review as a revision workflow, not as paper content.
+- **Series prerequisite blocks**: Replace prerequisite notices with a short scope statement, assumed background, or terminology paragraph in the introduction or methodology.
+- **Pure teaching analogies**: Use a short motivating example only when it supports the research problem. Do not build the paper around an analogy.
+- **Recommendation matrices and action items**: In papers, convert these into limitations, future work, design implications, or evaluation criteria.
+- **Curated resource lists**: Related work should synthesize research by theme or problem, not list resources by usefulness.
+- **Production-ready threshold tables**: Use thresholds only when they are part of the evaluation design or are justified by prior work. Do not invent operational thresholds for rhetorical clarity.
+
+### What Transfers Well To Papers
+
+The following rules apply strongly to academic writing:
+
+- **Define before use**:
+  - Define every core term before using it in claims, figures, tables, or evaluation.
+  - For a systems paper, define objects such as event, attempt, template, group, lifecycle, rule, evidence, and outcome before using them in methodology or evaluation.
+- **Order concepts by dependency**:
+  - Introduce the problem domain before the data model.
+  - Introduce observable evidence before parser output.
+  - Introduce parser output before higher-level grouping.
+  - Introduce grouping before lifecycle interpretation.
+  - Introduce lifecycle and workflow before evaluation metrics.
+- **Avoid forward references**:
+  - Do not rely on phrases such as "explained later" when the current paragraph needs the concept.
+  - Add a short local definition or move the concept earlier.
+- **Avoid circular definitions**:
+  - Do not define one paper object using another object that has not yet been defined.
+  - If two objects depend on each other, first define the shared parent concept, then define each object separately.
+- **Keep claim and evidence close**:
+  - A claim should be followed nearby by its evidence, citation, table, figure, or explicit limitation.
+  - Do not place all citations in a final source list while leaving key claims unsupported in the text.
+- **Group by logical unit**:
+  - Related work should be grouped by research problem, method family, or evidence role, not by one paragraph per paper.
+  - Methodology should be grouped by data transformation stage, with input, output, assumptions, and failure modes close together.
+  - Evaluation should be grouped by research question or claim, with metrics and limitations next to each claim.
+- **State what the paper does not prove**:
+  - If the evidence only supports a symptom, do not call it a root cause.
+  - If the evaluation only reports aggregate replayability, do not claim user usefulness.
+  - If a label requires human judgment, mark it as unverified until the paper has a labeled dataset.
+
+### Paper Draft Review Checklist
+
+Use this checklist when reviewing a thesis chapter, conference paper, or journal manuscript:
+
+- [ ] The introduction defines the problem before introducing the proposed object or method.
+- [ ] Every research question has a matching claim, evidence source, and limitation.
+- [ ] Core terms are defined before first argumentative use.
+- [ ] Acronyms are expanded on first use unless they are universal in the target field.
+- [ ] Related work is organized by theme or gap, not by source order.
+- [ ] Each related-work section ends by explaining how that literature changes this paper's method, data boundary, claim boundary, or evaluation.
+- [ ] Methodology states input, transformation, output, assumptions, and failure modes for each stage.
+- [ ] Evaluation uses the same units defined in methodology and does not mix rows, events, attempts, documents, or users.
+- [ ] Tables and figures appear near the claims they support.
+- [ ] Limitations match actual missing evidence, not generic disclaimers.
+- [ ] Future work contains only work that is outside the current evidence, implementation, or author decision boundary.
+
+### Thesis-Specific Pattern Learned From Use
+
+When applying technical-writing rules to a research paper, first remove tutorial-only guidance, then keep the structural rules that protect the argument. In the mail-log thesis draft, the reusable pattern is:
+
+```text
+problem framing
+  -> observable evidence
+  -> data preparation
+  -> parser or template output
+  -> higher-level grouping
+  -> lifecycle or workflow interpretation
+  -> evaluation claim
+  -> explicit limitation
+```
+
+This pattern prevents common paper-draft failures:
+
+- using a later concept before defining it;
+- treating parser output as a final research object;
+- presenting workflow support without evaluation evidence;
+- calling an observable symptom a root cause;
+- separating a claim from its table, figure, citation, or limitation.
+
+---
+
 ## Complete Checklist
 
 When writing technical content:
@@ -623,3 +715,15 @@ When writing technical content:
 - [ ] Name each recommended workflow and note when to use it
 - [ ] Include production-ready threshold tables for metrics
 - [ ] End with numbered, specific action items
+
+**Academic Papers:**
+
+- [ ] Remove tutorial-only devices from the paper body: thought questions, collapsible answers, prerequisite callouts, recommendation matrices, and action-item endings.
+- [ ] Define every core term before first argumentative use.
+- [ ] Introduce concepts in dependency order: problem -> evidence -> representation -> method -> workflow -> evaluation -> limitation.
+- [ ] For every research question, identify the claim, evidence, and limitation.
+- [ ] Keep each claim near the citation, table, figure, or result that supports it.
+- [ ] Organize related work by theme, method family, or research gap.
+- [ ] Keep methodology stages self-contained: input, output, assumption, and failure mode.
+- [ ] Use consistent counting units across methodology and evaluation.
+- [ ] State what the paper does not prove when the available evidence is incomplete.

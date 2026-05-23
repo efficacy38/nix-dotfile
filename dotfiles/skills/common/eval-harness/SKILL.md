@@ -1,3 +1,9 @@
+---
+name: Eval Harness Skill
+description: A formal evaluation framework for Claude Code sessions, implementing eval-driven development (EDD) principles.
+license: Complete terms in LICENSE.txt
+---
+
 # Eval Harness Skill
 
 A formal evaluation framework for Claude Code sessions, implementing eval-driven development (EDD) principles.
