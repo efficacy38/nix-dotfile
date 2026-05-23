@@ -39,7 +39,7 @@ _: {
                 realm = test
                 username = ${config.sops.placeholder."cscc/username"}
                 pppd-use-peerdns = 0
-                trusted-cert = d9921fc2c7702e215826ea75b17511f3d59b7d5ed328b92e29b79307e90c84f9
+                trusted-cert = b3c695f082f93d6f7b0551eec56e82401ef49c159e5c9e54af3af44c67c5a2b7
                 pppd-ifname = ppp0
                 password = ${config.sops.placeholder."cscc/password"}
               '';
@@ -52,7 +52,7 @@ _: {
                 realm = prod
                 username = ${config.sops.placeholder."cscc/username"}
                 pppd-use-peerdns = 0
-                trusted-cert = d9921fc2c7702e215826ea75b17511f3d59b7d5ed328b92e29b79307e90c84f9
+                trusted-cert = b3c695f082f93d6f7b0551eec56e82401ef49c159e5c9e54af3af44c67c5a2b7
                 pppd-ifname = ppp1
                 password = ${config.sops.placeholder."cscc/password"}
               '';
