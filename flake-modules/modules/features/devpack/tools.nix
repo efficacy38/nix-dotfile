@@ -371,7 +371,6 @@ _: {
               claude-code-router
               codex
               copilot-cli
-              gemini-cli
               openspec
               opencode
               vibe-kanban

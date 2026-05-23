@@ -227,8 +227,8 @@ _: {
             bind -n M-j select-pane -D
 
             # Shift arrow to switch windows
-            bind -n S-Left previous-window
-            bind -n S-Right next-window
+            # bind -n S-Left previous-window
+            # bind -n S-Right next-window
 
             # Mouse mode
             setw -g mouse on
