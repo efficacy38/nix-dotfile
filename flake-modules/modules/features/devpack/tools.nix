@@ -17,7 +17,9 @@ _: {
           directories = [
             ".krew"
             ".kube"
+            ".config/k9s"
             ".local/share/k9s"
+            ".config/glab-cli"
             ".mc"
             ".local/share/mc"
           ];
@@ -87,9 +89,14 @@ _: {
             ".config/github-copilot"
 
             # Codex
-            ".config/codex"
-            ".local/share/codex"
-            ".cache/codex"
+            ".codex"
+
+            # GitHub Copilot (CLI sessions/state)
+            ".copilot"
+
+            # opencode
+            ".config/opencode"
+            ".local/share/opencode"
 
             # Antigravity
             ".antigravity"

@@ -118,6 +118,7 @@ _: {
             environment.persistence."/persistent/system".users."efficacy38" = {
               directories = [
                 # XDG user data directories
+                "LLM-wiki"
                 "Music"
                 "Downloads"
                 "Pictures"
