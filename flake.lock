@@ -1,5 +1,39 @@
 {
   "nodes": {
+    "academic-research-skills": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1779518592,
+        "narHash": "sha256-Vm9DvonrHRZrEFMtURYGPJOgHkxRIwBRzeza6zhlURg=",
+        "owner": "Imbad0202",
+        "repo": "academic-research-skills",
+        "rev": "3187bf8e32b34ed3dfbcfbd2c254299ccf011220",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Imbad0202",
+        "repo": "academic-research-skills",
+        "rev": "3187bf8e32b34ed3dfbcfbd2c254299ccf011220",
+        "type": "github"
+      }
+    },
+    "academic-research-skills-codex": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1779169522,
+        "narHash": "sha256-VDQcY/jpM8sjJn/NqClgQd4Ohl4cd5/EWtChIaQhXW8=",
+        "owner": "Imbad0202",
+        "repo": "academic-research-skills-codex",
+        "rev": "900238ce1b04109bc3e11a4849f4be55122e5301",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Imbad0202",
+        "repo": "academic-research-skills-codex",
+        "rev": "900238ce1b04109bc3e11a4849f4be55122e5301",
+        "type": "github"
+      }
+    },
     "base16": {
       "inputs": {
         "fromYaml": "fromYaml"
@@ -834,6 +868,8 @@
     },
     "root": {
       "inputs": {
+        "academic-research-skills": "academic-research-skills",
+        "academic-research-skills-codex": "academic-research-skills-codex",
         "determinate": "determinate",
         "disko": "disko",
         "firefox-addons": "firefox-addons",

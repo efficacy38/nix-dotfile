@@ -268,6 +268,7 @@ in
     devpack-podman =
       {
         options,
+        inputs,
         pkgs,
         lib,
         config,
@@ -290,6 +291,8 @@ in
         commonSkillNames = skillNamesFromDir commonSkillsPath;
         claudeSkillNames = skillNamesFromDir claudeSkillsPath;
         codexSkillNames = skillNamesFromDir codexSkillsPath;
+        thirdPartySkillPackages =
+          (import ./third-party-skills.nix { inherit inputs; })._module.args.devpackThirdPartySkills;
 
         mkSkillEntries =
           dir: names:
@@ -298,14 +301,19 @@ in
             path = config.lib.file.mkOutOfStoreSymlink "${dir}/${name}";
           }) names;
 
+        thirdPartySkillEntriesFor =
+          agentName:
+          lib.flatten (map (skillPackage: skillPackage.variants.${agentName} or [ ]) thirdPartySkillPackages);
+
         mkSkillFarm =
-          agentName: skillSets:
+          agentName: localSkillSets: thirdPartyEntries:
           let
-            entries = lib.flatten (map (skillSet: mkSkillEntries skillSet.dir skillSet.names) skillSets);
-            names = map (entry: entry.name) entries;
+            entries = lib.flatten (map (skillSet: mkSkillEntries skillSet.dir skillSet.names) localSkillSets);
+            allEntries = entries ++ thirdPartyEntries;
+            names = map (entry: entry.name) allEntries;
           in
           if builtins.length (lib.unique names) == builtins.length names then
-            pkgs.linkFarm "${agentName}-skills" entries
+            pkgs.linkFarm "${agentName}-skills" allEntries
           else
             builtins.throw "Duplicate skill names configured for ${agentName}";
 
@@ -318,7 +326,18 @@ in
             dir = claudeSkillsDir;
             names = claudeSkillNames;
           }
-        ];
+        ] (thirdPartySkillEntriesFor "claude");
+
+        geminiSkills = mkSkillFarm "gemini" [
+          {
+            dir = commonSkillsDir;
+            names = commonSkillNames;
+          }
+          {
+            dir = claudeSkillsDir;
+            names = claudeSkillNames;
+          }
+        ] (thirdPartySkillEntriesFor "claude");
 
         codexSkills = mkSkillFarm "codex" [
           {
@@ -329,7 +348,7 @@ in
             dir = codexSkillsDir;
             names = codexSkillNames;
           }
-        ];
+        ] (thirdPartySkillEntriesFor "codex");
       in
       {
         config =
@@ -362,6 +381,9 @@ in
               };
               ".codex/skills" = {
                 source = codexSkills;
+              };
+              ".gemini/skills" = {
+                source = geminiSkills;
               };
               ".codex/AGENTS.md" = {
                 source = config.lib.file.mkOutOfStoreSymlink "${dotfilesDir}/codex/AGENTS.md";
