@@ -14,6 +14,15 @@
     '';
   };
 
+  # FIXME: this should add extra module option to make sure this machine would
+  # not sleep
+  systemd.sleep.extraConfig = ''
+    AllowSuspend=no
+    AllowHibernation=no
+    AllowHybridSleep=no
+    AllowSuspendThenHibernate=no
+  '';
+
   my = {
     bundles = {
       common.enable = true;
@@ -23,6 +32,7 @@
     desktop = {
       fprintd.enable = true;
       batteryHealth.enable = true;
+      sunshine.enable = true;
     };
     users = {
       efficacy38 = {
