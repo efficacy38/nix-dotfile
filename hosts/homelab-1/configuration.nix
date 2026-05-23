@@ -67,9 +67,12 @@ in
     };
   };
 
+  virtualisation = {
+    podman.enable = lib.mkForce true;
+    docker.enable = lib.mkForce true;
+  };
+
   services = {
-    virtualisation.podman.enable = lib.mkForce true;
-    virtualisation.docker.enable = lib.mkForce true;
     openiscsi = {
       enable = true;
       name = "iqn.2025-02.net.csjhuang:homelab-1";
