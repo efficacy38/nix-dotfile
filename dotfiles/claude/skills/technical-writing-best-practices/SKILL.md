@@ -462,6 +462,116 @@ For articles with many technical terms, add a quick reference table early:
 
 ---
 
+## Part 7: Research Survey & Comparison Reports
+
+### The Problem
+
+When synthesizing research from many sources (papers, docs, blog posts) into a technical report, the result often reads like a disorganized link dump or an overwhelming wall of text with no actionable takeaways.
+
+**Symptoms:**
+- Reader can't tell which sources matter most
+- No clear recommendations or decision framework
+- Comparison tables missing or inconsistent
+- Actionable next steps buried in prose
+
+### The Rule: Structure for Decision-Making
+
+A survey report should help the reader **make decisions**, not just absorb information. Every section should answer: "So what? What should I do with this?"
+
+### Recommended Report Structure
+
+```
+1. Research Scope        — What was surveyed, how many sources, what categories
+2. Core Concepts         — Define the framework/taxonomy FIRST (define before use)
+3. Comparison Tables     — Side-by-side tool/method comparisons
+4. Detailed Analysis     — Deep dives grouped by theme, not by source
+5. Recommended Workflows — Concrete step-by-step procedures
+6. Curated Resources     — Top 10 (not top 100) with why each matters
+7. Action Items          — Numbered, specific next steps for the reader
+```
+
+### Comparison Table Design
+
+**Good comparison table:**
+```markdown
+| Tool | Tracing | Evaluation | Open Source | Best For |
+|---|---|---|---|---|
+| **LangSmith** | Best (LangChain native) | evaluate() API | No | LangChain ecosystem |
+| **Langfuse** | Good (OTel) | DeepEval/RAGAS | Yes | Self-hosted, cost control |
+```
+
+**Rules:**
+- Max 5-6 columns (more → unreadable)
+- Bold the tool/method name in first column
+- Include a "Best For" or "When to Use" column — this is the decision column
+- Follow with a **Recommendation Matrix** mapping scenarios to choices:
+
+```markdown
+| Scenario | Recommended Stack |
+|---|---|
+| LangChain ecosystem | **LangSmith** + OpenEvals |
+| Self-hosted priority | **Langfuse** + DeepEval |
+```
+
+### Curated Resource Lists
+
+When selecting from many sources, apply the **Top-N with justification** pattern:
+
+```markdown
+1. **"Paper Title"** — Author (Year)
+   One-line summary of why this specific resource matters
+   https://url
+```
+
+**Rules:**
+- 10 resources is the sweet spot (not 3, not 50)
+- Each entry needs a **why it matters** line, not just a summary
+- Order by importance/relevance, not chronologically
+- Group by theme if over 10 items
+
+### Workflow Documentation
+
+When documenting recommended workflows, use the **named workflow** pattern:
+
+```markdown
+### Workflow A: Golden Dataset Driven (recommended for starting)
+
+Step 1 → Step 2 → Step 3
+
+### Workflow B: Production Data Flywheel (recommended for mature systems)
+
+Step 1 → Step 2 → Step 3
+```
+
+**Rules:**
+- Give each workflow a short memorable name
+- Add parenthetical guidance on when to use each
+- Use ASCII flow diagrams for multi-step processes
+- Include concrete code snippets where applicable
+
+### Threshold Tables
+
+When reporting metrics or benchmarks, include **production-ready thresholds**:
+
+```markdown
+| Metric | Description | Recommended | High-stakes Domain |
+|---|---|---|---|
+| **Faithfulness** | Grounded in context | > 0.85 | > 0.9 |
+| **Relevance** | Answers the question | > 0.8 | > 0.85 |
+```
+
+This transforms abstract metrics into actionable standards.
+
+### Anti-patterns
+
+1. **Link dump**: Listing 50+ URLs without curation or ranking
+2. **Source-organized**: Grouping by "what Paper A says, what Paper B says" instead of by theme
+3. **Missing "so what"**: Detailed analysis with no recommendations
+4. **No comparison tables**: Forcing readers to extract comparisons from prose
+5. **Buried action items**: Next steps hidden in the middle of analysis
+
+---
+
 ## Complete Checklist
 
 When writing technical content:
@@ -502,3 +612,14 @@ When writing technical content:
 - [ ] Subsequent mentions: term only
 - [ ] Add spaces around English terms in Chinese text
 - [ ] Consider adding a glossary table for many terms
+
+**Research Survey Reports:**
+- [ ] Start with research scope (sources count, categories)
+- [ ] Define core taxonomy/framework before detailed analysis
+- [ ] Group analysis by theme, not by source
+- [ ] Include comparison tables with max 5-6 columns and a "Best For" column
+- [ ] Add recommendation matrix mapping scenarios to choices
+- [ ] Curate top ~10 resources with "why it matters" justification
+- [ ] Name each recommended workflow and note when to use it
+- [ ] Include production-ready threshold tables for metrics
+- [ ] End with numbered, specific action items
