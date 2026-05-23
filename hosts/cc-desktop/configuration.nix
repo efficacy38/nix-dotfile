@@ -53,6 +53,10 @@
       # backup.enable = true;
       systemdInitrd.enable = true;
       # systemdInitrd.debug = true;
+      incus = {
+        enable = true;
+        ui.enable = true;
+      };
     };
   };
 
@@ -92,6 +96,7 @@
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
+  networking.firewall.enable = false;
 
   system.stateVersion = "24.05";
 }
