@@ -55,7 +55,7 @@ in
           catppuccin-sddm
           wireshark
           super-productivity
-          tradingview
+          # tradingview
         ];
 
         security.pam.services.sddm.enableGnomeKeyring = true;
@@ -114,8 +114,9 @@ in
               "hypr/mocha.conf"
               "rofi"
               "waybar"
-              "kanshi/config"
-              "ghostty/config"
+              "alacritty/alacritty.toml"
+              "alacritty/catppuccin-mocha.toml"
+              "hyprmon/profiles"
             ]
           );
 
@@ -138,7 +139,6 @@ in
             settings.global.follow = "mouse";
           };
 
-          services.kanshi.enable = true;
           xsession.preferStatusNotifierItems = true;
 
           services = {
@@ -153,7 +153,7 @@ in
               systemd.enable = true;
               systemd.target = "graphical-session.target";
             };
-            ghostty.enable = true;
+            alacritty.enable = true;
           };
 
           wayland.windowManager.hyprland.systemd.enable = false;
@@ -183,13 +183,9 @@ in
             pkgs.kdePackages.breeze-icons
             pkgs.kdePackages.qtsvg
             pkgs.gawk
+            pkgs.hyprmon
+            pkgs.libreoffice
 
-            # GStreamer plugins for Ghostty media playback
-            pkgs.gst_all_1.gstreamer
-            pkgs.gst_all_1.gst-plugins-base
-            pkgs.gst_all_1.gst-plugins-good
-            pkgs.gst_all_1.gst-plugins-bad
-            pkgs.gst_all_1.gst-libav
           ];
         }
         // lib.optionalAttrs (builtins.hasAttr "stylix" options) {
@@ -202,7 +198,7 @@ in
               fzf.enable = lib.mkDefault true;
               gedit.enable = lib.mkDefault true;
               emacs.enable = lib.mkDefault true;
-              kde.enable = lib.mkDefault true;
+              kde.enable = lib.mkDefault false;
             };
           };
         }
