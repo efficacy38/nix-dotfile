@@ -1,22 +1,5 @@
 {
   "nodes": {
-    "academic-research-skills": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1779518592,
-        "narHash": "sha256-Vm9DvonrHRZrEFMtURYGPJOgHkxRIwBRzeza6zhlURg=",
-        "owner": "Imbad0202",
-        "repo": "academic-research-skills",
-        "rev": "3187bf8e32b34ed3dfbcfbd2c254299ccf011220",
-        "type": "github"
-      },
-      "original": {
-        "owner": "Imbad0202",
-        "repo": "academic-research-skills",
-        "rev": "3187bf8e32b34ed3dfbcfbd2c254299ccf011220",
-        "type": "github"
-      }
-    },
     "academic-research-skills-codex": {
       "flake": false,
       "locked": {
@@ -868,7 +851,6 @@
     },
     "root": {
       "inputs": {
-        "academic-research-skills": "academic-research-skills",
         "academic-research-skills-codex": "academic-research-skills-codex",
         "determinate": "determinate",
         "disko": "disko",

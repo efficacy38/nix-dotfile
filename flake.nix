@@ -40,11 +40,6 @@
 
     llm-agents.url = "github:numtide/llm-agents.nix";
 
-    academic-research-skills = {
-      url = "github:Imbad0202/academic-research-skills/3187bf8e32b34ed3dfbcfbd2c254299ccf011220";
-      flake = false;
-    };
-
     academic-research-skills-codex = {
       url = "github:Imbad0202/academic-research-skills-codex/900238ce1b04109bc3e11a4849f4be55122e5301";
       flake = false;
