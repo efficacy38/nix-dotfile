@@ -1,0 +1,28 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(FILTER_BRANCH_SQUELCH_WARNING=1 git filter-branch:*)",
+      "Bash(git for-each-ref:*)",
+      "Bash(nix fmt:*)",
+      "Bash(nixfmt:*)",
+      "Bash(du:*)",
+      "WebSearch",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:filipmikina.com)",
+      "WebFetch(domain:mynixos.com)",
+      "Bash(gh api:*)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "Bash(nix flake:*)",
+      "Bash(impermanence-audit --hostname stella 2>&1)",
+      "Bash(impermanence-audit --hostname stella 2>/dev/null | grep -E \"^---\")",
+      "Bash(impermanence-audit --hostname stella)",
+      "Bash(nh os:*)",
+      "Bash(nix store repair-path:*)",
+      "Bash(nix-store --realise:*)",
+      "Bash(nix store repair:*)",
+      "Bash(nix-collect-garbage:*)",
+      "Bash(sudo nix-store:*)",
+      "Bash(nix-store --verify:*)"
+    ]
+  }
+}
