@@ -93,7 +93,7 @@ _: {
 
                   # System state and keyrings
                   ".local/state"
-                  ".local/share/keyring"
+                  ".local/share/keyrings"
 
                   # Shell history and data
                   ".local/share/zsh"
