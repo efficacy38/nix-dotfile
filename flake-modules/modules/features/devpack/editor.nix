@@ -90,7 +90,6 @@ in
             gofumpt
             golangci-lint
             gomodifytags
-            gopls
             gotests
             gotools
             govulncheck
@@ -105,8 +104,8 @@ in
             nixd
             nixfmt
             nil
-            nodePackages.bash-language-server
-            nodePackages.prettier
+            # nodePackages.bash-language-server
+            # nodePackages.prettier
             nodejs
             prettierd
             pyright
@@ -171,6 +170,9 @@ in
               identityFile = "~/.ssh/keys/gh.id_ed25519";
               identitiesOnly = true;
             };
+            includes = [
+              "config.d/*.conf"
+            ];
           };
 
           gh.enable = true;
