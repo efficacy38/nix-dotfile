@@ -461,11 +461,16 @@ in
               claude-code
               claude-code-router
               codex
+              pi
               copilot-cli
               openspec
               opencode
+              (lib.lowPrio ollama)
               vibe-kanban
               pkgs.notebooklm-py
+
+              # mcp servers
+              pkgs.zhtw-mcp
             ])
             ++ [
               # Playwright with chromium browser

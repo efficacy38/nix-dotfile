@@ -27,6 +27,18 @@ let
         ../overlays/personal-scripts/personal-scripts.nix
         ../overlays/flowsurface/flowsurface.nix
         ../overlays/notebooklm-py/notebooklm-py.nix
+
+        # inline nixpkgs overlay
+        (
+          { ... }:
+          {
+            nixpkgs.overlays = [
+              (_final: _prev: {
+                zhtw-mcp = inputs.zhtw-mcp.packages.${_prev.system}.default;
+              })
+            ];
+          }
+        )
       ];
     };
 

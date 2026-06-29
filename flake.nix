@@ -44,6 +44,10 @@
       url = "github:Imbad0202/academic-research-skills-codex/900238ce1b04109bc3e11a4849f4be55122e5301";
       flake = false;
     };
+
+    zhtw-mcp = {
+      url = "github:sysprog21/zhtw-mcp";
+    };
   };
 
   outputs =
