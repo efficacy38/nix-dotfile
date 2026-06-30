@@ -61,12 +61,12 @@ in
         security.pam.services.sddm.enableGnomeKeyring = true;
         services.gnome.gnome-keyring.enable = true;
 
-        systemd.sleep.extraConfig = ''
-          AllowSuspend=yes
-          AllowHibernation=no
-          AllowHybridSleep=no
-          AllowSuspendThenHibernate=no
-        '';
+        systemd.sleep.settings.Sleep = {
+          AllowSuspend = "yes";
+          AllowHibernation = "no";
+          AllowHybridSleep = "no";
+          AllowSuspendThenHibernate = "no";
+        };
       };
     };
 

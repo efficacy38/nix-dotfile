@@ -1,4 +1,4 @@
-{ ... }:
+{ lib, ... }:
 {
   imports = [
     # Include the results of the hardware scan.
@@ -16,12 +16,12 @@
 
   # FIXME: this should add extra module option to make sure this machine would
   # not sleep
-  systemd.sleep.extraConfig = ''
-    AllowSuspend=no
-    AllowHibernation=no
-    AllowHybridSleep=no
-    AllowSuspendThenHibernate=no
-  '';
+  systemd.sleep.settings.Sleep = {
+    AllowSuspend = lib.mkForce "no";
+    AllowHibernation = lib.mkForce "no";
+    AllowHybridSleep = lib.mkForce "no";
+    AllowSuspendThenHibernate = lib.mkForce "no";
+  };
 
   my = {
     bundles = {
