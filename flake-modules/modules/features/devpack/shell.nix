@@ -15,7 +15,6 @@ _: {
       config = lib.mkIf (cfg.enable && cfg.zsh.enable) {
         home.packages = with pkgs; [
           fzf
-          fzf-zsh
           zsh-defer
         ];
 
@@ -68,6 +67,7 @@ _: {
                 "node"
                 "rust"
                 "deno"
+                "fzf"
               ];
             };
 
