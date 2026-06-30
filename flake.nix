@@ -3,12 +3,12 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-25.11";
+    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-26.05";
 
     nixos-hardware.url = "github:NixOS/nixos-hardware";
     sops-nix.url = "github:Mic92/sops-nix";
     impermanence.url = "github:nix-community/impermanence";
-    stylix.url = "github:danth/stylix/release-25.11";
+    stylix.url = "github:danth/stylix/release-26.05";
     zen-browser.url = "github:youwen5/zen-browser-flake";
     determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
     nix-secrets = {
@@ -18,7 +18,7 @@
       flake = false;
     };
 
-    home-manager-stable.url = "github:nix-community/home-manager/release-25.11";
+    home-manager-stable.url = "github:nix-community/home-manager/release-26.05";
     home-manager-stable.inputs.nixpkgs.follows = "nixpkgs-stable";
 
     solaar.url = "github:Svenum/Solaar-Flake";
