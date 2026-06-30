@@ -176,7 +176,7 @@ in
                 gnused
               ];
             })
-            pkgs.blueberry
+            pkgs.blueman
             pkgs.rofi-calc
             pkgs.rofi-emoji
             pkgs.kdePackages.breeze
