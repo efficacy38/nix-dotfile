@@ -27,6 +27,7 @@ let
         ../overlays/personal-scripts/personal-scripts.nix
         ../overlays/flowsurface/flowsurface.nix
         ../overlays/notebooklm-py/notebooklm-py.nix
+        ../overlays/hyprmon/hyprmon.nix
 
         # inline nixpkgs overlay
         (

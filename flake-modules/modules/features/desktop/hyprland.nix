@@ -107,11 +107,11 @@ in
           xdg.configFile = lib.attrsets.mergeAttrsList (
             map mkLinkConfig [
               "hypr/hypridle.conf"
-              "hypr/hyprland.conf"
+              "hypr/hyprland.lua"
               "hypr/hyprlock.conf"
               "hypr/hyprpaper.conf"
               "hypr/handle_lid_switch.sh"
-              "hypr/mocha.conf"
+              "hypr/mocha.lua"
               "rofi"
               "waybar"
               "alacritty/alacritty.toml"
@@ -159,7 +159,7 @@ in
           wayland.windowManager.hyprland.systemd.enable = false;
 
           home.packages = [
-            pkgs.mate.mate-media
+            pkgs.mate-media
             (pkgs.writeShellApplication {
               name = "my-audio-control";
               text = ''
