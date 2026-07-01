@@ -457,7 +457,7 @@ in
             ]
             ++ (with inputs.llm-agents.packages."${pkgs.stdenv.hostPlatform.system}"; [
               agent-browser
-              antigravity
+              antigravity-cli
               claude-code
               claude-code-router
               codex
