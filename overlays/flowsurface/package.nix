@@ -9,7 +9,7 @@
   libxkbcommon,
   vulkan-loader,
   wayland,
-  xorg,
+  pkgs,
 }:
 stdenv.mkDerivation rec {
   pname = "flowsurface";
@@ -25,16 +25,16 @@ stdenv.mkDerivation rec {
     makeWrapper
   ];
 
-  buildInputs = [
+  buildInputs = with pkgs; [
     alsa-lib
     libGL
     libxkbcommon
     vulkan-loader
     wayland
-    xorg.libX11
-    xorg.libXcursor
-    xorg.libXi
-    xorg.libXrandr
+    libx11
+    libxi
+    libxcursor
+    libxrandr
     stdenv.cc.cc.lib
   ];
 
