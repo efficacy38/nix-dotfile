@@ -41,6 +41,7 @@
     system = {
       impermanence.enable = true;
       systemdInitrd.enable = true;
+      netbird.enable = true;
       # systemdInitrd.debug = true;
       backup.enable = true;
     };
