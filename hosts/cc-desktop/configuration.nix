@@ -49,6 +49,7 @@
       tailscale.enable = true;
     };
     system = {
+      netbird.enable = true;
       impermanence.enable = false;
       # backup.enable = true;
       systemdInitrd.enable = true;
