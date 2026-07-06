@@ -1,26 +1,26 @@
 ---
 name: impermanence-audit
-description: Audit NixOS impermanence configuration — find files on root filesystem not covered by persistence declarations. Use when the user wants to check for untracked files, audit impermanence, or runs /impermanence-audit.
+description: Audit NixOS impermanence state — find files still on the current filesystem device. Use when the user wants to check for untracked files, audit impermanence, or runs /impermanence-audit.
 allowed-tools: Bash(sudo:*), Bash(bash:*), Bash(nix:*), Read, Edit, Glob, Grep
 ---
 
 # Impermanence Audit
 
-Scan the root filesystem and identify files not covered by NixOS impermanence persistence declarations. These files would be lost on reboot.
+Scan the root filesystem with `find -xdev` and identify files still on the same device as `/`. These files would be lost on reboot when impermanence resets the root filesystem.
 
 ## Workflow
 
 ### 1. Run the audit script
 
 ```bash
-sudo impermanence-audit --hostname stella
+sudo impermanence-audit efficacy38
 ```
 
-Options:
-- `--hostname NAME` — NixOS host config to evaluate (default: `$(hostname)`)
-- `--user NAME` — user home to check (default: current user)
-- `--ignore FILE` — extra ignore patterns file
-- `--json` — machine-readable output
+Interface:
+- Users are optional positional arguments, for example `sudo impermanence-audit efficacy38 gaming`.
+- With no users, it audits system paths only.
+- The script only relies on `find -xdev` plus device-number filtering.
+- It always emits JSON.
 
 ### 2. Analyze results
 
