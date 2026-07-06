@@ -20,15 +20,9 @@ _: {
         systemd.packages = with pkgs; [ fprintd ];
         systemd.services.fprintd.enable = true;
 
-        # only allow tty to consume fingerprint auth
-        security.pam.services.sudo.rules.auth.fprintd-tty-only = {
-          enable = true;
-          order = config.security.pam.services.sudo.rules.auth.fprintd-personalize.order - 10;
-          control = "[success=1 default=ignore]";
-          modulePath = "${pkgs.fprintd}/lib/security/pam_fprintd.so";
-          args = [ "service in sudo:su:su-l tty in :tty" ];
-        };
-
+        # Keep pam_fprintd as the sufficient sudo auth step. A preceding
+        # conditional wrapper must not consume the successful fingerprint.
+        # ref: https://wiki.archlinux.org/title/Talk:Fprint
         security.pam.services.sudo.rules.auth.fprintd-personalize = {
           enable = true;
           order = config.security.pam.services.sudo.rules.auth.unix.order - 10;
