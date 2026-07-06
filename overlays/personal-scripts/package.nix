@@ -28,7 +28,6 @@ stdenv.mkDerivation {
   installPhase = ''
     mkdir -p $out/bin/modules/
     cp cscc_work.sh $out/bin/cscc_work
-    cp impermanence_audit.sh $out/bin/impermanence-audit
     cp modules/* $out/bin/modules
     chmod +x -R $out/bin
   '';

@@ -27,6 +27,7 @@ _: {
     {
       lib,
       config,
+      pkgs,
       ...
     }:
     let
@@ -37,6 +38,19 @@ _: {
 
       config =
         let
+          impermanenceAudit = pkgs.writeShellApplication {
+            name = "impermanence-audit";
+            runtimeInputs = with pkgs; [
+              coreutils
+              findutils
+              glibc.bin
+              jq
+            ];
+            text = ''
+              exec ${pkgs.bash}/bin/bash ${../../../../overlays/personal-scripts/impermanence_audit.sh} "$@"
+            '';
+          };
+
           common-impermanence = {
             # Mount /etc/ssh early in initrd for sops-nix decryption
             fileSystems."/etc/ssh" = {
@@ -103,6 +117,60 @@ _: {
             };
 
             programs.fuse.userAllowOther = true;
+
+            environment.systemPackages = [
+              impermanenceAudit
+            ];
+
+            systemd.services.impermanence-audit-shutdown = {
+              description = "Audit impermanence before shutdown";
+              wantedBy = [ "shutdown.target" ];
+              before = [ "shutdown.target" ];
+              after = [ "local-fs.target" ];
+              unitConfig.DefaultDependencies = "no";
+              path = with pkgs; [
+                coreutils
+                jq
+              ];
+              serviceConfig = {
+                Type = "oneshot";
+                TimeoutStartSec = "60s";
+              };
+              script = ''
+                set -u
+
+                output_dir=/persistent/system/var/log/impermanence-audit
+                timestamp="$(date -u '+%Y%m%dT%H%M%SZ')"
+                tmp_file="$output_dir/.shutdown-$timestamp.tmp"
+                report_file="$output_dir/shutdown-$timestamp.json"
+                latest_file="$output_dir/shutdown-latest.json"
+
+                mkdir -p "$output_dir"
+
+                if ${impermanenceAudit}/bin/impermanence-audit \
+                  efficacy38 \
+                  > "$tmp_file"; then
+                  :
+                else
+                  status=$?
+                  jq -n \
+                    --arg hostname ${lib.escapeShellArg config.networking.hostName} \
+                    --arg user efficacy38 \
+                    --arg error "impermanence-audit exited with status $status" \
+                    '{
+                      hostname: $hostname,
+                      system: [],
+                      users: {($user): []},
+                      total: 0,
+                      error: $error
+                    }' > "$tmp_file"
+                fi
+
+                cp "$tmp_file" "$report_file"
+                cp "$tmp_file" "$latest_file"
+                rm -f "$tmp_file"
+              '';
+            };
 
             systemd.tmpfiles.rules = [
               "d /mnt 0770 root root -"
