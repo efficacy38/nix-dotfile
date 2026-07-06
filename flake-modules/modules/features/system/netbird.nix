@@ -40,6 +40,11 @@ _: {
               }
             ];
           })
+
+          (lib.mkIf config.my.system.impermanence.enable {
+            environment.persistence."/persistent/system".directories =
+              lib.map (client: client.dir.state) clients;
+          })
         ]
       );
     };

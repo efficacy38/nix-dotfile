@@ -71,8 +71,11 @@ _: {
                 "/var/db/sudo"
                 "/var/log"
                 "/var/lib/bluetooth"
+                "/var/lib/docker"
                 "/var/lib/fail2ban"
                 "/var/lib/fprint"
+                "/var/lib/fwupd"
+                "/var/lib/NetworkManager"
                 "/var/lib/nixos"
                 "/var/lib/power-profiles-daemon"
                 "/var/lib/sddm"
@@ -106,6 +109,7 @@ _: {
                   ".config/incus"
 
                   # System state and keyrings
+                  ".config/syncthing"
                   ".local/state"
                   ".local/share/keyrings"
 

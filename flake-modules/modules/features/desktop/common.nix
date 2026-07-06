@@ -132,6 +132,8 @@ _: {
                 ".thunderbird" # Email client
                 ".config/keepassxc" # Password manager
                 ".cache/keepassxc"
+                ".config/kdeconnect" # KDE Connect device pairing
+                ".local/share/kdeconnect"
                 ".local/share/remmina" # Remote desktop
                 ".local/share/Trash" # System utilities
                 ".config/Moonlight\\ Game\\ Streaming\\ Project" # Game streaming
