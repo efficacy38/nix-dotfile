@@ -42,7 +42,7 @@ in
           swaybg
           wpaperd
           mpvpaper
-          swww
+          awww
           brightnessctl
 
           # launcher
@@ -151,7 +151,7 @@ in
             waybar = {
               enable = true;
               systemd.enable = true;
-              systemd.target = "graphical-session.target";
+              systemd.targets = [ "graphical-session.target" ];
             };
             alacritty.enable = true;
           };
