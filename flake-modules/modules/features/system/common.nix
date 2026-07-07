@@ -117,9 +117,11 @@ _: {
         # systemd resolved
         services.resolved = {
           enable = true;
-          dnssec = if cfg.resolvedDnssec then "true" else lib.mkDefault "false";
-          domains = lib.mkIf cfg.resolvedDnssec [ "~." ];
-          dnsovertls = if cfg.resolvedDnssec then "true" else lib.mkDefault "opportunistic";
+          settings.Resolve = {
+            DNSSEC = if cfg.resolvedDnssec then "true" else lib.mkDefault "false";
+            Domains = lib.mkIf cfg.resolvedDnssec [ "~." ];
+            DNSOverTLS = if cfg.resolvedDnssec then "true" else lib.mkDefault "opportunistic";
+          };
         };
 
         # Allow unfree packages
