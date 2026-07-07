@@ -17,14 +17,16 @@ _: {
       };
     in
     {
-      options.my.system.backup.enable = lib.mkEnableOption "backup configuration (kopia)";
+      options.my.system.backup = {
+        enable = lib.mkEnableOption "backup configuration (kopia)";
+        path = lib.mkOption {
+          type = lib.types.path;
+          default = "/persistent";
+        };
+      };
 
       config = lib.mkIf cfg.backup.enable {
         sops.secrets = {
-          # homelab-1 secrets kept for future homelab backup restore
-          "homelab-1/password" = backupSecret;
-          "homelab-1/accessKey" = backupSecret;
-          "homelab-1/secretKey" = backupSecret;
           "b2/password" = backupSecret;
           "b2/accessKey" = backupSecret;
           "b2/secretKey" = backupSecret;
@@ -45,7 +47,8 @@ _: {
           };
 
           snapshots.persistent = {
-            path = "/persistent";
+            timer.enable = true;
+            path = config.my.system.backup.path;
             policy = {
               retention = {
                 keepLatest = 5;
@@ -54,7 +57,7 @@ _: {
                 keepMonthly = 3;
                 keepAnnual = 0;
               };
-              compression = "pgzip";
+              compression.compressorName = "pgzip";
             };
           };
 

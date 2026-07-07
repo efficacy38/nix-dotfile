@@ -57,6 +57,11 @@
         enable = true;
         ui.enable = true;
       };
+      # TODO: add more persistent directory, currently only user home
+      backup = {
+        enable = true;
+        path = "/home/efficacy38";
+      };
     };
   };
 
