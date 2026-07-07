@@ -44,18 +44,20 @@ _: {
             serverPasswordFile = config.sops.secrets."b2/serverPassword".path;
           };
 
-          paths = [ "/persistent" ];
-
-          policy = {
-            retention = {
-              keepLatest = 5;
-              keepDaily = 30;
-              keepWeekly = 4;
-              keepMonthly = 3;
-              keepAnnual = 0;
+          snapshots.persistent = {
+            path = "/persistent";
+            policy = {
+              retention = {
+                keepLatest = 5;
+                keepDaily = 30;
+                keepWeekly = 4;
+                keepMonthly = 3;
+                keepAnnual = 0;
+              };
+              compression = "pgzip";
             };
-            compression = "pgzip";
           };
+
         };
       };
     };

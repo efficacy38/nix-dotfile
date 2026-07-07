@@ -16,7 +16,11 @@ let
         inputs.stylix.nixosModules.stylix
         inputs.solaar.nixosModules.default
         inputs.impermanence.nixosModules.impermanence
-        "${inputs.nixpkgs-kopia}/nixos/modules/services/backup/kopia"
+        "${inputs.nixpkgs-kopia}/nixos/modules/services/backup/kopia/default.nix"
+        "${inputs.nixpkgs-kopia}/nixos/modules/services/backup/kopia/policy-service.nix"
+        "${inputs.nixpkgs-kopia}/nixos/modules/services/backup/kopia/repository-service.nix"
+        "${inputs.nixpkgs-kopia}/nixos/modules/services/backup/kopia/snapshot-service.nix"
+        "${inputs.nixpkgs-kopia}/nixos/modules/services/backup/kopia/web-service.nix"
         inputs.determinate.nixosModules.default
         inputs.disko.nixosModules.disko
         inputs.home-manager-stable.nixosModules.default
