@@ -166,9 +166,24 @@ in
         programs = {
           ssh = {
             enable = true;
-            matchBlocks."github.com" = {
-              identityFile = "~/.ssh/keys/gh.id_ed25519";
-              identitiesOnly = true;
+            enableDefaultConfig = false;
+            settings = {
+              "github.com" = {
+                IdentityFile = "~/.ssh/keys/gh.id_ed25519";
+                IdentitiesOnly = true;
+              };
+              "*" = {
+                ForwardAgent = lib.mkDefault false;
+                AddKeysToAgent = lib.mkDefault "no";
+                Compression = lib.mkDefault false;
+                ServerAliveInterval = lib.mkDefault 0;
+                ServerAliveCountMax = lib.mkDefault 3;
+                HashKnownHosts = lib.mkDefault false;
+                UserKnownHostsFile = lib.mkDefault "~/.ssh/known_hosts";
+                ControlMaster = lib.mkDefault "no";
+                ControlPath = lib.mkDefault "~/.ssh/master-%r@%n:%p";
+                ControlPersist = lib.mkDefault "no";
+              };
             };
             includes = [
               "config.d/*.conf"
