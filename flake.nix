@@ -45,6 +45,11 @@
       flake = false;
     };
 
+    mattpocock-skills = {
+      url = "github:mattpocock/skills";
+      flake = false;
+    };
+
     zhtw-mcp = {
       url = "github:sysprog21/zhtw-mcp";
     };

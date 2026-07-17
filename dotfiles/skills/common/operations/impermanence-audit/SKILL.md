@@ -76,7 +76,7 @@ environment.persistence."/persistent/system" = {
 After adding persistence declarations:
 
 ```bash
-nh os switch --hostname=stella
+nh os switch --hostname <host>
 ```
 
 Then re-run the audit to confirm the paths are now covered.
