@@ -476,6 +476,7 @@ in
               socat
               uv
               claude-notify
+              pkgs.codex-desktop
             ]
             ++ (with inputs.llm-agents.packages."${pkgs.stdenv.hostPlatform.system}"; [
               agent-browser

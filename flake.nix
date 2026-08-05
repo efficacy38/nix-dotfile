@@ -40,6 +40,11 @@
 
     llm-agents.url = "github:numtide/llm-agents.nix";
 
+    codex-desktop-linux = {
+      url = "github:ilysenko/codex-desktop-linux";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     academic-research-skills-codex = {
       url = "github:Imbad0202/academic-research-skills-codex/900238ce1b04109bc3e11a4849f4be55122e5301";
       flake = false;

@@ -32,6 +32,7 @@ let
         ../overlays/flowsurface/flowsurface.nix
         ../overlays/notebooklm-py/notebooklm-py.nix
         ../overlays/hyprmon/hyprmon.nix
+        ../overlays/codex-desktop/codex-desktop.nix
 
         # inline nixpkgs overlay
         (
