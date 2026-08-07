@@ -496,6 +496,9 @@ in
               pkgs.zhtw-mcp
             ])
             ++ [
+              # Deploy other NixOS machines
+              inputs.deploy-rs.packages.${pkgs.stdenv.hostPlatform.system}.default
+
               # Playwright with chromium browser
               pkgs.playwright-driver
               playwright-browsers

@@ -58,10 +58,12 @@
     zhtw-mcp = {
       url = "github:sysprog21/zhtw-mcp";
     };
+
+    deploy-rs.url = "github:serokell/deploy-rs";
   };
 
   outputs =
-    inputs@{ flake-parts, ... }:
+    inputs@{ self, flake-parts, ... }:
     let
       import-tree = import inputs.import-tree;
     in
@@ -72,9 +74,10 @@
       ];
 
       perSystem =
-        { pkgs, ... }:
+        { system, pkgs, ... }:
         {
           formatter = pkgs.nixfmt-tree;
+          checks = inputs.deploy-rs.lib.${system}.deployChecks self.deploy;
         };
 
       imports = [
@@ -86,5 +89,17 @@
         # New flake-parts modules (features and bundles) via import-tree
         (import-tree ./flake-modules/modules)
       ];
+
+      flake.deploy.nodes = {
+        stella = {
+          hostname = "stella";
+          sshUser = "efficacy38";
+          interactiveSudo = true;
+          profiles.system = {
+            user = "root";
+            path = inputs.deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.stella;
+          };
+        };
+      };
     };
 }

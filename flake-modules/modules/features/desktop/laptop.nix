@@ -20,9 +20,24 @@ _: {
         systemd.packages = with pkgs; [ fprintd ];
         systemd.services.fprintd.enable = true;
 
-        # Keep pam_fprintd as the sufficient sudo auth step. A preceding
-        # conditional wrapper must not consume the successful fingerprint.
-        # ref: https://wiki.archlinux.org/title/Talk:Fprint
+        # Skip fingerprint authentication when sudo has no controlling TTY.
+        # On success, pam_succeed_if skips the immediately following rule.
+        security.pam.services.sudo.rules.auth.fprintd-skip-without-tty = {
+          enable = true;
+          order = config.security.pam.services.sudo.rules.auth.fprintd-personalize.order - 1;
+          control = "[success=1 default=ignore]";
+          modulePath = "${config.security.pam.package}/lib/security/pam_succeed_if.so";
+          args = [
+            "service"
+            "in"
+            "sudo:su:su-l"
+            "tty"
+            "in"
+            ":unknown"
+          ];
+        };
+
+        # Keep pam_fprintd as the sufficient sudo auth step.
         security.pam.services.sudo.rules.auth.fprintd-personalize = {
           enable = true;
           order = config.security.pam.services.sudo.rules.auth.unix.order - 10;
