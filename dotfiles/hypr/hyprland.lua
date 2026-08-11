@@ -240,8 +240,8 @@ hl.bind("XF86AudioPause", hl.dsp.exec_cmd("playerctl play-pause"), { locked = tr
 hl.bind("XF86AudioPlay", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
 hl.bind("XF86AudioPrev", hl.dsp.exec_cmd("playerctl previous"), { locked = true })
 
-hl.bind("PRINT", hl.dsp.exec_cmd("uwsm app -- hyprshot -m window"))
-hl.bind("SHIFT + PRINT", hl.dsp.exec_cmd("uwsm app -- hyprshot -m region"))
+hl.bind("PRINT", hl.dsp.exec_cmd("uwsm app -- hyprshot -m window -z"))
+hl.bind("SHIFT + PRINT", hl.dsp.exec_cmd("uwsm app -- hyprshot -m region -z"))
 hl.bind(shiftSuper .. " + l", hl.dsp.exec_cmd("uwsm app -- hyprlock"))
 hl.bind("SUPER + Tab", hl.dsp.window.cycle_next())
 hl.bind("SUPER + Tab", hl.dsp.window.bring_to_top())
@@ -299,7 +299,7 @@ hl.window_rule({
 
 hl.window_rule({
     name = "float-bluetooth-title",
-    match = { title = "^Bluetooth$" },
+    match = { title = "^Bluetooth Devices$" },
     float = true,
 })
 
