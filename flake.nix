@@ -56,7 +56,7 @@
     };
 
     zhtw-mcp = {
-      url = "github:sysprog21/zhtw-mcp";
+      url = "github:sysprog21/zhtw-mcp/df4762639f8b079d94b1c97e07ecbfff468dfd3c";
     };
 
     deploy-rs.url = "github:serokell/deploy-rs";

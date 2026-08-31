@@ -76,11 +76,18 @@ in
           packages = with pkgs-unstable; [
             alejandra
             ansible-lint
+            ansible-language-server
             astro-language-server
+            basedpyright
+            bash-language-server
+            black
+            clang-tools # clangd
+            cuelsp
             deadnix
             delve
             deno
             docker-compose-language-service
+            docker-language-server
             docker-ls
             dockerfile-language-server
             edukai
@@ -90,12 +97,14 @@ in
             gofumpt
             golangci-lint
             gomodifytags
+            gopls
             gotests
             gotools
             govulncheck
             hadolint
             iferr
             impl
+            isort
             jsonnet-language-server
             lua-language-server
             lynx
@@ -104,11 +113,12 @@ in
             nixd
             nixfmt
             nil
-            # nodePackages.bash-language-server
             # nodePackages.prettier
             nodejs
             prettierd
             pyright
+            pyrefly
+            python3Packages.debugpy
             reftools
             richgo
             ruff
@@ -116,6 +126,7 @@ in
             selene
             shellcheck
             shfmt
+            sqlfluff
             sqls
             stylua
             taplo
@@ -124,10 +135,14 @@ in
             tflint
             tfsec
             ttf-tw-moe
+            ty
             typescript-language-server
             typos
             typos-lsp
             vtsls
+            vscode-extensions.vadimcn.vscode-lldb.adapter # codelldb
+            vscode-js-debug # js-debug-adapter
+            vscode-langservers-extracted # json-lsp
             yaml-language-server
             yamllint
           ];
