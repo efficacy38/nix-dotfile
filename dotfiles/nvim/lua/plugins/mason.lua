@@ -1,5 +1,3 @@
-if true then return {} end -- WARN: REMOVE THIS LINE TO ACTIVATE THIS FILE
-
 -- Customize Mason
 function dump(o)
   if type(o) == "table" then
@@ -17,7 +15,7 @@ end
 local disable_auto_install = function(_, opts)
   local core = require "astrocore"
   local data_dir = vim.fn.stdpath "data"
-  suggested_packages = core.list_insert_unique(suggested_packages, opts.ensure_installed or {})
+  local suggested_packages = core.list_insert_unique(nil, opts.ensure_installed or {})
   local f = io.open(data_dir .. "/suggested-pkgs.json", "w")
   -- print(dump(suggested_packages))
 
@@ -25,15 +23,19 @@ local disable_auto_install = function(_, opts)
   f:close()
 
   opts.ensure_installed = {}
+  opts.run_on_start = false
 end
 
 ---@type LazySpec
 return {
-  -- use mason-tool-installer for automatically installing Mason packages
+  -- Capture AstroCommunity's suggested packages without installing them through Mason.
   {
     "WhoIsSethDaniel/mason-tool-installer.nvim",
-    -- overrides `require("mason-tool-installer").setup(...)`
     opts = disable_auto_install,
+  },
+  {
+    "williamboman/mason.nvim",
+    opts = { PATH = "skip" },
   },
 }
 

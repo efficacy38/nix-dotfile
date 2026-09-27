@@ -2,14 +2,17 @@
   description = "A simple NixOS flake";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-26.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
 
     nixos-hardware.url = "github:NixOS/nixos-hardware";
+    nixos-hardware.inputs.nixpkgs.follows = "nixpkgs";
     sops-nix.url = "github:Mic92/sops-nix";
+    sops-nix.inputs.nixpkgs.follows = "nixpkgs";
     impermanence.url = "github:nix-community/impermanence";
     stylix.url = "github:danth/stylix/release-26.05";
+    stylix.inputs.nixpkgs.follows = "nixpkgs";
     zen-browser.url = "github:youwen5/zen-browser-flake";
+    zen-browser.inputs.nixpkgs.follows = "nixpkgs";
     determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
     nix-secrets = {
       url = "git+ssh://git@github.com/efficacy38/nix-secret.git?ref=main&shallow=1";
@@ -19,7 +22,7 @@
     };
 
     home-manager-stable.url = "github:nix-community/home-manager/release-26.05";
-    home-manager-stable.inputs.nixpkgs.follows = "nixpkgs-stable";
+    home-manager-stable.inputs.nixpkgs.follows = "nixpkgs";
 
     solaar.url = "github:Svenum/Solaar-Flake";
     solaar.inputs.nixpkgs.follows = "nixpkgs";
@@ -31,8 +34,6 @@
 
     nix-index-database.url = "github:nix-community/nix-index-database";
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
-
-    disko.url = "github:nix-community/disko";
 
     import-tree.url = "github:vic/import-tree";
 
@@ -57,13 +58,12 @@
 
     zhtw-mcp = {
       url = "github:sysprog21/zhtw-mcp/df4762639f8b079d94b1c97e07ecbfff468dfd3c";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    deploy-rs.url = "github:serokell/deploy-rs";
   };
 
   outputs =
-    inputs@{ self, flake-parts, ... }:
+    inputs@{ flake-parts, ... }:
     let
       import-tree = import inputs.import-tree;
     in
@@ -77,7 +77,6 @@
         { system, pkgs, ... }:
         {
           formatter = pkgs.nixfmt-tree;
-          checks = inputs.deploy-rs.lib.${system}.deployChecks self.deploy;
         };
 
       imports = [
@@ -89,17 +88,5 @@
         # New flake-parts modules (features and bundles) via import-tree
         (import-tree ./flake-modules/modules)
       ];
-
-      flake.deploy.nodes = {
-        stella = {
-          hostname = "stella";
-          sshUser = "efficacy38";
-          interactiveSudo = true;
-          profiles.system = {
-            user = "root";
-            path = inputs.deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.stella;
-          };
-        };
-      };
     };
 }

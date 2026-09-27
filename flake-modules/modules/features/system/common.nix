@@ -157,6 +157,7 @@ _: {
 
             # vpn
             openfortivpn
+            nixos-container
           ];
         };
 
@@ -168,6 +169,8 @@ _: {
 
         networking.nftables.enable = true;
         networking.firewall.enable = lib.mkDefault true;
+
+        boot.enableContainers = true;
 
         programs = {
           zsh.enable = true;

@@ -168,7 +168,6 @@ _: {
   flake.homeModules.desktop =
     {
       pkgs,
-      pkgs-unstable,
       lib,
       config,
       ...
@@ -235,7 +234,7 @@ _: {
         };
 
         home.packages =
-          (with pkgs-unstable; [
+          (with pkgs; [
             # fonts
             nerd-fonts.hack
             nerd-fonts.fira-mono
@@ -262,6 +261,7 @@ _: {
             obsidian
             keepassxc
             eog
+            readest
           ])
           ++ (with pkgs.kdePackages; [
             # Common desktop utilities (for MIME apps) - using stable

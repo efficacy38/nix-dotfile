@@ -82,9 +82,14 @@ in
     let
       cfg = config.my.desktop;
       dotfilesDir = "/etc/nixos/nix-dotfile/dotfiles";
+      inStore = config.my.dotfiles.inStore;
 
       mkLinkConfig = relativePath: {
-        "${relativePath}".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesDir}/${relativePath}";
+        "${relativePath}".source =
+          if inStore then
+            dotfilesBasePath + "/${relativePath}"
+          else
+            config.lib.file.mkOutOfStoreSymlink "${dotfilesDir}/${relativePath}";
       };
 
       MUTE_ICON_PATH = dotfilesBasePath + /dunst/volume-off.png;

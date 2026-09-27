@@ -2,7 +2,7 @@
 let
   mkSystem =
     hostConfig:
-    inputs.nixpkgs-stable.lib.nixosSystem {
+    inputs.nixpkgs.lib.nixosSystem {
       specialArgs = {
         inherit inputs;
       };
@@ -22,7 +22,6 @@ let
         "${inputs.nixpkgs-kopia}/nixos/modules/services/backup/kopia/snapshot-service.nix"
         "${inputs.nixpkgs-kopia}/nixos/modules/services/backup/kopia/web-service.nix"
         inputs.determinate.nixosModules.default
-        inputs.disko.nixosModules.disko
         inputs.home-manager-stable.nixosModules.default
         # Default enables
         { config.my.common.enable = true; }
@@ -50,32 +49,27 @@ let
 
   mkIsoSystem =
     hostConfig:
-    inputs.nixpkgs-stable.lib.nixosSystem {
+    inputs.nixpkgs.lib.nixosSystem {
       modules = [ hostConfig ];
     };
 
-  pkgs-stable = import inputs.nixpkgs-stable {
-    system = "x86_64-linux";
-    config.allowUnfree = true;
-  };
-
-  pkgs-unstable = import inputs.nixpkgs {
+  pkgs = import inputs.nixpkgs {
     system = "x86_64-linux";
     config.allowUnfree = true;
   };
 in
 {
   flake = {
-    inherit pkgs-stable pkgs-unstable;
+    inherit pkgs;
 
     nixosConfigurations = {
       workstation = mkSystem ../hosts/workstation/configuration.nix;
       homelab-1 = mkSystem ../hosts/homelab-1/configuration.nix;
       homelab-test = mkSystem ../hosts/homelab-test/configuration.nix;
-      stella = mkSystem ../hosts/stella/configuration.nix;
+      stella = mkSystem ../hosts/stella;
       cc-desktop = mkSystem ../hosts/cc-desktop/configuration.nix;
       cc-container-vps = mkSystem ../hosts/cc-container-vps/configuration.nix;
-      stella-nspawn = mkSystem ../hosts/stella-nspawn/configuration.nix;
+      stella-nspawn = mkSystem ../hosts/stella-nspawn;
       iso = mkIsoSystem ../hosts/iso/configuration.nix;
     };
   };

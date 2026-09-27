@@ -120,13 +120,11 @@ Uses **sops-nix** for secret management:
 
 ### Key Dependencies
 
-- `nixpkgs-stable` (nixos-25.11) - Primary nixpkgs for systems
-- `nixpkgs` (nixos-unstable) - Available as overlay
+- `nixpkgs` (nixos-26.05) - Primary nixpkgs for systems and user environments
 - `home-manager-stable` - User environment management
 - `sops-nix` - Secrets management
 - `impermanence` - Stateless system support
 - `stylix` - System-wide theming (disabled by default)
-- `disko` - Declarative disk management
 - `nixos-hardware` - Hardware-specific configurations
 - `import-tree` - Automatic module importing
 - `flake-parts` - Modular flake structure

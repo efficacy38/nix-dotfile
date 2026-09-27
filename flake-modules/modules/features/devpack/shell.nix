@@ -1,5 +1,9 @@
 # Shell tools: zsh, tmux
-_: {
+_:
+let
+  dotfilesBasePath = ../../../../dotfiles;
+in
+{
   # Home-manager: zsh configuration
   flake.homeModules.devpack-zsh =
     {
@@ -193,7 +197,11 @@ _: {
 
         home.file = {
           ".p10k.zsh" = {
-            source = config.lib.file.mkOutOfStoreSymlink "/etc/nixos/nix-dotfile/dotfiles/p10k.zsh";
+            source =
+              if config.my.dotfiles.inStore then
+                dotfilesBasePath + /p10k.zsh
+              else
+                config.lib.file.mkOutOfStoreSymlink "/etc/nixos/nix-dotfile/dotfiles/p10k.zsh";
           };
         };
 

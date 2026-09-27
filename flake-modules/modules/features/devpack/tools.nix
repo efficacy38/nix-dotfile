@@ -277,13 +277,15 @@ in
       let
         cfg = config.my.devpack;
         dotfilesDir = "/etc/nixos/nix-dotfile/dotfiles";
+        inStore = config.my.dotfiles.inStore;
         skillsDir = "${dotfilesDir}/skills";
         commonSkillsPath = dotfilesBasePath + /skills/common;
         claudeSkillsPath = dotfilesBasePath + /skills/claude;
         codexSkillsPath = dotfilesBasePath + /skills/codex;
-        commonSkillsDir = "${skillsDir}/common";
-        claudeSkillsDir = "${skillsDir}/claude";
-        codexSkillsDir = "${skillsDir}/codex";
+        # Path-based dirs when in-store; absolute-string dirs for out-of-store symlinks
+        commonSkillsDir = if inStore then commonSkillsPath else "${skillsDir}/common";
+        claudeSkillsDir = if inStore then claudeSkillsPath else "${skillsDir}/claude";
+        codexSkillsDir = if inStore then codexSkillsPath else "${skillsDir}/codex";
 
         skillNamesFromDir =
           path: lib.attrNames (lib.filterAttrs (_: type: type == "directory") (builtins.readDir path));
@@ -324,7 +326,7 @@ in
           dir: names:
           map (name: {
             inherit name;
-            path = config.lib.file.mkOutOfStoreSymlink "${dir}/${name}";
+            path = if inStore then dir + "/${name}" else config.lib.file.mkOutOfStoreSymlink "${dir}/${name}";
           }) names;
 
         mkSkillFarm =
@@ -371,6 +373,14 @@ in
             names = codexSkillNames;
           }
         ] thirdPartySkills.codex;
+
+        mkAgentDotfile = relativePath: {
+          source =
+            if inStore then
+              dotfilesBasePath + "/${relativePath}"
+            else
+              config.lib.file.mkOutOfStoreSymlink "${dotfilesDir}/${relativePath}";
+        };
       in
       {
         config =
@@ -407,15 +417,9 @@ in
               ".gemini/skills" = {
                 source = geminiSkills;
               };
-              ".codex/AGENTS.md" = {
-                source = config.lib.file.mkOutOfStoreSymlink "${dotfilesDir}/codex/AGENTS.md";
-              };
-              ".claude/settings.json" = {
-                source = config.lib.file.mkOutOfStoreSymlink "${dotfilesDir}/claude/settings.json";
-              };
-              ".claude/CLAUDE.md" = {
-                source = config.lib.file.mkOutOfStoreSymlink "${dotfilesDir}/claude/CLAUDE.md";
-              };
+              ".codex/AGENTS.md" = mkAgentDotfile "codex/AGENTS.md";
+              ".claude/settings.json" = mkAgentDotfile "claude/settings.json";
+              ".claude/CLAUDE.md" = mkAgentDotfile "claude/CLAUDE.md";
             };
           };
       };
@@ -425,7 +429,6 @@ in
       {
         inputs,
         pkgs,
-        pkgs-unstable,
         lib,
         config,
         ...
@@ -452,7 +455,7 @@ in
       {
         config = lib.mkIf (cfg.enable && cfg.utils.enable) {
           home.packages =
-            with pkgs-unstable;
+            with pkgs;
             [
               ansible
               boxes
@@ -496,9 +499,6 @@ in
               pkgs.zhtw-mcp
             ])
             ++ [
-              # Deploy other NixOS machines
-              inputs.deploy-rs.packages.${pkgs.stdenv.hostPlatform.system}.default
-
               # Playwright with chromium browser
               pkgs.playwright-driver
               playwright-browsers

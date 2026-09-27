@@ -58,7 +58,7 @@
       fsType = "tmpfs";
       options = [
         "defaults"
-        "size=2G"
+        "size=4G"
         "mode=744"
         "uid=1000"
       ];

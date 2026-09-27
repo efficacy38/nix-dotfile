@@ -2,14 +2,6 @@
 {
   boot.isContainer = true;
 
-  my = {
-    bundles.common.enable = true;
-    users.efficacy38 = {
-      type = "minimal";
-    };
-    devpack.enable = true;
-  };
-
   # Containers use host resolv.conf, incompatible with systemd-resolved
   services.resolved.enable = lib.mkForce false;
 

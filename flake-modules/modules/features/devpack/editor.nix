@@ -5,6 +5,7 @@
 }:
 let
   secretpath = builtins.toString inputs.nix-secrets;
+  dotfilesBasePath = ../../../../dotfiles;
 in
 {
   # NixOS: deploy GitHub SSH keys via sops-nix
@@ -63,7 +64,7 @@ in
   flake.homeModules.devpack-nvim =
     {
       config,
-      pkgs-unstable,
+      pkgs,
       lib,
       ...
     }:
@@ -73,7 +74,7 @@ in
     {
       config = lib.mkIf (cfg.enable && cfg.nvim.enable) {
         home = {
-          packages = with pkgs-unstable; [
+          packages = with pkgs; [
             alejandra
             ansible-lint
             ansible-language-server
@@ -152,7 +153,11 @@ in
 
           file = {
             ".config/nvim" = {
-              source = config.lib.file.mkOutOfStoreSymlink "/etc/nixos/nix-dotfile/dotfiles/nvim";
+              source =
+                if config.my.dotfiles.inStore then
+                  dotfilesBasePath + /nvim
+                else
+                  config.lib.file.mkOutOfStoreSymlink "/etc/nixos/nix-dotfile/dotfiles/nvim";
             };
           };
         };

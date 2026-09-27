@@ -12,7 +12,7 @@ _: {
     in
     {
       options.my.desktop.steam.enable = lib.mkEnableOption "Steam gaming";
-      options.my.desktop.steamHidpi = lib.mkEnableOption "scale steam for HiDPI";
+      options.my.desktop.steam.hidpi = lib.mkEnableOption "scale steam for HiDPI";
 
       config = lib.mkMerge [
         (lib.mkIf (cfg.enable && cfg.steam.enable) {
@@ -51,7 +51,7 @@ _: {
             # connect xbox controller
           };
 
-          environment.sessionVariables = lib.mkIf cfg.steamHidpi {
+          environment.sessionVariables = lib.mkIf cfg.steam.hidpi {
             STEAM_FORCE_DESKTOPUI_SCALING = "2";
           };
         })

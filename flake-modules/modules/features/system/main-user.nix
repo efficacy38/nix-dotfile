@@ -114,10 +114,6 @@ _: {
         # Generate home-manager configs
         home-manager = {
           extraSpecialArgs = {
-            inherit (inputs.self.outputs)
-              pkgs-stable
-              pkgs-unstable
-              ;
             inherit inputs pkgs;
           };
 
