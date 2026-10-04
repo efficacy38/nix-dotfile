@@ -19,6 +19,9 @@ _: {
         # Enable observability tools by default
         my.system.observability.enable = lib.mkDefault true;
 
+        # Enable systemd-oomd (user slices only) by default
+        my.system.oomd.enable = lib.mkDefault true;
+
         # enable nix flake
         nix = {
           settings = {
