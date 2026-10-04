@@ -13,11 +13,12 @@ _: {
     {
       options.my.devpack = {
         enable = lib.mkEnableOption "enable devpack configuration";
+        podman.enable = lib.mkEnableOption "enable podman and docker container runtimes";
         csccUtil.enable = lib.mkEnableOption "enable cscc-util";
         tailscale.enable = lib.mkEnableOption "enable tailscale";
       };
 
-      config = lib.mkIf cfg.enable {
+      config = lib.mkIf (cfg.enable && cfg.podman.enable) {
         virtualisation.podman.enable = lib.mkDefault true;
         virtualisation.docker.enable = lib.mkDefault true;
       };
@@ -29,15 +30,23 @@ _: {
     {
       options.my.devpack = {
         enable = lib.mkEnableOption "devpack home-manager configuration";
-        git.enable = lib.mkEnableOption "git configuration";
-        nvim.enable = lib.mkEnableOption "neovim configuration";
-        tmux.enable = lib.mkEnableOption "tmux terminal multiplexer";
-        zsh.enable = lib.mkEnableOption "zsh configuration";
+        git = {
+          enable = lib.mkEnableOption "git core configuration (git, ssh, signing)";
+          pack.enable = lib.mkEnableOption "git tooling pack (gh, glab, lazygit, diff-so-fancy)";
+        };
+        nvim = {
+          enable = lib.mkEnableOption "neovim as the default editor (no configuration)";
+          pack.enable = lib.mkEnableOption "AstroNvim configuration and full language-server toolchain";
+        };
+        shell.enable = lib.mkEnableOption "shell environment (zsh, prompt, fuzzy finding, tmux)";
         gpg.enable = lib.mkEnableOption "GPG and Yubikey configuration";
         just.enable = lib.mkEnableOption "just command runner";
         k8s.enable = lib.mkEnableOption "Kubernetes tools";
         podman.enable = lib.mkEnableOption "podman container tools";
-        utils.enable = lib.mkEnableOption "utility packages";
+        utils.enable = lib.mkEnableOption "base utility packages";
+        ai.enable = lib.mkEnableOption "AI/LLM tooling (agent CLIs, playwright)";
+        gui.enable = lib.mkEnableOption "GUI/desktop tools (flatpak, emacs, clipboard)";
+        agents.enable = lib.mkEnableOption "AI agent skills and dotfiles";
       };
     };
 }

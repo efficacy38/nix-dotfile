@@ -16,6 +16,7 @@
     };
     devpack = {
       enable = true;
+      podman.enable = true;
       csccUtil.enable = true;
       tailscale.enable = true;
     };

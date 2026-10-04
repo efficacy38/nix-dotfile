@@ -105,7 +105,8 @@ in
 
       config = lib.mkIf cfg.enable {
         my = {
-          bundles.minimal.enable = true;
+          bundles.general.enable = true;
+          system.incus.enable = true;
           dotfiles.inStore = lib.mkDefault true;
           desktop = {
             enable = true;
@@ -114,7 +115,13 @@ in
             zen.enable = lib.mkDefault cfg.zen.enable;
             ssh-tunnels.enable = lib.mkDefault cfg.ssh-tunnels.enable;
           };
-          devpack.nvim.enable = lib.mkDefault cfg.nvim.enable;
+          devpack = {
+            gpg.enable = true;
+            gui.enable = true;
+            ai.enable = true;
+            nvim.enable = lib.mkDefault cfg.nvim.enable;
+            nvim.pack.enable = lib.mkDefault cfg.nvim.enable;
+          };
         };
       };
     };

@@ -60,7 +60,7 @@ in
       };
     };
 
-  # Home-manager: neovim configuration
+  # Home-manager: neovim (default editor, no configuration)
   flake.homeModules.devpack-nvim =
     {
       config,
@@ -73,6 +73,28 @@ in
     in
     {
       config = lib.mkIf (cfg.enable && cfg.nvim.enable) {
+        home = {
+          packages = with pkgs; [ neovim ];
+          sessionVariables = {
+            EDITOR = "nvim";
+          };
+        };
+      };
+    };
+
+  # Home-manager: AstroNvim configuration and full language toolchain
+  flake.homeModules.devpack-nvim-pack =
+    {
+      config,
+      pkgs,
+      lib,
+      ...
+    }:
+    let
+      cfg = config.my.devpack;
+    in
+    {
+      config = lib.mkIf (cfg.enable && cfg.nvim.enable && cfg.nvim.pack.enable) {
         home = {
           packages = with pkgs; [
             alejandra
@@ -110,7 +132,6 @@ in
             lua-language-server
             lynx
             marksman
-            neovim
             nixd
             nixfmt
             nil
@@ -147,9 +168,6 @@ in
             yaml-language-server
             yamllint
           ];
-          sessionVariables = {
-            EDITOR = "nvim";
-          };
 
           file = {
             ".config/nvim" = {
@@ -177,11 +195,7 @@ in
     in
     {
       config = lib.mkIf (cfg.enable && cfg.git.enable) {
-        home.packages = with pkgs; [
-          git
-          glab
-          lazygit
-        ];
+        home.packages = with pkgs; [ git ];
 
         programs = {
           ssh = {
@@ -208,13 +222,6 @@ in
             includes = [
               "config.d/*.conf"
             ];
-          };
-
-          gh.enable = true;
-
-          diff-so-fancy = {
-            enable = true;
-            enableGitIntegration = true;
           };
 
           git = {
@@ -278,6 +285,35 @@ in
                   path = ".config/git/99-local.conf";
                 }
               ];
+          };
+        };
+      };
+    };
+
+  # Home-manager: git tooling pack (gh, glab, lazygit, diff-so-fancy)
+  flake.homeModules.devpack-git-pack =
+    {
+      pkgs,
+      lib,
+      config,
+      ...
+    }:
+    let
+      cfg = config.my.devpack;
+    in
+    {
+      config = lib.mkIf (cfg.enable && cfg.git.pack.enable) {
+        home.packages = with pkgs; [
+          glab
+          lazygit
+        ];
+
+        programs = {
+          gh.enable = true;
+
+          diff-so-fancy = {
+            enable = true;
+            enableGitIntegration = true;
           };
         };
       };

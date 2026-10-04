@@ -15,6 +15,9 @@
   # module related options
   my.bundles.common.enable = true;
   my.bundles.homelab.enable = true;
+  my.users.efficacy38.extraHomeConfig = {
+    home.stateVersion = "24.11";
+  };
 
   # services
   services.openssh.enable = true;

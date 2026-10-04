@@ -42,7 +42,7 @@ in
       cfg = config.my.devpack;
     in
     {
-      config = lib.mkIf (cfg.enable && config.my.system.impermanence.enable) {
+      config = lib.mkIf (cfg.enable && cfg.podman.enable && config.my.system.impermanence.enable) {
         # Persist container data
         environment.persistence."/persistent/system".users."efficacy38" = {
           directories = [
@@ -268,6 +268,41 @@ in
     devpack-podman =
       {
         options,
+        pkgs,
+        lib,
+        config,
+        ...
+      }:
+      let
+        cfg = config.my.devpack;
+      in
+      {
+        config = lib.mkIf (cfg.enable && cfg.podman.enable) {
+          home.packages = with pkgs; [ podman-compose ];
+
+          services.podman = {
+            enable = true;
+          }
+          // lib.optionalAttrs (builtins.hasAttr "settings" options.services.podman) {
+            settings = {
+              policy = {
+                "default" = [ { "type" = "insecureAcceptAnything"; } ];
+              };
+              registries = {
+                search = [
+                  "docker.io"
+                  "quay.io"
+                  "gcr.io"
+                ];
+              };
+            };
+          };
+        };
+      };
+
+    # Home-manager: AI agent skills and dotfiles
+    devpack-agents =
+      {
         inputs,
         pkgs,
         lib,
@@ -383,49 +418,68 @@ in
         };
       in
       {
-        config =
-          lib.mkIf (cfg.enable && cfg.podman.enable) {
-            home.packages = with pkgs; [ podman-compose ];
-
-            services.podman = {
-              enable = true;
-            }
-            // lib.optionalAttrs (builtins.hasAttr "settings" options.services.podman) {
-              settings = {
-                policy = {
-                  "default" = [ { "type" = "insecureAcceptAnything"; } ];
-                };
-                registries = {
-                  search = [
-                    "docker.io"
-                    "quay.io"
-                    "gcr.io"
-                  ];
-                };
-              };
+        config = lib.mkIf (cfg.enable && cfg.agents.enable) {
+          home.file = {
+            ".claude/skills" = {
+              source = claudeSkills;
             };
-
-          }
-          // lib.mkIf (cfg.enable) {
-            home.file = {
-              ".claude/skills" = {
-                source = claudeSkills;
-              };
-              ".codex/skills" = {
-                source = codexSkills;
-              };
-              ".gemini/skills" = {
-                source = geminiSkills;
-              };
-              ".codex/AGENTS.md" = mkAgentDotfile "codex/AGENTS.md";
-              ".claude/settings.json" = mkAgentDotfile "claude/settings.json";
-              ".claude/CLAUDE.md" = mkAgentDotfile "claude/CLAUDE.md";
+            ".codex/skills" = {
+              source = codexSkills;
             };
+            ".gemini/skills" = {
+              source = geminiSkills;
+            };
+            ".codex/AGENTS.md" = mkAgentDotfile "codex/AGENTS.md";
+            ".claude/settings.json" = mkAgentDotfile "claude/settings.json";
+            ".claude/CLAUDE.md" = mkAgentDotfile "claude/CLAUDE.md";
           };
+        };
       };
 
-    # Home-manager: utility packages
+    # Home-manager: base utility packages
     devpack-utils =
+      {
+        pkgs,
+        lib,
+        config,
+        ...
+      }:
+      let
+        cfg = config.my.devpack;
+      in
+      {
+        config = lib.mkIf (cfg.enable && cfg.utils.enable) {
+          home.packages = with pkgs; [
+            ansible
+            boxes
+            cachix
+            cfssl
+            ctags
+            curl
+            dnsutils
+            entr
+            mosh
+            nixos-shell
+            openssl
+            pkgs.personal-script
+            ripgrep
+            statix
+            wget
+            bubblewrap
+            socat
+            uv
+          ];
+
+          programs.direnv = {
+            enable = true;
+            nix-direnv.enable = true;
+            enableZshIntegration = true;
+          };
+        };
+      };
+
+    # Home-manager: AI/LLM tooling
+    devpack-ai =
       {
         inputs,
         pkgs,
@@ -453,47 +507,20 @@ in
         '';
       in
       {
-        config = lib.mkIf (cfg.enable && cfg.utils.enable) {
+        config = lib.mkIf (cfg.enable && cfg.ai.enable) {
           home.packages =
             with pkgs;
             [
-              ansible
-              boxes
-              cachix
-              cfssl
               claude-monitor
-              ctags
-              curl
-              dnsutils
-              entr
-              flatpak
-              mosh
-              nixos-shell
-              openssl
-              pkgs.personal-script
-              ripgrep
-              statix
-              wl-clipboard
-              wget
-              bubblewrap
-              socat
-              uv
               claude-notify
               pkgs.codex-desktop
             ]
             ++ (with inputs.llm-agents.packages."${pkgs.stdenv.hostPlatform.system}"; [
-              agent-browser
               antigravity-cli
               claude-code
-              claude-code-router
               codex
-              pi
-              copilot-cli
               openspec
-              opencode
-              (lib.lowPrio ollama)
-              vibe-kanban
-              pkgs.notebooklm-py
+              opencode2
 
               # mcp servers
               pkgs.zhtw-mcp
@@ -508,14 +535,26 @@ in
           home.sessionVariables = {
             PLAYWRIGHT_BROWSERS_PATH = "${playwright-browsers}";
           };
+        };
+      };
 
-          programs.direnv = {
-            enable = true;
-            nix-direnv.enable = true;
-            enableZshIntegration = true;
-          };
-
-          programs.emacs.enable = true;
+    # Home-manager: GUI/desktop tools
+    devpack-gui =
+      {
+        pkgs,
+        lib,
+        config,
+        ...
+      }:
+      let
+        cfg = config.my.devpack;
+      in
+      {
+        config = lib.mkIf (cfg.enable && cfg.gui.enable) {
+          home.packages = with pkgs; [
+            flatpak
+            wl-clipboard
+          ];
         };
       };
   };

@@ -10,7 +10,7 @@ _: {
     in
     {
       options.my.bundles.minimal = {
-        enable = lib.mkEnableOption "minimal bundle (git, gpg, incus, just, tmux, zsh)";
+        enable = lib.mkEnableOption "minimal bundle (git, shell; vim from common)";
       };
 
       config = lib.mkIf cfg.enable {
@@ -26,12 +26,8 @@ _: {
           devpack = {
             enable = true;
             git.enable = true;
-            gpg.enable = true;
-            just.enable = true;
-            tmux.enable = true;
-            zsh.enable = true;
+            shell.enable = true;
           };
-          system.incus.enable = true;
         };
       };
     };
