@@ -39,8 +39,14 @@ _: {
             "audio"
           ];
           homeDefaults = {
-            my.bundles.desktop.enable = true;
             my.bundles.general.enable = true;
+            my.bundles.desktop = {
+              enable = true;
+              session = config.my.bundles.desktop.session;
+              zen.enable = config.my.bundles.desktop.zen.enable;
+              ssh-tunnels.enable = config.my.bundles.desktop.ssh-tunnels.enable;
+              nvim.enable = config.my.bundles.desktop.nvim.enable;
+            };
           };
         };
       };
@@ -117,18 +123,13 @@ _: {
             inherit inputs pkgs;
           };
 
+          # Applied to every user: the repo's home modules (options + bundles).
+          sharedModules = [
+            inputs.self.outputs.homeModules.default
+          ];
+
           users = lib.mapAttrs (
-            name: userCfg:
-            {
-              imports = [
-                inputs.self.outputs.homeModules.default
-              ];
-              home.stateVersion = "24.11";
-              home.username = name;
-              home.homeDirectory = "/home/${name}";
-            }
-            // userTypes.${userCfg.type}.homeDefaults
-            // userCfg.extraHomeConfig
+            _: userCfg: lib.recursiveUpdate userTypes.${userCfg.type}.homeDefaults userCfg.extraHomeConfig
           ) cfg;
         };
 

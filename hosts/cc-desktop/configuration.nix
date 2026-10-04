@@ -24,9 +24,9 @@
   };
 
   my = {
-    bundles = {
-      common.enable = true;
-      desktop-hyprland.enable = true;
+    bundles.desktop = {
+      enable = true;
+      session = "hyprland";
       steam.enable = true;
     };
     desktop = {
@@ -41,6 +41,9 @@
       };
       gaming = {
         type = "minimal";
+        extraHomeConfig = {
+          home.stateVersion = "24.11";
+        };
       };
     };
     devpack = {

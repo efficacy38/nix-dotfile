@@ -21,6 +21,8 @@ _: {
         };
 
         my = {
+          dotfiles.inStore = lib.mkDefault true;
+
           devpack = {
             enable = true;
             git.enable = true;

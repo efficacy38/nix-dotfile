@@ -1,8 +1,9 @@
 { lib, ... }:
 {
   my = {
-    bundles = {
-      desktop-hyprland.enable = true;
+    bundles.desktop = {
+      enable = true;
+      session = "hyprland";
       steam.enable = true;
     };
     system = {
