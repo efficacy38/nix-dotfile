@@ -1,14 +1,4 @@
 {
-  modulesPath,
-  lib,
-  ...
-}:
-{
-  imports = [
-    # Include the default lxd configuration.
-    "${modulesPath}/virtualisation/incus-virtual-machine.nix"
-  ];
-
   networking = {
     hostName = "workstation";
     dhcpcd.enable = false;
@@ -28,31 +18,5 @@
     };
   };
 
-  my = {
-    common-server.enable = true;
-    users.efficacy38 = {
-      type = "developing";
-      isAdmin = true;
-      extraHomeConfig = import ./home.nix;
-    };
-    devpack = {
-      enable = true;
-      podman.enable = true;
-      csccUtil.enable = true;
-      tailscale.enable = true;
-    };
-    system.systemdInitrd.enable = true;
-  };
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
-  # environment.systemPackages = with pkgs; [
-  # ];
-
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-
   system.stateVersion = "24.11";
-  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 }

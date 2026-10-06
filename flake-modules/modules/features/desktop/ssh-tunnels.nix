@@ -84,7 +84,7 @@ _: {
         enable = lib.mkEnableOption "SSH tunnel service";
       };
 
-      config = lib.mkIf cfg.enable {
+      config = lib.mkIf (config.my.desktop.enable && cfg.enable) {
         xdg.configFile."ssh-tunnels/.keep".text = "";
 
         systemd.user.services."ssh-tunnel@" = {

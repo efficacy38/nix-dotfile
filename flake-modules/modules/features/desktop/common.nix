@@ -16,9 +16,6 @@ _: {
     {
       options.my.desktop = {
         enable = lib.mkEnableOption "enable desktop Environment";
-        zram.enable = lib.mkEnableOption "enable zram";
-        hyprland.enable = lib.mkEnableOption "enable hyprland(system)";
-        kde.enable = lib.mkEnableOption "enable KDE(system)";
       };
 
       config = lib.mkIf cfg.enable (
@@ -26,10 +23,7 @@ _: {
           common-config = {
             # enable networkmanager for desktop usage
             networking.networkmanager.enable = true;
-            networking.firewall.enable = lib.mkDefault true;
             services = {
-              fwupd.enable = true;
-
               # Enable the X11 windowing system.
               xserver.enable = true;
               displayManager.sddm = {
@@ -143,23 +137,10 @@ _: {
             };
           };
 
-          zram-config = {
-            zramSwap = {
-              enable = true;
-              memoryPercent = 50;
-            };
-            boot.kernel.sysctl = {
-              "vm.swappiness" = 180;
-              "vm.watermark_boost_factor" = 0;
-              "vm.watermark_scale_factor" = 125;
-              "vm.page-cluster" = 0;
-            };
-          };
         in
         lib.mkMerge [
           common-config
           (lib.mkIf config.my.system.impermanence.enable persistence-config)
-          (lib.mkIf cfg.zram.enable zram-config)
         ]
       );
     };
@@ -178,9 +159,6 @@ _: {
     {
       options.my.desktop = {
         enable = lib.mkEnableOption "desktop home-manager configuration";
-        hyprland.enable = lib.mkEnableOption "Hyprland home-manager configuration";
-        kde.enable = lib.mkEnableOption "KDE home-manager packages";
-        zen.enable = lib.mkEnableOption "Zen browser configuration";
       };
 
       config = lib.mkIf cfg.enable {
@@ -262,6 +240,7 @@ _: {
             keepassxc
             eog
             readest
+            flowsurface
           ])
           ++ (with pkgs.kdePackages; [
             # Common desktop utilities (for MIME apps) - using stable

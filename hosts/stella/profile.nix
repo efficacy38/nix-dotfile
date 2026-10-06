@@ -1,6 +1,10 @@
 {
   my = {
-    bundles.common.enable = true;
+    bundles.desktop = {
+      enable = true;
+      session = "hyprland";
+      steam.enable = true;
+    };
     users = {
       efficacy38 = {
         type = "desktop-user";
@@ -9,7 +13,6 @@
           my = {
             bundles.desktop.enable = true;
             bundles.general.enable = true;
-            desktop.flowsurface.enable = true;
           };
         };
       };

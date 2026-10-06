@@ -34,6 +34,8 @@ _: {
       cfg = config.my.desktop;
     in
     {
+      options.my.desktop.zen.enable = lib.mkEnableOption "Zen browser configuration";
+
       config = lib.mkIf (cfg.enable && cfg.zen.enable) {
         xdg.mimeApps = {
           enable = lib.mkForce true;

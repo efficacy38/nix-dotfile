@@ -1,20 +1,5 @@
 { lib, ... }:
 {
-  my = {
-    bundles.desktop = {
-      enable = true;
-      session = "hyprland";
-      steam.enable = true;
-    };
-    system = {
-      impermanence.enable = true;
-      systemdInitrd.enable = true;
-      netbird.enable = true;
-      # systemdInitrd.debug = true;
-      backup.enable = true;
-    };
-  };
-
   # Enable networking related
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   # Configure network proxy if necessary

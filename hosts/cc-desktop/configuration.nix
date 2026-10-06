@@ -1,77 +1,4 @@
-{ lib, ... }:
 {
-  imports = [
-    # Include the results of the hardware scan.
-    ./hardware-configuration.nix
-  ];
-
-  boot = {
-    supportedFilesystems = [ "zfs" ];
-    tmp.useTmpfs = true;
-    extraModprobeConfig = ''
-      # only allow 50% arc cache is enabled
-      options zfs zfs_arc_max_percent=50
-    '';
-  };
-
-  # FIXME: this should add extra module option to make sure this machine would
-  # not sleep
-  systemd.sleep.settings.Sleep = {
-    AllowSuspend = lib.mkForce "no";
-    AllowHibernation = lib.mkForce "no";
-    AllowHybridSleep = lib.mkForce "no";
-    AllowSuspendThenHibernate = lib.mkForce "no";
-  };
-
-  my = {
-    bundles.desktop = {
-      enable = true;
-      session = "hyprland";
-      steam.enable = true;
-    };
-    desktop = {
-      fprintd.enable = true;
-      batteryHealth.enable = true;
-      sunshine.enable = true;
-    };
-    users = {
-      efficacy38 = {
-        type = "desktop-user";
-        extraHomeConfig = import ./home.nix;
-      };
-      gaming = {
-        type = "minimal";
-        extraHomeConfig = {
-          home.stateVersion = "24.11";
-        };
-      };
-    };
-    devpack = {
-      enable = true;
-      podman.enable = true;
-      csccUtil.enable = true;
-      tailscale.enable = true;
-    };
-    system = {
-      netbird.enable = true;
-      impermanence.enable = false;
-      # backup.enable = true;
-      systemdInitrd.enable = true;
-      # systemdInitrd.debug = true;
-      incus = {
-        enable = true;
-        ui.enable = true;
-      };
-      # TODO: add more persistent directory, currently only user home
-      backup = {
-        enable = true;
-        path = "/home/efficacy38";
-      };
-    };
-  };
-
-  services.nfs.server.enable = true;
-
   # Enable networking related
   networking.hostName = "cc-desktop";
   networking.extraHosts = ''
@@ -98,9 +25,6 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   # environment.systemPackages = with pkgs; [ ];
-  environment.variables.EDITOR = "vim";
-
-  programs.zsh.enable = true;
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];

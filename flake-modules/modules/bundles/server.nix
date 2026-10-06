@@ -14,7 +14,6 @@ _: {
       };
 
       config = lib.mkIf cfg.enable {
-        my.bundles.common.enable = true;
         my.common-server.enable = true;
       };
     };

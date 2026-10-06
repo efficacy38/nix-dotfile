@@ -15,7 +15,6 @@ _: {
 
       config = lib.mkIf cfg.enable {
         my = {
-          bundles.common.enable = true;
           desktop.steam = {
             enable = true;
             hidpi = false;

@@ -30,7 +30,7 @@ Review the untracked files and categorize them:
 |----------|--------|
 | **Application state/config** | Add to the appropriate feature module's `environment.persistence` |
 | **Transient/cache files** | Safe to ignore — add to `~/.config/impermanence-audit/ignore` if noisy |
-| **System service data** | Add to the system module (usually `features/system/boot.nix`) |
+| **System service data** | Add to the system module (usually `features/system/impermanence.nix`) |
 | **Unknown** | Investigate what created the file before deciding |
 
 ### 3. Add missing persistence declarations
@@ -42,9 +42,9 @@ Persistence paths are declared across feature modules. Match the file to its fea
 | Desktop app configs (`~/.config/app`, `~/.local/share/app`) | `flake-modules/modules/features/desktop/common.nix` |
 | Dev tools (`~/.kube`, `.local/share/direnv`, etc.) | `flake-modules/modules/features/devpack/tools.nix` |
 | Editor data (`~/.local/share/nvim`) | `flake-modules/modules/features/devpack/editor.nix` |
-| System services (`/var/lib/*`, `/etc/*`) | `flake-modules/modules/features/system/boot.nix` |
-| KDE state | `flake-modules/modules/features/desktop/kde.nix` |
-| Steam/gaming | `flake-modules/modules/features/desktop/steam.nix` |
+| System services (`/var/lib/*`, `/etc/*`) | `flake-modules/modules/features/system/impermanence.nix` |
+| KDE state | `flake-modules/modules/features/desktop/desktop-manager.nix` |
+| Steam/gaming | `flake-modules/modules/features/desktop/gaming.nix` |
 | Browser profiles | `flake-modules/modules/features/desktop/zen.nix` |
 
 The pattern for adding a user directory to a feature module:

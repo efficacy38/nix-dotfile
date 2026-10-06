@@ -17,10 +17,17 @@
     ACTION=="add|change", KERNEL=="nvme0n1", ATTR{queue/scheduler}="mq-deadline"
   '';
 
-  my.desktop = {
-    fprintd.enable = true;
-    batteryHealth.enable = true;
-    steam.hidpi = lib.mkForce true;
+  my = {
+    system = {
+      impermanence.enable = true;
+      netbird.enable = true;
+      backup.enable = true;
+    };
+    desktop = {
+      fprintd.enable = true;
+      batteryHealth.enable = true;
+      steam.hidpi = lib.mkForce true;
+    };
   };
 
   environment.systemPackages = with pkgs; [

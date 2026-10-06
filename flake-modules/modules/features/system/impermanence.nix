@@ -1,28 +1,5 @@
-# Boot system configurations: systemd-initrd, impermanence
+# Impermanence: btrfs rollback + persistent directories
 _: {
-  # NixOS: systemd-initrd configuration
-  flake.nixosModules.system-initrd =
-    {
-      lib,
-      config,
-      ...
-    }:
-    let
-      cfg = config.my.system;
-    in
-    {
-      options.my.system.systemdInitrd.enable = lib.mkEnableOption "systemd-initrd";
-      options.my.system.systemdInitrd.debug = lib.mkEnableOption "debug mode for systemd-initrd";
-
-      config = lib.mkIf cfg.systemdInitrd.enable {
-        boot.initrd.systemd = {
-          enable = true;
-          emergencyAccess = cfg.systemdInitrd.debug;
-        };
-      };
-    };
-
-  # NixOS: impermanence configuration
   flake.nixosModules.system-impermanence =
     {
       lib,
@@ -206,26 +183,26 @@ _: {
             umount /btrfs_tmp
           '';
 
-          udev-initrd = {
-            boot.initrd.postDeviceCommands = lib.mkAfter reset-btrfs-impermanance-script;
-          };
-
+          # Rollback is implemented as a systemd-initrd service, so
+          # impermanence requires (and forces) systemd-initrd.
           systemd-initrd = {
-            boot.initrd.systemd.services."rootfs-cleanup" = {
-              wantedBy = [ "initrd.target" ];
-              after = [ "initrd-root-device.target" ];
-              before = [ "sysroot.mount" ];
-              unitConfig.DefaultDependencies = "no";
-              serviceConfig.Type = "oneshot";
-              script = reset-btrfs-impermanance-script;
+            boot.initrd.systemd = {
+              enable = lib.mkForce true;
+              services."rootfs-cleanup" = {
+                wantedBy = [ "initrd.target" ];
+                after = [ "initrd-root-device.target" ];
+                before = [ "sysroot.mount" ];
+                unitConfig.DefaultDependencies = "no";
+                serviceConfig.Type = "oneshot";
+                script = reset-btrfs-impermanance-script;
+              };
             };
           };
         in
         lib.mkIf cfg.impermanence.enable (
           lib.mkMerge [
             common-impermanence
-            (lib.mkIf (!cfg.systemdInitrd.enable) udev-initrd)
-            (lib.mkIf cfg.systemdInitrd.enable systemd-initrd)
+            systemd-initrd
           ]
         );
     };

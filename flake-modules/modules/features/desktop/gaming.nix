@@ -1,5 +1,6 @@
-# Steam gaming configuration
+# Gaming configuration: Steam and Sunshine.
 _: {
+  # NixOS: Steam gaming
   flake.nixosModules.desktop-steam =
     {
       lib,
@@ -26,23 +27,20 @@ _: {
           hardware.graphics.extraPackages = [ pkgs.libva-vdpau-driver ];
           hardware.steam-hardware.enable = true;
 
-          # bluetooth setting for xbox controller
+          # Bluetooth tuning for Xbox controllers. The base
+          # hardware.bluetooth (enable + powerOnBoot) is set by
+          # desktop/common.nix.
+          hardware.bluetooth.settings.General = {
+            experimental = true; # show battery
 
-          hardware.bluetooth = {
-            enable = true;
-            powerOnBoot = true;
-            settings.General = {
-              experimental = true; # show battery
-
-              # https://www.reddit.com/r/NixOS/comments/1ch5d2p/comment/lkbabax/
-              # for pairing bluetooth controller
-              Privacy = "device";
-              JustWorksRepairing = "always";
-              Class = "0x000100";
-              FastConnectable = true;
-            };
+            # https://www.reddit.com/r/NixOS/comments/1ch5d2p/comment/lkbabax/
+            # for pairing bluetooth controller
+            Privacy = "device";
+            JustWorksRepairing = "always";
+            Class = "0x000100";
+            FastConnectable = true;
           };
-          hardware.xpadneo.enable = true; # Enable the xpadneo driver for Xbox One wireless controllers
+          hardware.xpadneo.enable = true; # xpadneo driver for Xbox One wireless controllers
           boot = {
             extraModulePackages = with config.boot.kernelPackages; [ xpadneo ];
             extraModprobeConfig = ''
@@ -69,5 +67,28 @@ _: {
           };
         })
       ];
+    };
+
+  # NixOS: Sunshine game streaming server
+  flake.nixosModules.desktop-sunshine =
+    {
+      lib,
+      config,
+      ...
+    }:
+    let
+      cfg = config.my.desktop;
+    in
+    {
+      options.my.desktop.sunshine.enable = lib.mkEnableOption "Sunshine game streaming server";
+
+      config = lib.mkIf (cfg.enable && cfg.sunshine.enable) {
+        services.sunshine = {
+          enable = true;
+          openFirewall = true;
+          capSysAdmin = true;
+          autoStart = true;
+        };
+      };
     };
 }

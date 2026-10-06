@@ -1,4 +1,4 @@
-# Hyprland desktop environment configuration
+# Desktop session managers: Hyprland, KDE Plasma, and the shared XDG portal.
 _:
 let
   dotfilesBasePath = ../../../../dotfiles;
@@ -16,6 +16,8 @@ in
       cfg = config.my.desktop;
     in
     {
+      options.my.desktop.hyprland.enable = lib.mkEnableOption "Hyprland (system)";
+
       config = lib.mkIf (cfg.enable && cfg.hyprland.enable) {
         programs.hyprland = {
           enable = true;
@@ -70,6 +72,75 @@ in
       };
     };
 
+  # NixOS: KDE Plasma system config
+  flake.nixosModules.desktop-kde =
+    {
+      lib,
+      config,
+      ...
+    }:
+    let
+      cfg = config.my.desktop;
+    in
+    {
+      options.my.desktop.kde.enable = lib.mkEnableOption "KDE Plasma (system)";
+
+      config = lib.mkMerge [
+        (lib.mkIf (cfg.enable && cfg.kde.enable) {
+          services.desktopManager.plasma6.enable = true;
+          security.pam.services.sddm.enableKwallet = true;
+        })
+        (lib.mkIf (cfg.enable && cfg.kde.enable && config.my.system.impermanence.enable) {
+          # Persist KDE application data
+          environment.persistence."/persistent/system".users."efficacy38" = {
+            directories = [
+              ".local/share/dolphin" # Dolphin file manager
+              ".local/share/kate" # Kate text editor
+              ".local/share/sddm" # SDDM display manager state
+            ];
+          };
+        })
+      ];
+    };
+
+  # NixOS: XDG portal configuration (auto-enabled with the desktop)
+  flake.nixosModules.desktop-xdg =
+    {
+      pkgs,
+      lib,
+      config,
+      ...
+    }:
+    let
+      cfg = config.my.desktop;
+    in
+    {
+      config = lib.mkIf cfg.enable {
+        # compatibility with KDE applications
+        environment.etc."/xdg/menus/plasma-applications.menu".text =
+          builtins.readFile "${pkgs.kdePackages.plasma-workspace}/etc/xdg/menus/plasma-applications.menu";
+
+        # for better compatibility, check https://wiki.archlinux.org/title/XDG_Desktop_Portal
+        xdg.portal = {
+          enable = true;
+          extraPortals = with pkgs; [
+            xdg-desktop-portal-hyprland
+            xdg-desktop-portal-gnome
+            xdg-desktop-portal-gtk
+            kdePackages.xdg-desktop-portal-kde
+          ];
+          config = {
+            hyprland = {
+              default = [
+                "hyprland"
+                "gtk"
+              ];
+            };
+          };
+        };
+      };
+    };
+
   # Home-manager: Hyprland user config
   flake.homeModules.desktop-hyprland =
     {
@@ -98,6 +169,8 @@ in
       HIGH_ICON_PATH = dotfilesBasePath + /dunst/volume-high.png;
     in
     {
+      options.my.desktop.hyprland.enable = lib.mkEnableOption "Hyprland home-manager configuration";
+
       config = lib.mkIf (cfg.enable && cfg.hyprland.enable) (
         {
           # FIXME: work-around for hm
@@ -132,6 +205,13 @@ in
               enable = true;
               indicator = true;
             };
+            dunst = {
+              enable = true;
+              settings.global.follow = "mouse";
+            };
+            hyprpaper.enable = true;
+            hypridle.enable = true;
+            network-manager-applet.enable = true;
           };
 
           systemd.user.services = {
@@ -139,18 +219,7 @@ in
             kdeconnect-indicator.Unit.After = lib.mkForce [ "graphical-session.target" ];
           };
 
-          services.dunst = {
-            enable = true;
-            settings.global.follow = "mouse";
-          };
-
           xsession.preferStatusNotifierItems = true;
-
-          services = {
-            hyprpaper.enable = true;
-            hypridle.enable = true;
-            network-manager-applet.enable = true;
-          };
 
           programs = {
             waybar = {
@@ -208,5 +277,32 @@ in
           };
         }
       );
+    };
+
+  # Home-manager: KDE user packages
+  flake.homeModules.desktop-kde =
+    {
+      pkgs,
+      lib,
+      config,
+      ...
+    }:
+    let
+      cfg = config.my.desktop;
+    in
+    {
+      options.my.desktop.kde.enable = lib.mkEnableOption "KDE Plasma home-manager packages";
+
+      config = lib.mkIf (cfg.enable && cfg.kde.enable) {
+        home.packages = with pkgs.kdePackages; [
+          elisa
+          ghostwriter
+          kate
+          kcalc
+          kdeconnect-kde
+          markdownpart
+          yakuake
+        ];
+      };
     };
 }

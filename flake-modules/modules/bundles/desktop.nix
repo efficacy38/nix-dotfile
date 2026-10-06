@@ -52,17 +52,18 @@ in
 
       config = lib.mkIf cfg.enable {
         my = {
-          bundles.common.enable = true;
           desktop = {
             enable = true;
-            zram.enable = lib.mkDefault cfg.zram.enable;
             hyprland.enable = lib.mkDefault (cfg.session == "hyprland");
             kde.enable = lib.mkDefault (cfg.session == "kde");
-            xdg.enable = lib.mkDefault (cfg.session == "hyprland");
             steam = {
               enable = lib.mkDefault cfg.steam.enable;
               hidpi = lib.mkDefault false;
             };
+          };
+          system = {
+            zram.enable = lib.mkDefault cfg.zram.enable;
+            firmware.enable = lib.mkDefault true;
           };
         };
       };
