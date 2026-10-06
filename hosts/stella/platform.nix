@@ -12,6 +12,11 @@
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
+  # Use the mq-deadline I/O scheduler for the NVMe system disk (kernel default is none).
+  services.udev.extraRules = ''
+    ACTION=="add|change", KERNEL=="nvme0n1", ATTR{queue/scheduler}="mq-deadline"
+  '';
+
   my.desktop = {
     fprintd.enable = true;
     batteryHealth.enable = true;
