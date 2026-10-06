@@ -521,6 +521,7 @@ in
               codex
               openspec
               opencode2
+              opencode2-desktop
 
               # mcp servers
               pkgs.zhtw-mcp
