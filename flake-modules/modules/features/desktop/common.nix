@@ -240,7 +240,6 @@ _: {
             keepassxc
             eog
             readest
-            flowsurface
           ])
           ++ (with pkgs.kdePackages; [
             # Common desktop utilities (for MIME apps) - using stable

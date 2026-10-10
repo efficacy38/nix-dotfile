@@ -13,6 +13,7 @@
           my = {
             bundles.desktop.enable = true;
             bundles.general.enable = true;
+            desktop.trading.enable = true;
           };
         };
       };
