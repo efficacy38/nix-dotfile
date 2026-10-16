@@ -63,16 +63,12 @@ in
     inherit pkgs;
 
     nixosConfigurations = {
-      workstation = mkSystem ../hosts/workstation;
-      homelab-1 = mkSystem ../hosts/homelab-1;
-      homelab-test = mkSystem ../hosts/homelab-test;
-      stella = mkSystem ../hosts/stella;
       cc-desktop = mkSystem ../hosts/cc-desktop;
-      cc-container-vps = mkSystem ../hosts/cc-container-vps;
-      stella-nspawn = mkSystem ../hosts/stella-nspawn;
+      drone = mkSystem ../hosts/drone;
       iso = mkIsoSystem ../hosts/iso/configuration.nix;
       ns1 = mkSystem ../hosts/ns1;
-      drone = mkSystem ../hosts/drone;
+      stella = mkSystem ../hosts/stella;
+      workstation = mkSystem ../hosts/workstation;
     };
   };
 }
