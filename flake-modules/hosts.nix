@@ -72,6 +72,7 @@ in
       stella-nspawn = mkSystem ../hosts/stella-nspawn;
       iso = mkIsoSystem ../hosts/iso/configuration.nix;
       ns1 = mkSystem ../hosts/ns1;
+      drone = mkSystem ../hosts/drone;
     };
   };
 }
