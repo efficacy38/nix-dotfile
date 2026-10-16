@@ -206,6 +206,11 @@ in
                 IdentityFile = "~/.ssh/keys/gh.id_ed25519";
                 IdentitiesOnly = true;
               };
+              "Host 10.7.205.* *.homelab.csjhuang.net" = {
+                IdentityFile = "~/.ssh/keys/automation.id_ed25519";
+                IdentitiesOnly = true;
+                User = "automation";
+              };
               "*" = {
                 ForwardAgent = lib.mkDefault false;
                 AddKeysToAgent = lib.mkDefault "no";

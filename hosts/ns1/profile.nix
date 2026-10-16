@@ -23,6 +23,7 @@ in
       enable = true;
     };
     system.netbird.enable = true;
+    system.automation-user.enable = true;
   };
 
   # BIND: authoritative secondary (slave) for the homelab zone. The primary

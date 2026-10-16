@@ -37,6 +37,7 @@ in
     devpack = {
       enable = true;
     };
+    system.automation-user.enable = true;
   };
 
   sops = {
