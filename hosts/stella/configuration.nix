@@ -14,6 +14,11 @@
     firewall.enable = lib.mkForce false;
   };
 
+  programs.appimage = {
+    enable = true;
+    binfmt = true;
+  };
+
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
