@@ -71,7 +71,7 @@ in
       cc-container-vps = mkSystem ../hosts/cc-container-vps;
       stella-nspawn = mkSystem ../hosts/stella-nspawn;
       iso = mkIsoSystem ../hosts/iso/configuration.nix;
-      pdns = mkSystem ../hosts/pdns;
+      ns1 = mkSystem ../hosts/ns1;
     };
   };
 }

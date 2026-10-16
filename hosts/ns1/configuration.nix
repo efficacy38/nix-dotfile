@@ -1,5 +1,5 @@
 {
-  networking.hostName = "pdns";
+  networking.hostName = "ns1";
 
   my.system.dhcp.enable = true;
 

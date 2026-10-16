@@ -25,30 +25,31 @@ in
     system.netbird.enable = true;
   };
 
-  # PowerDNS authoritative: writable sqlite backend + DDNS
-  services.powerdns = {
+  # BIND: authoritative secondary (slave) for the homelab zone. The primary
+  # (10.7.205.1) only permits zone transfers on port 5300, so this host pulls
+  # a copy over AXFR and answers queries for the zone locally.
+  services.bind = {
     enable = true;
-    extraConfig = ''
-      launch=gsqlite3
-      gsqlite3-database=/var/lib/pdns/pdns.sqlite3
-      local-address=127.0.0.1
-      local-port=5300
-      dnsupdate=yes
-      allow-dnsupdate-from=127.0.0.1,10.7.205.0/24
-    '';
+    listenOn = [ "127.0.0.1" ]; # AdGuardHome owns :53
+    listenOnPort = 5300;
+    # Without this BIND also binds IPv6 :53, which the firewall opens.
+    listenOnIpv6 = [ ];
+    directory = "/var/lib/bind";
+    zones."${zone}" = {
+      master = false; # named `type slave`
+      file = "/var/lib/bind/db.${zone}";
+      masters = [ "10.7.205.1 port 5300" ]; # AXFR-only source
+      allowQuery = [ "127.0.0.1" ];
+    };
+    # Authoritative only; AdGuardHome is the recursive resolver.
+    extraOptions = "recursion no;";
   };
 
-  # pdnsutil (and the rest of the PowerDNS tools)
-  environment.systemPackages = [ pkgs.pdns ];
-
-  # Bootstrap the sqlite DB + schema on first start (runs as User=pdns)
-  systemd.services.pdns.serviceConfig.StateDirectory = "pdns";
-  systemd.services.pdns.preStart = ''
-    if [ ! -e /var/lib/pdns/pdns.sqlite3 ]; then
-      ${pkgs.sqlite}/bin/sqlite3 /var/lib/pdns/pdns.sqlite3 \
-        < ${pkgs.pdns}/share/doc/pdns/schema.sqlite3.sql
-    fi
-  '';
+  # BIND tooling: named-checkconf/rndc from bind, dig from dnsutils.
+  environment.systemPackages = [
+    pkgs.bind
+    pkgs.dnsutils
+  ];
 
   # AdGuardHome: minimal forwarding front-end
   services.adguardhome = {
